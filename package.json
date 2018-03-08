@@ -2,7 +2,7 @@
   "name": "material-ui-form",
   "version": "1.0.0-alpha.1",
   "description": "react form component to manage state and validation for material-ui inputs",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
