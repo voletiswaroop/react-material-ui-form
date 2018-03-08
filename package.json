@@ -1,0 +1,24 @@
+{
+  "name": "material-ui-form",
+  "version": "1.0.0-alpha.1",
+  "description": "react form component to manage state and validation for material-ui inputs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \\\"Error: no test specified\\\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unitedhubs/material-ui-form.git"
+  },
+  "keywords": [
+    "material-ui",
+    "react",
+    "form"
+  ],
+  "author": "unitedhubs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unitedhubs/material-ui-form/issues"
+  },
+  "homepage": "https://github.com/unitedhubs/material-ui-form#readme"
+}
