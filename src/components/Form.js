@@ -6,8 +6,8 @@ import FieldClone from './FieldClone'
 import { validate } from '../validation'
 
 
-const DATA_VALIDATORS_PROP_NAME = 'data-validators'
-const NOTEMPTY_VALIDATOR_CODE = 'notEmpty'
+const FIELD_VALIDATORS_PROP_NAME = 'data-validators'
+const REQUIRED_VALIDATOR_CODE = 'notEmpty'
 
 function checkElementInteractivity(element) {
   return _.has(element, 'props.name') && _.has(element, 'props.value')
@@ -34,7 +34,7 @@ function getPristineFieldValues(fields) {
 }
 
 function extractFieldValidators(fieldProps) {
-  let validators = _.get(fieldProps, DATA_VALIDATORS_PROP_NAME)
+  let validators = _.get(fieldProps, FIELD_VALIDATORS_PROP_NAME)
   if (validators !== undefined) {
     if (_.isString(validators)) {
       validators = validators.replace(/\s/g, '').split(',')
@@ -70,7 +70,7 @@ export default class Form extends React.Component {
   static defaultProps = {
     disableSubmitButtonOnError: true,
     validate: null,
-    validations: [],
+    validations: {},
     validationMessageMap: {},
   }
 
@@ -92,24 +92,27 @@ export default class Form extends React.Component {
   }
 
   registerField = (fieldProps) => {
-    const { name, value } = fieldProps
+    const { name, value, required } = fieldProps
     if (!_.has(this.state.fields, name)) {
       const validators = extractFieldValidators(fieldProps)
       const isRequired = (
-        !_.isEmpty(validators) && validators.includes(NOTEMPTY_VALIDATOR_CODE)
+        !_.isEmpty(validators)
+        && (required || validators.includes(REQUIRED_VALIDATOR_CODE))
       )
 
       _.defer(() => {
-        this.setState({ fields: {
-          ...this.state.fields,
-          [name]: {
-            ...getFieldTemplate(),
-            isRequired,
-            pristineValue: value,
-            validators,
-            value,
+        this.setState({
+          fields: {
+            ...this.state.fields,
+            [name]: {
+              ...getFieldTemplate(),
+              isRequired,
+              pristineValue: value,
+              validators,
+              value,
+            },
           },
-        } })
+        })
 
         if (!_.isEmpty(validators) && !_.isEmpty(value)) {
           this.validateField(name, value)
@@ -120,15 +123,17 @@ export default class Form extends React.Component {
 
   updateFieldValue = (name, value) => {
     _.defer(() => {
-      this.setState({ fields: {
-        ...this.state.fields,
-        [name]: {
-          ...this.state.fields[name],
-          isPristine: false,
-          validations: [],
-          value,
+      this.setState({
+        fields: {
+          ...this.state.fields,
+          [name]: {
+            ...this.state.fields[name],
+            isPristine: false,
+            validations: [],
+            value,
+          },
         },
-      } })
+      })
 
       if (isValidForm(this.state.fields)) {
         this.enableSubmitButton()
@@ -140,30 +145,28 @@ export default class Form extends React.Component {
 
   validateField = (name, value) => {
     const field = this.state.fields[name]
-    if (_.isEmpty(field.validations)) {
-      const validations = this.validate(
+
+    let validations = []
+    if (value !== '') {
+      validations = this.validate(
         String(value),
         field.validators,
         this.props.validationMessageMap,
       )
-
-      if (!_.isEmpty(validations)) {
-        field.validations = validations
-        this.setState({ fields: {
-          ...this.state.fields,
-          [name]: field,
-        } })
-
-        if (this.props.disableSubmitButtonOnError) {
-          this.disableSubmitButton()
-        }
-      }
     }
+
+    field.validations = validations
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        [name]: field,
+      },
+    })
   }
 
   submit = (event) => {
     event.preventDefault()
-    const fields = this.state.fields
+    const { fields } = this.state
     _.each(fields, (field, name) => {
       if (field.isRequired
         && _.isEmpty(field.value)
@@ -227,7 +230,7 @@ export default class Form extends React.Component {
         return child
       }
       // clone all input elements
-      const name = child.props.name
+      const { name } = child.props
       return (
         <FieldClone
           field={this.state.fields[name]}
@@ -243,7 +246,10 @@ export default class Form extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submit}>
+      <form
+        onSubmit={this.submit}
+        autoComplete="false"
+      >
         { this.renderChildrenRecursively(this.props.children) }
       </form>
     )

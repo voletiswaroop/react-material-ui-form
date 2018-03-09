@@ -24,6 +24,5 @@ pids
 node_modules
 .vscode
 
-# BUILDS
-/dist
-/lib
+# TEST BUILDS
+/src/example/dist

@@ -28,10 +28,6 @@ export const createValidation = (validator, args, validationMessageMap) => {
   return { code, message }
 }
 
-export const createValidations = (fieldValidators, validationMessageMap) => (
-  validators.map(validator => createValidation(validator, validationMessageMap))
-)
-
 export const validate = (value, fieldValidators, validationMessageMap) => {
   const validations = []
   if (_.isEmpty(fieldValidators)) {
@@ -64,7 +60,8 @@ export const validate = (value, fieldValidators, validationMessageMap) => {
       }
     }
   })
-  return !_.isEmpty(validations) ? validations : null
+
+  return validations
 }
 
 export { validators }

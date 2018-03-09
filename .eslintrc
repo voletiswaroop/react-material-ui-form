@@ -60,8 +60,8 @@ rules:
   no-unused-expressions: 1
   no-unused-vars: ["warn", {argsIgnorePattern: "^_" }]
   react/forbid-prop-types: ["error", {forbid: ['any']}]
-  react/jsx-indent-props: ["error", "space"]
-  react/jsx-indent: ["error", "space"]
+  react/jsx-indent-props: ["error", 2]
+  react/jsx-indent: ["error", 2]
   react/jsx-wrap-multilines: 1
   react/prefer-stateless-function: 1
 
@@ -71,7 +71,6 @@ rules:
   import/extensions: 0
   indent: 0
   no-param-reassign: 0
-  no-tabs: 0
   no-underscore-dangle: 0
   prefer-template: 0
   react/jsx-filename-extension: 0  # unsupported by react-native

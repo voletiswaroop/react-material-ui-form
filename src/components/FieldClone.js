@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { withStyles } from 'material-ui/styles'
 
 
 function getElementFromProps(props) {
@@ -26,28 +25,19 @@ function makeErrorAndHelperText(props) {
   return { helperText, isError }
 }
 
-const styles = theme => ({
-  invalid: {
-    color: theme.palette.error[500],
-    fontWeight: 800,
-  },
-})
-
-@withStyles(styles)
 export default class FieldClone extends React.Component {
   static propTypes = {
+    /* eslint-disable-next-line */
     children: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.object,
     ]).isRequired,
-    classes: PropTypes.object.isRequired,
     field: PropTypes.object,
     onValueChange: PropTypes.func.isRequired,
     onConstruct: PropTypes.func.isRequired,
   }
 
   static defaultProps = {
-    classes: {},
     field: {},
   }
 
@@ -92,7 +82,7 @@ export default class FieldClone extends React.Component {
     const el = getElementFromProps(this.props)
     // // /* TODO: create function for condition */
     if (!el.props.select) {
-      const value = event.target.value
+      const { value } = event.target
       this.props.onValueChange(el.props.name, value)
     }
   }
@@ -100,7 +90,7 @@ export default class FieldClone extends React.Component {
   onChange = (event) => {
     event.stopPropagation()
     const el = getElementFromProps(this.props)
-    const value = event.target.value
+    const { value } = event.target
     const helperText = _.get(el.props, 'helperText')
     this.setState({ isError: false, helperText, value })
     /* TODO: create function for condition */
@@ -111,12 +101,11 @@ export default class FieldClone extends React.Component {
 
   render() {
     const el = getElementFromProps(this.props)
-    const { classes, ...props } = this.props
 
     return React.cloneElement(el, {
       error: this.state.isError,
       helperText: this.state.helperText,
-      label: makeLabel(props),
+      label: makeLabel(this.props),
       onBlur: el.props.onBlur || this.onBlur,
       onChange: el.props.onChange || this.onChange,
       value: this.state.value,

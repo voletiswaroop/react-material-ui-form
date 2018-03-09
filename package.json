@@ -2,8 +2,12 @@
   "name": "material-ui-form",
   "version": "1.0.0-alpha.1",
   "description": "react form component to manage state and validation for material-ui inputs",
-  "main": "./dist/index.js",
+  "main": "./dist/main.js",
   "scripts": {
+    "build": "webpack -p",
+    "build:dev": "webpack ./src/example/Root -d --output-path=./src/example/dist",
+    "prepublish": "rm -Rf ./dist && npm run build",
+    "start:dev": "webpack-dev-server --mode development --entry=./src/example/Root --output-path=./src/example/dist --open",
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {
@@ -26,6 +30,7 @@
     "material-ui": "^1.0.0-beta.36",
     "prop-types": "^15.6.1",
     "react": ">=16.2.0",
+    "react-dom": "^16.2.0",
     "validator": "^9.4.1"
   },
   "devDependencies": {
@@ -42,6 +47,11 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
-    "webpack": "^4.1.1"
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.0.6",
+    "webpack": "^4.1.1",
+    "webpack-cli": "^2.0.10",
+    "webpack-dev-server": "^3.1.0",
+    "yargs": "^11.0.0"
   }
 }
