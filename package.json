@@ -5,9 +5,9 @@
   "main": "./dist/main.js",
   "scripts": {
     "build": "webpack -p",
-    "build:dev": "webpack ./src/example/Root -d --output-path=./src/example/dist",
+    "build:dev": "webpack ./example/Root -d --output-path=./example/dist",
     "prepublish": "rm -Rf ./dist && npm run build",
-    "start:dev": "webpack-dev-server --mode development --entry=./src/example/Root --output-path=./src/example/dist --open",
+    "start:dev": "webpack-dev-server --mode development --entry=./example/Root --output-path=./example/dist --open",
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {
