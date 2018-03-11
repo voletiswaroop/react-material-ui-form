@@ -9,7 +9,6 @@ import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import Form from '../src/index'
-// import Form from '../dist/main'
 
 
 function getSteps() {
