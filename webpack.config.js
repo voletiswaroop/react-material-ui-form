@@ -50,6 +50,11 @@ if (!args.p) {
 }
 
 module.exports = {
-  module: { rules },
+  output: {
+    libraryTarget: 'umd',
+  },
+  module: {
+    rules,
+  },
   plugins,
 }
