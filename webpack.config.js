@@ -1,6 +1,7 @@
 const path = require('path')
 const args = require('yargs').argv
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const WebpackStripLoader = require('strip-loader')
 
 
 const rules = [
@@ -39,6 +40,13 @@ if (!args.p) {
       filename: './index.html',
     }),
   ]
+// production
+} else {
+  rules.push({
+    test: /\.js$/,
+    exclude: path.resolve(__dirname, 'node_modules'),
+    loader: WebpackStripLoader.loader('console.log'),
+  })
 }
 
 module.exports = {

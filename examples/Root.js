@@ -1,12 +1,15 @@
 import React, { Component, Fragment } from 'react'
 import ReactDOM from 'react-dom'
 
+/* eslint-disable import/no-extraneous-dependencies */
 import Button from 'material-ui/Button'
 import { MenuItem } from 'material-ui/Menu'
 import TextField from 'material-ui/TextField'
 import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
+/* eslint-enable import/no-extraneous-dependencies */
 
 import Form from '../src/index'
+// import Form from '../dist/main'
 
 
 function getSteps() {
@@ -18,8 +21,8 @@ function getSteps() {
 
 export default class Root extends Component {
   state = {
-    activeStep: 1,
-    amounts: [true],
+    activeStep: 0,
+    amounts: [true], // hack
   }
 
   clickNext = () => {
@@ -51,16 +54,16 @@ export default class Root extends Component {
 
     return (
       <div style={{ width: '400px' }}>
-        <Form onSubmit={this.submit}>
-          <Stepper activeStep={this.state.activeStep} alternativeLabel>
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
+        <Stepper activeStep={this.state.activeStep} alternativeLabel>
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
 
-          {this.state.activeStep === 1 &&
+        <Form onSubmit={this.submit}>
+          {this.state.activeStep === 0 &&
             <Fragment>
               <TextField
                 label="Name"
@@ -83,7 +86,7 @@ export default class Root extends Component {
             </Fragment>
           }
 
-          {this.state.activeStep === 2 &&
+          {this.state.activeStep === 1 &&
             <Fragment>
               {this.state.amounts.map((amount, i) => (
                 <TextField

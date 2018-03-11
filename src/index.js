@@ -1,3 +1,1 @@
-import Form from './components/Form' // eslint-disable-line filenames/match-exported
-
-export default Form
+export default from './components/Form.js' // eslint-disable-line filenames/match-exported

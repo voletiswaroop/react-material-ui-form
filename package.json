@@ -1,16 +1,12 @@
 {
   "name": "material-ui-form",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.5",
   "description": "react form component to manage state and validation for material-ui inputs",
-  "files": [
-    "dist"
-  ],
   "main": "dist/main.js",
   "scripts": {
     "build": "webpack -p",
-    "build:dev": "webpack ./examples/Root -d --output-path=./examples/dist",
     "prepublish": "rm -Rf ./dist && npm run build",
-    "start:dev": "webpack-dev-server --mode development --entry=./examples/Root --output-path=./examples/dist --open",
+    "start": "webpack-dev-server --mode development --entry=./examples/Root --open",
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {
@@ -24,6 +20,9 @@
     "react",
     "react-component",
     "validation"
+  ],
+  "files": [
+    "dist"
   ],
   "author": "unitedhubs",
   "license": "MIT",
@@ -54,6 +53,7 @@
     "material-ui": "^1.0.0-beta.36",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "strip-loader": "^0.1.2",
     "validator": "^9.4.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",

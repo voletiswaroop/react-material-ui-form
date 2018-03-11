@@ -1,18 +1,11 @@
 # FILES
-*.bak
 *.log
-*.pid
-*.pyc
-*.seed
 *.sublime-project
 *.sublime-workspace
 *~
 .DS_Store
-.lock-wscript
 .vscode
 
 # DIRS
 logs
 node_modules
-/dist
-/src/examples/dist

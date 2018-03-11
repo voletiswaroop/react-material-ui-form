@@ -14,4 +14,4 @@ npm install --save material-ui-form
 
 #### example
 
-run `npm run start:dev`
+run `npm run start`
