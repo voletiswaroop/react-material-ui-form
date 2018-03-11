@@ -1,28 +1,18 @@
 # FILES
 *.bak
-*.graphql
 *.log
 *.pid
 *.pyc
 *.seed
 *.sublime-project
 *.sublime-workspace
-*.swo
-*.swp
-*broken*/
 *~
 .DS_Store
-.grunt
 .lock-wscript
-
-# GENERATED DIRS
-build/Release
-coverage
-lib-cov
-logs
-pids
-node_modules
 .vscode
 
-# TEST BUILDS
-/src/example/dist
+# DIRS
+logs
+node_modules
+/dist
+/src/examples/dist

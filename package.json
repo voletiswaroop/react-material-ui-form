@@ -1,13 +1,16 @@
 {
   "name": "material-ui-form",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "react form component to manage state and validation for material-ui inputs",
-  "main": "./dist/main.js",
+  "files": [
+    "dist"
+  ],
+  "main": "dist/main.js",
   "scripts": {
     "build": "webpack -p",
-    "build:dev": "webpack ./example/Root -d --output-path=./example/dist",
+    "build:dev": "webpack ./examples/Root -d --output-path=./examples/dist",
     "prepublish": "rm -Rf ./dist && npm run build",
-    "start:dev": "webpack-dev-server --mode development --entry=./example/Root --output-path=./example/dist --open",
+    "start:dev": "webpack-dev-server --mode development --entry=./examples/Root --output-path=./examples/dist --open",
     "test": "echo \\\"Error: no test specified\\\" && exit 1"
   },
   "repository": {
@@ -15,9 +18,12 @@
     "url": "git+https://github.com/unitedhubs/material-ui-form.git"
   },
   "keywords": [
+    "form",
+    "forms",
     "material-ui",
     "react",
-    "form"
+    "react-component",
+    "validation"
   ],
   "author": "unitedhubs",
   "license": "MIT",
@@ -26,12 +32,7 @@
   },
   "homepage": "https://github.com/unitedhubs/material-ui-form#readme",
   "dependencies": {
-    "lodash": "^4.17.5",
-    "material-ui": "^1.0.0-beta.36",
-    "prop-types": "^15.6.1",
-    "react": ">=16.2.0",
-    "react-dom": "^16.2.0",
-    "validator": "^9.4.1"
+    "prop-types": "^15.6.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.40",
@@ -49,9 +50,18 @@
     "eslint-plugin-react": "^7.7.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.0.6",
+    "lodash": "^4.17.5",
+    "material-ui": "^1.0.0-beta.36",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "validator": "^9.4.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
     "webpack-dev-server": "^3.1.0",
     "yargs": "^11.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
   }
 }

@@ -35,7 +35,7 @@ let plugins = []
 if (!args.p) {
   plugins = [
     new HtmlWebPackPlugin({
-      template: './example/index.html',
+      template: './examples/index.html',
       filename: './index.html',
     }),
   ]
