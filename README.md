@@ -1,3 +1,8 @@
+[![npm package](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
+[![PeerDependencies](https://img.shields.io/david/peer/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form?type=peer)
+[![Dependencies](https://img.shields.io/david/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form)
+[![DevDependencies](https://img.shields.io/david/dev/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form?type=dev)
+
 #### install
 ```
 npm install --save material-ui-form
