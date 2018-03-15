@@ -70,6 +70,7 @@ rules:
   eol-last: 0
   import/extensions: 0
   indent: 0
+  jsx-a11y/anchor-is-valid: 0
   no-param-reassign: 0
   no-underscore-dangle: 0
   prefer-template: 0

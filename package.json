@@ -41,6 +41,7 @@
     "@babel/preset-stage-0": "^7.0.0-beta.40",
     "babel-eslint": "^8.2.2",
     "babel-loader": "^8.0.0-beta.2",
+    "css-loader": "^0.28.10",
     "eslint": "^4.18.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-filenames": "^1.2.0",
@@ -49,11 +50,15 @@
     "eslint-plugin-react": "^7.7.0",
     "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.0.6",
+    "less": "^3.0.1",
+    "less-loader": "^4.1.0",
     "lodash": "^4.17.5",
-    "material-ui": "^1.0.0-beta.36",
+    "material-ui": "^1.0.0-beta.37",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-router-dom": "^4.2.2",
     "strip-loader": "^0.1.2",
+    "style-loader": "^0.20.3",
     "validator": "^9.4.1",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.10",
@@ -61,6 +66,7 @@
     "yargs": "^11.0.0"
   },
   "peerDependencies": {
+    "material-ui": "^1.0.0-beta.37",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   }

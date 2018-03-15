@@ -1,119 +1,78 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 
 /* eslint-disable import/no-extraneous-dependencies */
+import { BrowserRouter, Link, Route } from 'react-router-dom'
+
+import CssBaseline from 'material-ui/CssBaseline'
+import AppBar from 'material-ui/AppBar'
+import Toolbar from 'material-ui/Toolbar'
 import Button from 'material-ui/Button'
-import { MenuItem } from 'material-ui/Menu'
-import TextField from 'material-ui/TextField'
-import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
 /* eslint-enable import/no-extraneous-dependencies */
 
-import Form from '../src/index'
+import './styles.less'
+import MultiStep from './pages/MultiStep'
+import NestedFields from './pages/NestedFields'
+import CustomValidationMessages from './pages/CustomValidationMessages'
+import CustomValidators from './pages/CustomValidators'
+import CustomValidateFunction from './pages/CustomValidateFunction'
+import MiscProps from './pages/MiscProps'
 
 
-function getSteps() {
-  return [
-    'Step 1',
-    'Step 2',
-  ]
+const wrapperStyle = {
+  backgroundColor: 'white',
+  height: 'inherit',
+  overflowX: 'hidden',
+  overflowY: 'auto',
 }
 
-export default class Root extends Component {
-  state = {
-    activeStep: 0,
-    amounts: [true], // hack
-  }
+const Root = () => (
+  <div style={wrapperStyle}>
+    <CssBaseline />
+    <BrowserRouter>
+      <div>
+        <AppBar position="sticky">
+          <Toolbar>
+            <Button>
+              <Link to="/">Nested Fields</Link>
+            </Button>
+            <Button>
+              <Link to="/custom-validation-messages">
+                Custom Validation Messages
+              </Link>
+            </Button>
+            <Button>
+              <Link to="/custom-validators">Custom Validators</Link>
+            </Button>
+            <Button>
+              <Link to="/custom-validate-function">
+                Custom Validate Function
+              </Link>
+            </Button>
+            <Button>
+              <Link to="/stepper">Stepper</Link>
+            </Button>
+            <Button>
+              <Link to="/misc-props">Misc Props</Link>
+            </Button>
+          </Toolbar>
+        </AppBar>
 
-  clickNext = () => {
-    this.setState({
-      activeStep: this.state.activeStep + 1,
-    })
-  }
-
-  clickBack = () => {
-    this.setState({
-      activeStep: this.state.activeStep - 1,
-    })
-  }
-
-  addAmount = () => {
-    const amounts = _.clone(this.state.amounts)
-    amounts.push(true)
-    this.setState({ amounts })
-  }
-
-  submit = (values, pristineValues) => {
-    console.log('submit values:', values, 'pristine values:', pristineValues)
-  }
-
-  render() {
-    console.log('Form:', this.props, this.state)
-
-    const steps = getSteps()
-
-    return (
-      <div style={{ width: '400px' }}>
-        <Stepper activeStep={this.state.activeStep} alternativeLabel>
-          {steps.map(label => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-
-        <Form onSubmit={this.submit}>
-          {this.state.activeStep === 0 &&
-            <Fragment>
-              <TextField
-                label="Name"
-                type="text"
-                name="name"
-                value=""
-                required
-                fullWidth
-              />
-              <TextField
-                label="Email"
-                type="text"
-                name="email"
-                value="alias@example."
-                data-validators="isEmail"
-                fullWidth
-              />
-              <Button variant="raised" onClick={this.requestClose}>Cancel</Button>
-              <Button variant="raised" onClick={this.clickNext}>Next</Button>
-            </Fragment>
-          }
-
-          {this.state.activeStep === 1 &&
-            <Fragment>
-              {this.state.amounts.map((amount, i) => (
-                <TextField
-                  key={amount}
-                  select
-                  label="Amount"
-                  helperText="Amount should be an integer"
-                  name={`amounts[${i}]`}
-                  value=""
-                  data-validators="isInt"
-                  margin="normal"
-                  fullWidth
-                >
-                  <MenuItem value="0">Zero</MenuItem>
-                  <MenuItem value={10.5}>Ten and a half</MenuItem>
-                  <MenuItem value="20">Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </TextField>
-              ))}
-              <Button variant="raised" onClick={this.addAmount}>Add amount</Button>
-              <Button variant="raised" onClick={this.clickBack}>Back</Button>
-              <Button variant="raised" type="submit">Create</Button>
-            </Fragment>
-          }
-        </Form>
+        <Route exact path="/" component={NestedFields} />
+        <Route
+          path="/custom-validation-messages"
+          component={CustomValidationMessages}
+        />
+        <Route path="/custom-validators" component={CustomValidators} />
+        <Route
+          path="/custom-validate-function"
+          component={CustomValidateFunction}
+        />
+        <Route path="/stepper" component={MultiStep} />
+        <Route path="/misc-props" component={MiscProps} />
       </div>
-    )
-  }
-}
+    </BrowserRouter>
+  </div>
+)
 
 ReactDOM.render(<Root />, document.querySelector('#root'))
