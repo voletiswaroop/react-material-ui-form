@@ -1,6 +1,6 @@
 {
   "name": "material-ui-form",
-  "version": "1.0.0-alpha.6",
+  "version": "1.0.0-alpha.7",
   "description": "react form component to manage state and validation for material-ui inputs",
   "main": "dist/main.js",
   "scripts": {
@@ -53,6 +53,7 @@
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "lodash": "^4.17.5",
+    "markdown-loader": "^2.0.2",
     "material-ui": "^1.0.0-beta.37",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

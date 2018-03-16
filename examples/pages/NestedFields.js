@@ -72,13 +72,8 @@ export default class NestedFields extends React.Component {
               <legend>FormControl Select</legend>
               <FormControl required>
                 <InputLabel htmlFor="age-helper">Age</InputLabel>
-                <Select
-                  value=""
-                  name="age"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
+                <Select value="" name="age">
+                  <MenuItem value=""><em>Please select your age ...</em></MenuItem>
                   <MenuItem value={10}>Teens</MenuItem>
                   <MenuItem value={20}>Twenties</MenuItem>
                   <MenuItem value={30}>Thirties</MenuItem>

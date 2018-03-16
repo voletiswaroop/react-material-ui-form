@@ -20,20 +20,27 @@ const rules = [
     },
   },
   {
+    test: /\.(css|less)$/,
+    use: [
+      { loader: 'style-loader' },
+      { loader: 'css-loader' },
+      { loader: 'less-loader' },
+    ],
+  },
+  {
+    test: /\.md$/,
+    use: [
+      { loader: 'html-loader' },
+      { loader: 'markdown-loader' },
+    ],
+  },
+  {
     test: /\.html$/,
     use: [
       {
         loader: 'html-loader',
         options: { minimize: true },
       },
-    ],
-  },
-  {
-    test: /\.less$/,
-    use: [
-      { loader: 'style-loader' },
-      { loader: 'css-loader' },
-      { loader: 'less-loader' },
     ],
   },
 ]

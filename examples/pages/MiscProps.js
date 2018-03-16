@@ -17,7 +17,7 @@ import styles from '../styles'
 const dividerStyle = { margin: '20px 0' }
 
 const mockServerValidations = {
-  name: [{ code: 'isInvalid', message: 'such invalid...' }],
+  firstName: [{ code: 'isInvalid', message: 'such invalid...' }],
 }
 
 @withStyles(styles)
@@ -32,12 +32,24 @@ export default class MiscProps extends React.Component {
   }
 
   componentDidMount() {
+    let validations = {
+      firstName: [{ message: 'such WOOOOOOOOOW...' }],
+    }
+
     setTimeout(() => {
-      const newMockServerValidations = {
-        name: [{ message: 'such WOOOOOOOOOW...' }],
-      }
-      this.setState({ mockServerValidations: newMockServerValidations })
+      this.setState({ mockServerValidations: validations })
     }, 1500)
+
+    setTimeout(() => {
+      validations = {
+        firstName: [{ message: 'so still haven\'t watched Italian Spiderman?' }],
+      }
+      this.setState({ mockServerValidations: validations })
+    }, 3000)
+  }
+
+  handleLastNameChange = (event) => {
+    console.log(event.target.value, event)
   }
 
   handleValuesChange = (values, pristineValues) => {
@@ -69,13 +81,23 @@ export default class MiscProps extends React.Component {
             validations={this.state.mockServerValidations}
           >
             <TextField
-              label="Name"
+              label="First name"
               type="text"
-              name="name"
+              name="firstName"
               value="doge"
               fullWidth
             />
+            <Divider style={dividerStyle} />
 
+            <TextField
+              label="Last name"
+              type="text"
+              name="lastName"
+              value=""
+              onChange={this.handleLastNameChange}
+              helperText="let's see what you've got"
+              fullWidth
+            />
             <Divider style={dividerStyle} />
 
             <Button variant="raised" type="reset">Reset</Button>
