@@ -12,12 +12,12 @@ It also supports validation out-of-the-box (using [validator.js](https://github.
 
 The wrapper keeps all values and validations in its own state, allowing for functionality like steppers (multi-page forms) and conditional form fields.
 
-#### conditions
+#### use
 
-- only supports [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (and custom Material-UI fields)
-- must set `value` and `name` props on every field
-- remove any `onChange` and `onBlur` props (unless you want to customize that logic)
-- set a `data-validators` prop on a field to specify its validators
+- only supports [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (including custom Material-UI fields)
+- every input field must have `value` and `name` props
+- every input field should NOT have `onChange` and `onBlur` props (unless you need custom logic)
+- specify input field validation with a `data-validators` prop
 
 #### extra validators
 
@@ -71,6 +71,8 @@ Prop                          | Description               | Required
 ***value*** _[any]_ | The value of the field. If empty set an empty string | Yes
 ***name*** _[string]_ | The name of the field | Yes
 ***data-validators*** _[string, array[object]]_ | Validators to apply to the field. Multiple validator names can be specified with a comma-delimited string |  
+***onBlur*** _[func]_ | Todo... | 
+***onChange*** _[func]_ | Todo... |  
 
 ## Examples
 
