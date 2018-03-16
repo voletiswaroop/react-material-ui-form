@@ -17,7 +17,7 @@ The wrapper keeps all values and validations in its own state, allowing for func
 - only supports [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (including custom Material-UI fields)
 - every input field must have `value` and `name` props
 - every input field should NOT have `onChange` and `onBlur` props (unless you need custom logic)
-- specify input field validation with a `data-validators` prop
+- add a `data-validators` prop to an input field (or FormControl / FormControlLabel) to specify validation rules
 
 #### extra validators
 
