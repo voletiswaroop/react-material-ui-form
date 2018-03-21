@@ -489,6 +489,41 @@ class MyForm extends React.Component {
 }
 ```
 
+#### Custom components with custom handlers:
+```jsx
+import Form from 'material-ui-form'
+ 
+
+class MyForm extends React.Component {
+  uploadFile = (event) => {
+    console.log(event.target.files)
+  }
+
+  render() {
+    return (
+      <div>
+        <Form>
+          {'Upload file: '}
+          <input
+            accept="image/*"
+            style={{ display: 'none' }}
+            id="raised-button-file"
+            multiple
+            type="file"
+            onChange={this.uploadFile}
+          />
+          <label htmlFor="raised-button-file">
+            <Button variant="raised" component="span">
+              Upload
+            </Button>
+          </label>
+        </Form>
+      </div>
+    )
+  }
+}
+```
+
 ## Contributing
 
 This is a new project and contributions are welcome so feel free to [open an issue](https://github.com/unitedhubs/material-ui-form/issues) or fork and create a pull request. Collaborators are also welcome - please send an email to info@unitedhubs.com.

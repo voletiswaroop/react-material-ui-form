@@ -42,6 +42,10 @@ export default class NestedFields extends React.Component {
     onSubmitValues: null,
   }
 
+  uploadFile = (event) => {
+    console.log(event.target.files) // eslint-disable-line
+  }
+
   submit = (values, pristineValues) => {
     // eslint-disable-next-line no-console
     console.log('submit values:', values, 'pristine values:', pristineValues)
@@ -67,6 +71,21 @@ export default class NestedFields extends React.Component {
               data-validators="isRequired,isAlpha"
               fullWidth
             />
+
+            {'Upload file:'}
+            <input
+              accept="image/*"
+              style={{ display: 'none' }}
+              id="raised-button-file"
+              multiple
+              type="file"
+              onChange={this.uploadFile}
+            />
+            <label htmlFor="raised-button-file">
+              <Button variant="raised" component="span">
+                Upload
+              </Button>
+            </label>
 
             <fieldset>
               <legend>FormControl Select</legend>

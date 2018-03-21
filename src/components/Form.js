@@ -300,9 +300,11 @@ export default class Form extends React.Component {
 
   cloneChildrenRecursively(children) {
     return React.Children.map(children, (child) => {
-      // skip blanks
       if (_.isEmpty(child)) {
         return null
+      }
+      if (_.isString(child)) {
+        return child
       }
 
       const isInteractiveElement = checkElementInteractivity(child)
