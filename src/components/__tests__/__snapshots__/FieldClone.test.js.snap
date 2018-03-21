@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FieldClone>:<TextField> should render 1`] = `
+<TextField
+  data-validators="isRequired,isAlpha"
+  error={false}
+  label="Name"
+  name="name"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={false}
+  select={false}
+  type="text"
+/>
+`;

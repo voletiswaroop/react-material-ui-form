@@ -1,0 +1,89 @@
+{
+  "root": true,
+  "extends": [
+    "airbnb",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "amd": true,
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "codeFrame": true,
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": [
+    "react",
+    "jsx-a11y",
+    "import",
+    "filenames"
+  ],
+  "rules": {
+    "class-methods-use-this": 0,
+    "comma-dangle": [2, "always-multiline"],
+    "constructor-super": 1,
+    "eol-last": [2, "always"],
+    "filenames/match-exported": [2, [null]],
+    "function-paren-newline": [2, "consistent"],
+    "import/default": 2,
+    "import/export": 2,
+    "import/extensions": 0,
+    "import/named": 2,
+    "import/namespace": 2,
+    "import/no-unresolved": 1,
+    "import/prefer-default-export": 0,
+    "import/unambiguous": 0,
+    "indent": [2, 2],
+    "jsx-a11y/anchor-is-valid": 0,
+    "linebreak-style": [2, "unix"],
+    "max-len": [1, {
+      "code": 85,
+      "ignoreComments": true,
+      "tabWidth": 2,
+      "ignoreRegExpLiterals": true
+    }],
+    "no-await-in-loop": 1,
+    "no-const-assign": 1,
+    "no-continue": 1,
+    "no-multi-str": 0,
+    "no-param-reassign": 0,
+    "no-plusplus": [0, { "allowForLoopAfterthoughts": true }],
+    "no-restricted-syntax": [2, "BinaryExpression[operator='of']"],
+    "no-this-before-super": 1,
+    "no-undef": 1,
+    "no-underscore-dangle": 0,
+    "no-unreachable": 1,
+    "no-unused-expressions": 1,
+    "no-unused-vars": [1, { "argsIgnorePattern": "^_" }],
+    "object-curly-newline": [2, { "minProperties": 5, "consistent": true }],
+    "prefer-template": 0,
+    "quotes": [2, "single"],
+    "react/forbid-prop-types": [2, { "forbid": ["any"] }],
+    "react/forbid-prop-types": [2, { "forbid": ["any"]}],
+    "react/jsx-filename-extension": 0,
+    "react/jsx-indent": [2, 2],
+    "react/jsx-indent-props": [2, 2],
+    "react/jsx-no-bind": 0,
+    "react/jsx-wrap-multilines": 1,
+    "react/no-multi-comp": 0,
+    "react/prefer-stateless-function": 1,
+    "semi": 0,
+    "space-in-parens": 0
+  },
+  "globals": {
+    "_": true,
+    "describe": true,
+    "expect": true,
+    "it": true,
+    "jest": true
+  }
+}

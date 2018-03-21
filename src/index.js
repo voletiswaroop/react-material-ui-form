@@ -1,2 +1,2 @@
-export default from './components/Form' // eslint-disable-line filenames/match-exported
+export default from './components/Form'
 export * from './validation'

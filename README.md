@@ -1,34 +1,34 @@
-[![npm package](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
+[![npm](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
 [![Build Status](https://travis-ci.org/unitedhubs/material-ui-form.svg?branch=dev)](https://travis-ci.org/unitedhubs/material-ui-form)
-[![PeerDependencies](https://img.shields.io/david/peer/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form?type=peer)
-[![Dependencies](https://img.shields.io/david/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form)
-[![DevDependencies](https://img.shields.io/david/dev/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form?type=dev)
+[![Coverage Status](https://coveralls.io/repos/github/unitedhubs/material-ui-form/badge.svg)](https://coveralls.io/github/unitedhubs/material-ui-form)
+[![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
 
 ## About
 
-_material-ui-form_ is a minimal wrapper for your form so you can get state and validation management "as-is" without having to configure anything or make changes to any of your form components or nesting structure.
+_material-ui-form_ is a React form component for Material-UI form fields. Use it instead of `<form>` to get state and validation management "as-is" - there's no need to use different components or alter your current form's nesting structure.
 
-It also supports validation out-of-the-box (using [validator.js](https://github.com/chriso/validator.js)) and allows you to extend its validation messages, validators, and use your own validation logic if you need to.
+Validation is supported out-of-the-box (using [validator.js](https://github.com/chriso/validator.js)) and you can customize validation messages, validators, and use your own validation logic if you need to.
 
-The wrapper keeps all values and validations in its own state, allowing for functionality like steppers (multi-page forms) and conditional form fields.
+Cases such as steppers (multi-page forms) and conditional form fields are also supported without extra configuration. 
 
-#### use
+#### use and requirements
 
+- requires React 16.2.0 or later
 - only supports [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (including custom Material-UI fields)
 - every input field must have `value` and `name` props
-- every input field should NOT have `onChange` and `onBlur` props (unless you need custom logic)
-- add a `data-validators` prop to an input field (or FormControl / FormControlLabel) to specify validation rules
+- every input field should NOT have `onChange` and `onBlur` props (unless you need custom field-specific logic)
+- add a `data-validators` prop to any input field (or FormControl / FormControlLabel) to specify validation rules
 
 #### extra validators
 
 _validator.js_ validators are extended with these handy bad-boys:
 
-- isAlias: _/^[a-zA-Z0-9-_\.]*$/i_
+- isAlias `/^[a-zA-Z0-9-_\.]*$/i`
 - isDate
-- isNumber: _/^([,.\d]+)$/_
-- isRequired: _value.length !== 0_
-- isSerial: _/^([-\s\da-zA-Z]+)$/_
-- isSize: _value >= min && value <= max_
+- isNumber `/^([,.\d]+)$/`
+- isRequired `value.length !== 0`
+- isSerial `/^([-\s\da-zA-Z]+)$/`
+- isSize `value >= min && value <= max`
 - isTime
 
 #### _NOTE!_
@@ -53,16 +53,17 @@ npm install --save material-ui-form
 
 Prop                          | Description               | Default
 ------------------------------| --------------------------|------------
-***autoComplete*** _[string]_ | sets form _autoComplete_ prop | "off"
-***disableSubmitButtonOnError*** _[bool]_ | disables submit button if any errors exist | true 
-***onSubmit*** _[func]_       | returns _@values_ and _@pristineValues_ on form submission|
-***onValuesChange*** _[func]_ | returns _@values_ and _@pristineValues_ on field value change|
-***validation*** _[object]_   | object specifing validation config options (listed below) |
-***validation.messageMap*** _[object]_ | a key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ parameter |
-***validation.messageKeyPrefix*** _[string]_ | optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
-***validation.requiredValidatorName*** _[bool, string]_ | specifies the required validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
-***validation.validate*** _[func]_ | overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | 
-***validation.validators*** _[object]_ | Defaults to the extended validator.js object. Is exposed as a _material-ui-form_ parameter |  
+***autoComplete*** _[string]_ | Sets form _autoComplete_ prop. Accepts one of ["on", "off"] | "off"
+***disableSubmitButtonOnError*** _[bool]_ | Disables submit button if any errors exist | true 
+***onSubmit*** _[func]_       | Returns _@values_ and _@pristineValues_ on form submission|
+***onValuesChange*** _[func]_ | Returns _@values_ and _@pristineValues_ on field value change|
+***validation*** _[object]_   | Object specifing validation config options (prefixed below with ↳) |
+↳ ***messageMap*** _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ parameter | _object_
+↳ ***messageKeyPrefix*** _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
+↳ ***requiredValidatorName*** _[bool, string]_ | Specifies the required validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
+↳ ***validate*** _[func]_ | Overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | _func_
+↳ ***validators*** _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ parameter | _object_
+***validations*** _[object]_ | Validations to pass to the form (i.e. from the server). Should be an object with keys representing field _name_ props and values as arrays of field error messages. The first error message will be displayed per field | 
 
 #### Field props:
 

@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormControlClone>:<RadioGroup> should render 1`] = `
+<WithStyles(FormControl)
+  component="fieldset"
+  required={true}
+>
+  <WithStyles(FormLabel)
+    component="legend"
+    key=".0"
+  >
+    RadioGroup FormControl
+  </WithStyles(FormLabel)>
+  <RadioGroup
+    key=".1"
+    name="certainty"
+    onChange={[Function]}
+    value=""
+  >
+    <WithStyles(FormControlLabel)
+      control={<WithStyles(Radio) />}
+      label="I swear"
+      value="high"
+    />
+    <WithStyles(FormControlLabel)
+      control={<WithStyles(Radio) />}
+      label="Probably"
+      value="soso"
+    />
+    <WithStyles(FormControlLabel)
+      control={<WithStyles(Radio) />}
+      label="Maybe"
+      value="low"
+    />
+  </RadioGroup>
+</WithStyles(FormControl)>
+`;
+
+exports[`<FormControlClone>:<Select> should render 1`] = `
+<WithStyles(FormControl)
+  required={true}
+>
+  <WithStyles(InputLabel)
+    htmlFor="age-helper"
+    key=".0"
+  >
+    Age
+  </WithStyles(InputLabel)>
+  <WithStyles(Select)
+    key=".1"
+    name="age"
+    onChange={[Function]}
+    value=""
+  >
+    <WithStyles(MenuItem)
+      value=""
+    >
+      <em>
+        Please select your age ...
+      </em>
+    </WithStyles(MenuItem)>
+    <WithStyles(MenuItem)
+      value={10}
+    >
+      Teens
+    </WithStyles(MenuItem)>
+    <WithStyles(MenuItem)
+      value={20}
+    >
+      Twenties
+    </WithStyles(MenuItem)>
+    <WithStyles(MenuItem)
+      value={30}
+    >
+      Thirties
+    </WithStyles(MenuItem)>
+    <WithStyles(MenuItem)
+      value="40+"
+    >
+      Fourties +
+    </WithStyles(MenuItem)>
+  </WithStyles(Select)>
+  <WithStyles(FormHelperText)
+    key=".2"
+  >
+    Some important helper text
+  </WithStyles(FormHelperText)>
+</WithStyles(FormControl)>
+`;

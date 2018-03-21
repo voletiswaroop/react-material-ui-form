@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Form> should render 1`] = `
+<form
+  autoComplete="on"
+  onReset={[Function]}
+  onSubmit={[Function]}
+>
+  <FieldClone
+    field={Object {}}
+    key="name/.0"
+    onConstruct={[Function]}
+    onToggle={[Function]}
+    onValueChange={[Function]}
+    useNativeRequiredValidator={true}
+  >
+    <TextField
+      data-validators="isRequired,isBorat"
+      label="Name"
+      name="name"
+      required={false}
+      select={false}
+      type="text"
+      value="123"
+    />
+  </FieldClone>
+  <div
+    key=".1"
+  >
+    <FormControlLabelClone
+      control={
+        <WithStyles(Checkbox)
+          checked={false}
+          name="love"
+          value="yes"
+        />
+      }
+      field={Object {}}
+      key="love/.0"
+      label="I love love"
+      onConstruct={[Function]}
+      onToggle={[Function]}
+    />
+    <React.Fragment
+      key=".1"
+    />
+  </div>
+  <FormControlClone
+    field={Object {}}
+    formControlElement={
+      <WithStyles(FormControl)
+        required={true}
+      >
+        <WithStyles(InputLabel)>
+          Age
+        </WithStyles(InputLabel)>
+        <WithStyles(Select)
+          name="age"
+          value=""
+        >
+          <WithStyles(MenuItem)
+            value=""
+          >
+            <em>
+              Please select your age ...
+            </em>
+          </WithStyles(MenuItem)>
+          <WithStyles(MenuItem)
+            value={10}
+          >
+            Teens
+          </WithStyles(MenuItem)>
+          <WithStyles(MenuItem)
+            value={20}
+          >
+            Twenties
+          </WithStyles(MenuItem)>
+          <WithStyles(MenuItem)
+            value={30}
+          >
+            Thirties
+          </WithStyles(MenuItem)>
+          <WithStyles(MenuItem)
+            value="40+"
+          >
+            Fourties +
+          </WithStyles(MenuItem)>
+        </WithStyles(Select)>
+      </WithStyles(FormControl)>
+    }
+    key="age/.2"
+    onConstruct={[Function]}
+    onValueChange={[Function]}
+  />
+  <WithStyles(Button)
+    disabled={false}
+    key=".3"
+    type="submit"
+    variant="raised"
+  >
+    Submit
+  </WithStyles(Button)>
+</form>
+`;

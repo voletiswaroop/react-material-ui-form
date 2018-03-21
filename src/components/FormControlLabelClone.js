@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
 
 import Checkbox from 'material-ui/Checkbox'
 import Switch from 'material-ui/Switch'
@@ -33,7 +34,7 @@ export default class FormControlLabelClone extends React.Component {
     if (props.field.value === undefined) {
       props.onConstruct(props.control.props)
     } else {
-      checked = props.field.checked // eslint-disable-line prefer-destructuring
+      checked = _.get(props.field, 'checked')
     }
 
     this.state = {
@@ -43,6 +44,7 @@ export default class FormControlLabelClone extends React.Component {
   }
 
   onToggle = (event, checked) => {
+    checked = _.get(event, 'target.checked') || checked
     let { value } = this.props.control.props // eslint-disable-line react/prop-types
     const { name } = this.props.control.props // eslint-disable-line react/prop-types
     value = checked ? value : ''
@@ -52,16 +54,22 @@ export default class FormControlLabelClone extends React.Component {
 
   render() {
     const { control, label } = this.props
+    const onChange = (
+      control.props.onChange || control.props.onToggle || this.onToggle
+    )
     const controlOptions = {
       checked: this.state.checked,
-      onChange: control.props.onChange || control.props.onToggle || this.onToggle,
+      onChange,
       value: this.state.value,
     }
 
     return (
       <FormControlLabel
+        checked={this.state.checked}
         control={React.cloneElement(control, controlOptions)}
+        onChange={onChange}
         label={label}
+        value={this.state.value}
       />
     )
   }

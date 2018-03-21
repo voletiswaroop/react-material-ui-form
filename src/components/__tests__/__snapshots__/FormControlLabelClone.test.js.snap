@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FormControlLabelClone>:<Checkbox> should render 1`] = `
+<WithStyles(FormControlLabel)
+  checked={false}
+  control={
+    <WithStyles(Checkbox)
+      checked={false}
+      name="love"
+      onChange={[Function]}
+      value="yes"
+    />
+  }
+  label="I love love"
+  onChange={[Function]}
+  value="yes"
+/>
+`;

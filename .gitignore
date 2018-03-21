@@ -1,11 +1,9 @@
-# FILES
 *.log
 *.sublime-project
 *.sublime-workspace
 *~
 .DS_Store
 .vscode
-
-# DIRS
+coverage
 logs
 node_modules

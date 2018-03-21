@@ -1,5 +1,8 @@
-.eslintrc
+.babelrc
+.travis.yml
+__tests__
+eslintrc.json
 examples
+setupTests.js
 src
-tests
 webpack.config.js

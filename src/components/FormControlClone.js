@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
 
 import { FormControl, FormHelperText, FormLabel } from 'material-ui/Form'
 import { InputLabel } from 'material-ui/Input'

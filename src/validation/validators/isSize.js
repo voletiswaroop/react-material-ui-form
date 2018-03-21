@@ -1,11 +1,14 @@
-export default function isSize(value, ...rest) {
+import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+
+
+export default function isSize(value, rest) {
   let min
   let max
-  if (typeof (rest) === 'object') {
+  if (_.isArray(rest)) {
+    [min, max] = rest
+  } else {
     min = rest.min || 0
     max = rest.max // eslint-disable-line
-  } else {
-    [min, max] = rest
   }
   return value >= min && (max === undefined || value <= max)
 }
