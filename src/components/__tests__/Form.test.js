@@ -26,7 +26,7 @@ describe('<Form>', () => {
     requiredValidatorName: false,
     validators,
   }
-  const validations = [{ code: 'isAlpha', message: 'invalid' }]
+  const validations = { name: [{ code: 'isAlpha', message: 'invalid' }] }
 
   const wrapper = shallow(
     <Form

@@ -1,6 +1,7 @@
 .babelrc
 .travis.yml
 __tests__
+__snapshots__
 eslintrc.json
 examples
 setupTests.js
