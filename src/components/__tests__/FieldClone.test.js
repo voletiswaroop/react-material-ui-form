@@ -16,39 +16,32 @@ describe('<FieldClone>:<TextField>', () => {
     validators: [],
     value: undefined,
   }
-  const onFieldConstruct = jest.fn()
-  const onFieldToggle = jest.fn()
-  const onFieldValueChange = jest.fn()
 
   const wrapper = shallow(
     <FieldClone
       field={field}
-      onConstruct={onFieldConstruct}
-      onToggle={onFieldToggle}
-      onValueChange={onFieldValueChange}
+      fieldComp={(
+        <TextField
+          label="Name"
+          type="text"
+          name="name"
+          value="mufasa"
+          data-validators="isRequired,isAlpha"
+        />
+      )}
+      onConstruct={jest.fn()}
+      onValueChange={jest.fn()}
       useNativeRequiredValidator={false}
-    >
-      <TextField
-        label="Name"
-        type="text"
-        name="name"
-        value="mufasa"
-        data-validators="isRequired,isAlpha"
-      />
-    </FieldClone>
+    />
   )
 
   it('should render', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
-  it('should have a single child', () => {
-    expect(wrapper.find(TextField)).toHaveLength(1)
-  })
-
   it('should not throw if field type prop is undefined', () => {
     function checkTypeName() {
-      if (wrapper.instance().props.children.type.name === undefined) {
+      if (wrapper.instance().props.fieldComp.type.name === undefined) {
         throw new Error('FieldClone does not support native elements')
       }
     }
@@ -57,7 +50,7 @@ describe('<FieldClone>:<TextField>', () => {
 
   it('should not throw if field component name and value are defined', () => {
     function testNameAndValueProps() {
-      const { name, value } = wrapper.instance().props.children.props
+      const { name, value } = wrapper.instance().props.fieldComp.props
       if (name === undefined || value === undefined) {
         throw new Error('FieldClone name and value must be defined')
       }
@@ -67,7 +60,6 @@ describe('<FieldClone>:<TextField>', () => {
 
   it('should set state', () => {
     expect(wrapper.state()).toMatchObject({
-      checked: null,
       helperText: undefined,
       isError: false,
       value: undefined,
@@ -83,7 +75,6 @@ describe('<FieldClone>:<TextField>', () => {
   })
 
   it('should have a rendered label', () => {
-    expect(wrapper.state('checked')).toBeNull()
     expect(wrapper.prop('label')).toBeDefined()
   })
 
@@ -113,3 +104,94 @@ describe('<FieldClone>:<TextField>', () => {
     expect(wrapper.state('value')).toEqual(value)
   })
 })
+
+describe('<FieldClone>:<Select>', () => {
+  const field = {
+    isPristine: true,
+    isRequired: null,
+    pristineValue: null,
+    validations: [{ code: 'error', message: 'invalid' }],
+    validators: [],
+    value: undefined,
+  }
+
+  const wrapper = shallow(
+    <FieldClone
+      field={field}
+      fieldComp={(
+        <TextField
+          select
+          label="Color"
+          name="color"
+          value=""
+          SelectProps={{ native: true }}
+        >
+          <option value="red">Red</option>
+          <option value="blue">Blue</option>
+        </TextField>
+      )}
+      onConstruct={jest.fn()}
+      onValueChange={jest.fn()}
+      useNativeRequiredValidator
+    />
+  )
+
+  it('should render', () => {
+    expect(toJson(wrapper)).toMatchSnapshot()
+  })
+
+  it('should handle onChange events', () => {
+    const value = 'blue'
+    const event = { target: { value } }
+    const { onValueChange } = wrapper.instance().props
+    wrapper.find(TextField).simulate('change', event)
+    expect(wrapper.state()).toMatchObject({
+      helperText: undefined,
+      isError: false,
+      value,
+    })
+    expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value)
+  })
+})
+
+// describe('<FieldClone> Invalid fieldComp type and props', () => {
+//   const field = {
+//     isPristine: true,
+//     isRequired: null,
+//     pristineValue: null,
+//     validations: [{ code: 'error', message: 'invalid' }],
+//     validators: [],
+//     value: undefined,
+//   }
+
+//   const wrapper = shallow(
+//     <FieldClone
+//       field={field}
+//       fieldComp={(
+//         <div>invalid</div>
+//       )}
+//       onConstruct={jest.fn()}
+//       onValueChange={jest.fn()}
+//       useNativeRequiredValidator
+//     />
+//   )
+
+//   it('should throw if field type prop is undefined', () => {
+//     function checkTypeName() {
+//       if (wrapper.instance().props.fieldComp.type.name === undefined) {
+//         throw new Error('FieldClone does not support native elements')
+//       }
+//     }
+//     expect(checkTypeName).toThrow()
+//   })
+
+//   it('should throw if field component name and value are undefined', () => {
+//     function testNameAndValueProps() {
+//       const { name, value } = wrapper.instance().props.fieldComp.props
+//       if (name === undefined || value === undefined) {
+//         throw new Error('FieldClone name and value must be defined')
+//       }
+//     }
+//     expect(testNameAndValueProps).toThrow()
+//   })
+// })

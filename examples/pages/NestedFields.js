@@ -63,6 +63,7 @@ export default class NestedFields extends React.Component {
       >
         <Grid item xs className={classes.gridItem}>
           <Form onSubmit={this.submit}>
+            {'Please fill in the required fields (*)'}
             <TextField
               label="Name"
               type="text"
@@ -72,20 +73,23 @@ export default class NestedFields extends React.Component {
               fullWidth
             />
 
-            {'Upload file:'}
-            <input
-              accept="image/*"
-              style={{ display: 'none' }}
-              id="raised-button-file"
-              multiple
-              type="file"
-              onChange={this.uploadFile}
-            />
-            <label htmlFor="raised-button-file">
-              <Button variant="raised" component="span">
-                Upload
-              </Button>
-            </label>
+            <fieldset>
+              <legend>Custom controlled component</legend>
+              {'Upload file:'}
+              <input
+                accept="image/*"
+                style={{ display: 'none' }}
+                id="raised-button-file"
+                multiple
+                type="file"
+                onChange={this.uploadFile}
+              />
+              <label htmlFor="raised-button-file">
+                <Button variant="raised" component="span">
+                  Upload
+                </Button>
+              </label>
+            </fieldset>
 
             <fieldset>
               <legend>FormControl Select</legend>

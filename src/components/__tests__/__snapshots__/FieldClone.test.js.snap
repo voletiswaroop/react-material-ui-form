@@ -1,5 +1,34 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`<FieldClone>:<Select> should render 1`] = `
+<TextField
+  SelectProps={
+    Object {
+      "native": true,
+    }
+  }
+  error={true}
+  helperText="invalid"
+  label="Color"
+  name="color"
+  onBlur={[Function]}
+  onChange={[Function]}
+  required={false}
+  select={true}
+>
+  <option
+    value="red"
+  >
+    Red
+  </option>
+  <option
+    value="blue"
+  >
+    Blue
+  </option>
+</TextField>
+`;
+
 exports[`<FieldClone>:<TextField> should render 1`] = `
 <TextField
   data-validators="isRequired,isAlpha"

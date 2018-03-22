@@ -9,10 +9,13 @@ import {
   FormLabel,
 } from 'material-ui/Form'
 import { InputLabel } from 'material-ui/Input'
+import Checkbox from 'material-ui/Checkbox'
+import Switch from 'material-ui/Switch'
 
 import FormControlClone from './FormControlClone'
 import FormControlLabelClone from './FormControlLabelClone'
 import FieldClone from './FieldClone'
+import CheckableFieldClone from './CheckableFieldClone'
 import {
   messageMap,
   validate,
@@ -309,7 +312,7 @@ export default class Form extends React.Component {
 
       const isInteractiveElement = checkElementInteractivity(child)
       const nestedChildren = _.isArray(child.props.children) && !isInteractiveElement
-        ? _.filter(child.props.children, _.isObject)
+        ? _.filter(child.props.children, v => (_.isObject(v) || _.isString(v)))
         : false
 
       // nested elements
@@ -365,17 +368,29 @@ export default class Form extends React.Component {
       }
       // clone input element
       const { name } = child.props
+
+      // checkable
+      if (child.type === Checkbox || child.type === Switch) {
+        return (
+          <CheckableFieldClone
+            key={name}
+            field={this.state.fields[name]}
+            fieldComp={child}
+            onConstruct={this.onFieldConstruct}
+            onToggle={this.onFieldToggle}
+          />
+        )
+      }
+
       return (
         <FieldClone
           key={name}
           field={this.state.fields[name]}
+          fieldComp={child}
           onConstruct={this.onFieldConstruct}
-          onToggle={this.onFieldToggle}
           onValueChange={this.onFieldValueChange}
           useNativeRequiredValidator={!this.validation.requiredValidatorName}
-        >
-          {child}
-        </FieldClone>
+        />
       )
     })
   }

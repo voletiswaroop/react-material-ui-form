@@ -2,13 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
 
-import Checkbox from 'material-ui/Checkbox'
-import Switch from 'material-ui/Switch'
-
-
-function getElementFromProps(props) {
-  return React.Children.only(props.children)
-}
 
 function getRequiredProp(required, useNativeRequiredValidator) {
   if (!useNativeRequiredValidator) {
@@ -17,31 +10,18 @@ function getRequiredProp(required, useNativeRequiredValidator) {
   return required
 }
 
-function makeIsCheckableAndChecked(el) {
-  let checked = null
-  const isCheckable = el.type === Checkbox || el.type === Switch
-  if (isCheckable) {
-    checked = el.props.checked || false
-  }
-  return { isCheckable, checked }
-}
-
-function makeLabel(el, props) {
-  const label = el.props.label || ''
+function makeLabel(fieldComp, props) {
+  const label = fieldComp.props.label || ''
   return props.field.isRequired && !props.useNativeRequiredValidator
     ? `${label} *`
     : label
 }
 
-function makeErrorAndHelperText(props, isCheckable) {
-  const el = getElementFromProps(props)
-  let helperText = _.get(el.props, 'helperText')
+function makeErrorAndHelperText(props) {
+  let helperText = _.get(props.fieldComp.props, 'helperText')
   let isError = false
 
-  if (!isCheckable
-    && !_.isEmpty(props.field)
-    && props.field.validations.length > 0
-  ) {
+  if (!_.isEmpty(props.field) && props.field.validations.length > 0) {
     helperText = props.field.validations[0].message
     isError = true
   }
@@ -50,13 +30,8 @@ function makeErrorAndHelperText(props, isCheckable) {
 
 export default class FieldClone extends React.Component {
   static propTypes = {
-    /* eslint-disable-next-line */
-    children: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.object,
-    ]).isRequired,
     field: PropTypes.object,
-    onToggle: PropTypes.func.isRequired,
+    fieldComp: PropTypes.object.isRequired,
     onValueChange: PropTypes.func.isRequired,
     onConstruct: PropTypes.func.isRequired,
     useNativeRequiredValidator: PropTypes.bool.isRequired,
@@ -68,28 +43,26 @@ export default class FieldClone extends React.Component {
 
   constructor(props) {
     super(props)
-    const el = getElementFromProps(props)
+    const { fieldComp } = props
 
-    if (el.type.name === undefined) {
+    if (fieldComp.type.name === undefined) {
       throw new Error('FieldClone does not support native elements')
     }
-    if (el.props.name === undefined || el.props.value === undefined) {
+    if (fieldComp.props.name === undefined || fieldComp.props.value === undefined) {
       throw new Error('FieldClone name and value must be defined')
     }
 
-    const value = _.isEmpty(props.field) ? el.props.value : props.field.value
-    const { isCheckable, checked } = makeIsCheckableAndChecked(el)
-    const { helperText, isError } = makeErrorAndHelperText(props, isCheckable)
+    const value = _.isEmpty(props.field) ? fieldComp.props.value : props.field.value
+    const { helperText, isError } = makeErrorAndHelperText(props)
 
     this.state = {
       helperText,
       isError,
       value,
-      checked,
     }
 
     if (props.field.value === undefined) {
-      this.props.onConstruct(el.props)
+      this.props.onConstruct(fieldComp.props)
     }
   }
 
@@ -105,57 +78,38 @@ export default class FieldClone extends React.Component {
   }
 
   onBlur = (event) => {
-    const el = getElementFromProps(this.props)
+    const { fieldComp } = this.props
     // // /* TODO: create function for condition */
-    if (!el.props.select) {
+    if (!fieldComp.props.select) {
       const { value } = event.target
-      this.props.onValueChange(el.props.name, value)
+      this.props.onValueChange(fieldComp.props.name, value)
     }
   }
 
   onChange = (event) => {
-    const el = getElementFromProps(this.props)
+    const { fieldComp } = this.props
     const { value } = event.target
-    const helperText = _.get(el.props, 'helperText')
+    const helperText = _.get(fieldComp.props, 'helperText')
     this.setState({ isError: false, helperText, value })
     /* TODO: create function for condition */
-    if (el.props.select) {
-      this.props.onValueChange(el.props.name, value)
+    if (fieldComp.props.select) {
+      this.props.onValueChange(fieldComp.props.name, value)
     }
-  }
-
-  onToggle = (event, checked) => {
-    const el = getElementFromProps(this.props)
-    const value = checked ? el.props.value : ''
-    this.setState({ checked, value })
-    this.props.onToggle(el.props.name, value, checked)
   }
 
   render() {
-    const el = getElementFromProps(this.props)
-    let options = {
+    const { fieldComp, ...props } = this.props
+    return React.cloneElement(fieldComp, {
       value: this.state.value,
-    }
-
-    if (this.state.checked === null) {
-      options = Object.assign(options, {
-        label: makeLabel(el, this.props),
-        error: this.state.isError,
-        helperText: this.state.helperText,
-        onBlur: el.props.onBlur || this.onBlur,
-        onChange: el.props.onChange || this.onChange,
-        required: getRequiredProp(
-          el.props.required,
-          this.props.useNativeRequiredValidator
-        ),
-      })
-    } else {
-      options = Object.assign(options, {
-        checked: this.state.checked,
-        onChange: el.props.onChange || el.props.onToggle || this.onToggle,
-      })
-    }
-
-    return React.cloneElement(el, options)
+      label: makeLabel(fieldComp, props),
+      error: this.state.isError,
+      helperText: this.state.helperText,
+      onBlur: fieldComp.props.onBlur || this.onBlur,
+      onChange: fieldComp.props.onChange || this.onChange,
+      required: getRequiredProp(
+        fieldComp.props.required,
+        this.props.useNativeRequiredValidator
+      ),
+    })
   }
 }

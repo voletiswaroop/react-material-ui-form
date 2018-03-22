@@ -8,22 +8,22 @@ exports[`<Form> should render 1`] = `
 >
   <FieldClone
     field={Object {}}
+    fieldComp={
+      <TextField
+        data-validators="isRequired,isBorat"
+        label="Name"
+        name="name"
+        required={false}
+        select={false}
+        type="text"
+        value="123"
+      />
+    }
     key="name/.0"
     onConstruct={[Function]}
-    onToggle={[Function]}
     onValueChange={[Function]}
     useNativeRequiredValidator={true}
-  >
-    <TextField
-      data-validators="isRequired,isBorat"
-      label="Name"
-      name="name"
-      required={false}
-      select={false}
-      type="text"
-      value="123"
-    />
-  </FieldClone>
+  />
   <div
     key=".1"
   >

@@ -5,7 +5,7 @@
 
 ## About
 
-_material-ui-form_ is a React form component for Material-UI form fields. Use it instead of `<form>` to get state and validation management "as-is" - there's no need to use different components or alter your current form's nesting structure.
+_material-ui-form_ is a React wrapper for Material-UI form components. Use it instead of `<form>` to get state and validation support "as-is" - there's no need to use special input components, alter your current form's nesting structure, or write onChange handlers.
 
 Validation is supported out-of-the-box (using [validator.js](https://github.com/chriso/validator.js)) and you can customize validation messages, validators, and use your own validation logic if you need to.
 
