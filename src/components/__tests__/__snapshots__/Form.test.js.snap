@@ -6,6 +6,7 @@ exports[`<Form> should render 1`] = `
   onReset={[Function]}
   onSubmit={[Function]}
 >
+  fill out the form!
   <FieldClone
     field={Object {}}
     fieldComp={
@@ -19,14 +20,32 @@ exports[`<Form> should render 1`] = `
         value="123"
       />
     }
-    key="name/.0"
+    key="name/.1"
     onConstruct={[Function]}
     onValueChange={[Function]}
     useNativeRequiredValidator={true}
   />
   <div
-    key=".1"
+    key=".2"
   >
+    <CheckableFieldClone
+      field={Object {}}
+      fieldComp={
+        <WithStyles(Checkbox)
+          checked={false}
+          name="foo"
+          value="bar"
+        />
+      }
+      key="foo/.0"
+      onConstruct={[Function]}
+      onToggle={[Function]}
+    />
+    <span
+      key=".1"
+    >
+      FooBar
+    </span>
     <FormControlLabelClone
       control={
         <WithStyles(Checkbox)
@@ -36,13 +55,13 @@ exports[`<Form> should render 1`] = `
         />
       }
       field={Object {}}
-      key="love/.0"
+      key="love/.2"
       label="I love love"
       onConstruct={[Function]}
       onToggle={[Function]}
     />
     <React.Fragment
-      key=".1"
+      key=".3"
     />
   </div>
   <FormControlClone
@@ -88,13 +107,13 @@ exports[`<Form> should render 1`] = `
         </WithStyles(Select)>
       </WithStyles(FormControl)>
     }
-    key="age/.2"
+    key="age/.3"
     onConstruct={[Function]}
     onValueChange={[Function]}
   />
   <WithStyles(Button)
     disabled={false}
-    key=".3"
+    key=".4"
     type="submit"
     variant="raised"
   >

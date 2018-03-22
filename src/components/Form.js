@@ -41,14 +41,18 @@ function isValidForm(fields) {
 
 function getFieldValues(fields) {
   const values = {}
-  _.each(fields, (field, name) => { values[name] = field.value })
+  _.each(fields, (field, name) => {
+    if (_.get(field, 'checked') !== false) {
+      values[name] = field.value
+    }
+  })
   return values
 }
 
 function getPristineFieldValues(fields) {
   const values = {}
   _.each(fields, (field, name) => {
-    if (!field.isPristine) {
+    if (!field.isPristine && _.get(field, 'checked') !== false) {
       values[name] = field.pristineValue
     }
   })
@@ -127,7 +131,12 @@ export default class Form extends React.Component {
   componentWillReceiveProps(nextProps) {
     const { fields } = this.state
     _.each(nextProps.validations, (validations, name) => {
-      fields[name].validations = validations
+      if (_.has(fields, name)) {
+        fields[name].validations = validations
+      } else {
+        // eslint-disable-next-line no-console
+        console.warn(`validations field "${name}" does not exist`)
+      }
     })
     this.setState({ fields })
   }
@@ -225,12 +234,18 @@ export default class Form extends React.Component {
   }
 
   onFieldToggle = (name, value, checked) => {
-    if (_.isEmpty(value)) {
-      const fields = _.omit(this.state.fields, name)
-      this.setState({ fields })
-    } else {
-      this.onFieldConstruct({ name, value, checked }, true)
-    }
+    this.setState({
+      fields: {
+        ...this.state.fields,
+        [name]: {
+          ...this.state.fields[name],
+          checked,
+          isPristine: false,
+          validations: [],
+          value,
+        },
+      },
+    })
   }
 
   validateField = (name, value) => {
@@ -280,7 +295,6 @@ export default class Form extends React.Component {
         isValid = false
       }
     })
-
     if (isValid) {
       this.props.onSubmit(
         getFieldValues(fields),

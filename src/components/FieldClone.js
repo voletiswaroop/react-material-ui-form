@@ -79,10 +79,16 @@ export default class FieldClone extends React.Component {
 
   onBlur = (event) => {
     const { fieldComp } = this.props
+    const { value } = event.target
     // // /* TODO: create function for condition */
     if (!fieldComp.props.select) {
-      const { value } = event.target
       this.props.onValueChange(fieldComp.props.name, value)
+    }
+    if (fieldComp.props.onBlur !== undefined) {
+      fieldComp.props.onBlur(value, {
+        event,
+        name: fieldComp.props.name,
+      })
     }
   }
 
@@ -95,6 +101,12 @@ export default class FieldClone extends React.Component {
     if (fieldComp.props.select) {
       this.props.onValueChange(fieldComp.props.name, value)
     }
+    if (fieldComp.props.onChange !== undefined) {
+      fieldComp.props.onChange(value, {
+        event,
+        name: fieldComp.props.name,
+      })
+    }
   }
 
   render() {
@@ -104,8 +116,8 @@ export default class FieldClone extends React.Component {
       label: makeLabel(fieldComp, props),
       error: this.state.isError,
       helperText: this.state.helperText,
-      onBlur: fieldComp.props.onBlur || this.onBlur,
-      onChange: fieldComp.props.onChange || this.onChange,
+      onBlur: this.onBlur,
+      onChange: this.onChange,
       required: getRequiredProp(
         fieldComp.props.required,
         this.props.useNativeRequiredValidator

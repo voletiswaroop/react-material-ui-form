@@ -37,6 +37,7 @@ describe('<Form>', () => {
       validation={validation}
       validations={validations}
     >
+      {'fill out the form!'}
       <TextField
         label="Name"
         type="text"
@@ -45,6 +46,8 @@ describe('<Form>', () => {
         data-validators="isRequired,isBorat"
       />
       <div>
+        <Checkbox checked={false} name="foo" value="bar" />
+        <span>FooBar</span>
         <FormControlLabel
           control={<Checkbox checked={false} name="love" value="yes" />}
           label="I love love"
@@ -81,7 +84,7 @@ describe('<Form>', () => {
   })
 
   it('should have 2 children', () => {
-    expect(wrapper.children()).toHaveLength(4)
+    expect(wrapper.children()).toHaveLength(5)
   })
 
   // it('should have a cloned TextField', () => {

@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<CheckableFieldClone>:<Checkbox> should render 1`] = `
+<WithStyles(Checkbox)
+  checked={true}
+  name="foo"
+  onChange={[Function]}
+  value="bar"
+/>
+`;

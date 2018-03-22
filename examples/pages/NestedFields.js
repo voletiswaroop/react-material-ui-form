@@ -52,6 +52,11 @@ export default class NestedFields extends React.Component {
     this.setState({ onSubmitValues: values })
   }
 
+  customHandler = (value, field) => {
+    // eslint-disable-next-line no-console
+    console.log(value, field)
+  }
+
   render() {
     const { classes } = this.props
 
@@ -62,7 +67,7 @@ export default class NestedFields extends React.Component {
         wrap="nowrap"
       >
         <Grid item xs className={classes.gridItem}>
-          <Form onSubmit={this.submit}>
+          <Form onSubmit={this.submit} validations={{ tste: [{ code: 'dfd', message: 'dfd' }] }}>
             {'Please fill in the required fields (*)'}
             <TextField
               label="Name"
@@ -70,6 +75,7 @@ export default class NestedFields extends React.Component {
               name="name"
               value=""
               data-validators="isRequired,isAlpha"
+              onChange={this.customHandler}
               fullWidth
             />
 

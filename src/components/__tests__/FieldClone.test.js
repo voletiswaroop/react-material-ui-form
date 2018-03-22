@@ -22,11 +22,13 @@ describe('<FieldClone>:<TextField>', () => {
       field={field}
       fieldComp={(
         <TextField
+          data-validators="isRequired,isAlpha"
           label="Name"
           type="text"
           name="name"
+          onBlur={jest.fn()}
+          onChange={jest.fn()}
           value="mufasa"
-          data-validators="isRequired,isAlpha"
         />
       )}
       onConstruct={jest.fn()}

@@ -32,37 +32,33 @@ export default class CheckableFieldClone extends React.Component {
       throw new Error('CheckableFieldClone name and value must be defined')
     }
 
-    const value = _.isEmpty(props.field) ? fieldComp.props.value : props.field.value
-
-    this.state = {
-      value,
-      checked: fieldComp.props.checked || false,
-    }
-
+    let checked = props.field.value
     if (props.field.value === undefined) {
+      checked = fieldComp.props.checked || false
       this.props.onConstruct(fieldComp.props)
     }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (!_.isEmpty(nextProps.field)) {
-      this.setState({ value: nextProps.field.value })
-    }
+    this.state = { checked }
   }
 
   onToggle = (event, checked) => {
-    const { fieldComp } = this.props
-    const value = checked ? fieldComp.props.value : ''
-    this.setState({ checked, value })
-    this.props.onToggle(fieldComp.props.name, value, checked)
+    const { fieldComp, fieldComp: { props: { name, value } } } = this.props
+    this.setState({ checked })
+    this.props.onToggle(name, value, checked)
+    if (fieldComp.props.onChange !== undefined) {
+      fieldComp.props.onChange(checked, {
+        event,
+        name,
+        value,
+      })
+    }
   }
 
   render() {
     const { fieldComp } = this.props
     return React.cloneElement(fieldComp, {
-      value: this.state.value,
+      value: fieldComp.props.value,
       checked: this.state.checked,
-      onChange: fieldComp.props.onToggle || this.onToggle,
+      onChange: this.onToggle,
     })
   }
 }
