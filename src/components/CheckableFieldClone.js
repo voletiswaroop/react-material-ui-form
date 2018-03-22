@@ -45,11 +45,7 @@ export default class CheckableFieldClone extends React.Component {
     this.setState({ checked })
     this.props.onToggle(name, value, checked)
     if (fieldComp.props.onChange !== undefined) {
-      fieldComp.props.onChange(checked, {
-        event,
-        name,
-        value,
-      })
+      fieldComp.props.onChange(checked, { name, value }, event)
     }
   }
 

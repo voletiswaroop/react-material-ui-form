@@ -156,6 +156,8 @@ describe('<FieldClone>:<Select>', () => {
   })
 })
 
+/* see https://stackoverflow.com/questions/49420305/how-to-get-coverage-for-jest-tothrow-without-failing-test */
+
 // describe('<FieldClone> Invalid fieldComp type and props', () => {
 //   const field = {
 //     isPristine: true,

@@ -53,7 +53,7 @@ describe('<FormControlClone>:<Select>', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
   })
 
-  // TODO: how to simulate on children?
+  /* TODO: how to simulate on children? */
   // it('should handle onChange events of children', () => {
   //   const value = '10'
   //   const event = { target: { value } }

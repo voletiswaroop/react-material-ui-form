@@ -5,7 +5,7 @@
 
 ## About
 
-_material-ui-form_ is a React wrapper for Material-UI form components. Use it instead of `<form>` to get state and validation support "as-is" - there's no need to use special input components, alter your current form's nesting structure, or write onChange handlers.
+_material-ui-form_ is a React wrapper for Material-UI form components. Use it instead of `<form>` to get state and validation support "as-is" - no need to use any other components, alter your current form's nesting structure, or write onChange handlers.
 
 Validation is supported out-of-the-box (using [validator.js](https://github.com/chriso/validator.js)) and you can customize validation messages, validators, and use your own validation logic if you need to.
 
@@ -55,8 +55,8 @@ Prop                          | Description               | Default
 ------------------------------| --------------------------|------------
 ***autoComplete*** _[string]_ | Sets form _autoComplete_ prop. Accepts one of ["on", "off"] | "off"
 ***disableSubmitButtonOnError*** _[bool]_ | Disables submit button if any errors exist | true 
-***onSubmit*** _[func]_       | Returns _@values_ and _@pristineValues_ on form submission|
-***onValuesChange*** _[func]_ | Returns _@values_ and _@pristineValues_ on field value change|
+***onSubmit*** _[func]_       | Returns _@values_ and _@pristineValues_ on form submission |
+***onValuesChange*** _[func]_ | Returns _@values_ and _@pristineValues_ on field value change |
 ***validation*** _[object]_   | Object specifing validation config options (prefixed below with ↳) |
 ↳ ***messageMap*** _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ parameter | _object_
 ↳ ***messageKeyPrefix*** _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
@@ -72,8 +72,8 @@ Prop                          | Description               | Required
 ***value*** _[any]_ | The value of the field. If empty set an empty string | Yes
 ***name*** _[string]_ | The name of the field | Yes
 ***data-validators*** _[string, array[object]]_ | Validators to apply to the field. Multiple validator names can be specified with a comma-delimited string |  
-***onBlur*** _[func]_ | Todo... | 
-***onChange*** _[func]_ | Todo... |  
+***onBlur*** _[func]_ | A custom handler that will be called after the field's `onBlur` event. Provides _@value/checked_, _@field_ and _@event_ parameters | 
+***onChange*** _[func]_ | A custom handler that will be called after the field's `onChange` event. Provides _@value/checked_, _@field_ and _@event_ parameters |  
 
 ## Examples
 
@@ -87,6 +87,14 @@ class MyForm extends React.Component {
     // on form submission you get the values and pristineValues
   }
 
+  customInputHandler = (value, { name }, event) => {
+    // the form will update the field as usual, and then call this handler
+  }
+
+  customToggleHandler = (checked, { name, value }, event) => {
+    // the form will update the field as usual, and then call this handler
+  }
+
   render() {
     return (
       <Form onSubmit={this.submit}>
@@ -96,11 +104,17 @@ class MyForm extends React.Component {
           name="name"
           value=""
           data-validators="isRequired,isAlpha"
+          onChange={this.customInputHandler}
         />
 
         <fieldset>
           <legend>Nested</legend>
-          <Checkbox checked name="love" value="yes" />
+          <Checkbox
+            checked
+            name="love"
+            value="yes"
+            onChange={this.customToggleHandler}
+          />
           <span>I love it</span>
 
           <FormControl required>

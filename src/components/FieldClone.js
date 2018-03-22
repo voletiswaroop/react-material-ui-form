@@ -78,34 +78,28 @@ export default class FieldClone extends React.Component {
   }
 
   onBlur = (event) => {
-    const { fieldComp } = this.props
+    const { fieldComp, fieldComp: { props: { name } } } = this.props
     const { value } = event.target
     // // /* TODO: create function for condition */
     if (!fieldComp.props.select) {
-      this.props.onValueChange(fieldComp.props.name, value)
+      this.props.onValueChange(name, value)
     }
     if (fieldComp.props.onBlur !== undefined) {
-      fieldComp.props.onBlur(value, {
-        event,
-        name: fieldComp.props.name,
-      })
+      fieldComp.props.onBlur(value, { name }, event)
     }
   }
 
   onChange = (event) => {
-    const { fieldComp } = this.props
+    const { fieldComp, fieldComp: { props: { name } } } = this.props
     const { value } = event.target
     const helperText = _.get(fieldComp.props, 'helperText')
     this.setState({ isError: false, helperText, value })
     /* TODO: create function for condition */
     if (fieldComp.props.select) {
-      this.props.onValueChange(fieldComp.props.name, value)
+      this.props.onValueChange(name, value)
     }
     if (fieldComp.props.onChange !== undefined) {
-      fieldComp.props.onChange(value, {
-        event,
-        name: fieldComp.props.name,
-      })
+      fieldComp.props.onChange(value, { name }, event)
     }
   }
 
