@@ -2,9 +2,10 @@
   "name": "material-ui-form",
   "version": "1.0.0-alpha.12",
   "description": "State and validation management for Material-UI form components",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "webpack -p",
+    "build": "babel -d ./dist ./src -s",
+    "build:webpack": "webpack -p",
     "lint": "eslint -c eslintrc.json ./src --no-eslintrc",
     "prepublish": "npm run lint && rm -Rf ./dist && npm run build",
     "start": "webpack-dev-server --mode development --entry=./examples/Root --open",
@@ -39,7 +40,9 @@
       "_": true
     },
     "setupTestFrameworkScriptFile": "<rootDir>/setupTests.js",
-    "snapshotSerializers": ["enzyme-to-json/serializer"]
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "dependencies": {
     "prop-types": "^15.6.1"

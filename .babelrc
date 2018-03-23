@@ -1,4 +1,8 @@
 {
+	"presets": ["@babel/env", "@babel/react", "@babel/stage-0"],
+	"ignore": [
+    "**/__tests__"
+  ],
   "env": {
     "test": {
 		  "presets": ["env", "react", "stage-0"],

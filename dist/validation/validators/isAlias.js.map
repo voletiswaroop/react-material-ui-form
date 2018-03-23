@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/validation/validators/isAlias.js"],"names":["test","value"],"mappings":";;;;;;;eAAe;AAAA,SAAS,sBAAsBA,IAAtB,CAA2BC,KAA3B,CAAT;AAAA,C,EAA2C","sourcesContent":["export default value => /^[a-zA-Z0-9-_\\.]*$/i.test(value) // eslint-disable-line\n"],"file":"isAlias.js"}

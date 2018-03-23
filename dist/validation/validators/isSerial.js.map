@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/validation/validators/isSerial.js"],"names":["test","value"],"mappings":";;;;;;;eAAe;AAAA,SAAS,qBAAqBA,IAArB,CAA0BC,KAA1B,CAAT;AAAA,C,EAA0C","sourcesContent":["export default value => /^([-\\s\\da-zA-Z]+)$/.test(value) // eslint-disable-line\n"],"file":"isSerial.js"}

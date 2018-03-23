@@ -21,7 +21,9 @@ import Input, { InputLabel } from 'material-ui/Input'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 
-import Form from '../../src/index'
+// import Form from '../../src/index'
+// import Form from '../../dist/main'
+import Form from '../../dist'
 import styles from '../styles'
 
 
