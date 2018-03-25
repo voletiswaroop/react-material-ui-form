@@ -1,8 +1,8 @@
 {
   "name": "material-ui-form",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.15",
   "description": "State and validation management for Material-UI form components",
-  "main": "dist/material-ui-form.min.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "webpack -p",
     "dev": "webpack-dev-server --mode development --entry=./examples/Root --open",
