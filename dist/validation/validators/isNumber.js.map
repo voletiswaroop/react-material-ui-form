@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../../src/validation/validators/isNumber.js"],"names":["value","test"],"mappings":";;;;;;;eAAe,kBAACA,KAAD;AAAA,SAAW,cAAcC,IAAd,CAAmBD,KAAnB,CAAX;AAAA,C,EAAqC","sourcesContent":["export default (value) => /^([,.\\d]+)$/.test(value) // eslint-disable-line\n"],"file":"isNumber.js"}

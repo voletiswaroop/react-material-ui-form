@@ -1,10 +1,9 @@
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = void 0;
-var _default = {
+exports.default = {
   // validator.js
   contains: 'Value should contain "{0}"',
   equals: 'Value should equal "{0}"',
@@ -63,5 +62,3 @@ var _default = {
   isSerial: 'Invalid serial',
   isSize: 'Value should be more than {0} and less than {1}'
 };
-exports.default = _default;
-//# sourceMappingURL=messageMap.js.map

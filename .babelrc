@@ -1,12 +1,11 @@
 {
-	"presets": ["@babel/env", "@babel/react", "@babel/stage-0"],
-	"ignore": [
-    "**/__tests__"
-  ],
+	"presets": ["env", "react", "stage-0"],
+	"plugins": ["transform-decorators-legacy"],
   "env": {
-    "test": {
-		  "presets": ["env", "react", "stage-0"],
-      "plugins": ["transform-decorators-legacy"]
-    }
+  	"production": {
+			"ignore": [
+		    "**/__tests__"
+		  ]
+  	}
   }
 }

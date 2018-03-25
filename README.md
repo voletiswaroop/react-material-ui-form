@@ -1,4 +1,5 @@
 [![npm](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
+[![David](https://david-dm.org/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form.svg)
 [![Build Status](https://travis-ci.org/unitedhubs/material-ui-form.svg?branch=dev)](https://travis-ci.org/unitedhubs/material-ui-form)
 [![Coverage Status](https://coveralls.io/repos/github/unitedhubs/material-ui-form/badge.svg)](https://coveralls.io/github/unitedhubs/material-ui-form)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
@@ -45,7 +46,7 @@ npm install --save material-ui-form
 #### demo
 1. `$ git clone https://github.com/unitedhubs/material-ui-form.git`
 2. `$ cd material-ui-form`
-3. `$ npm install && npm start`
+3. `$ npm install && npm run dev`
 
 ## Props
 
@@ -79,7 +80,7 @@ Prop                          | Description               | Required
 
 #### Nested fields:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
 
 
 class MyForm extends React.Component {
@@ -97,7 +98,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form onSubmit={this.submit}>
+      <MaterialUIForm onSubmit={this.submit}>
         <TextField
           label="Name"
           type="text"
@@ -132,7 +133,7 @@ class MyForm extends React.Component {
         </fieldset>
         <Button variant="raised" type="reset">Reset</Button>
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -158,7 +159,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         onSubmit={this.submit}
         validation={{
           messageMap: customMessageMap,
@@ -202,7 +203,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -225,7 +226,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         onSubmit={this.submit}
         validation={{
           messageMap: customMessageMap,
@@ -242,7 +243,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -250,7 +251,7 @@ class MyForm extends React.Component {
 
 #### Custom validation logic:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 function validate(value, fieldValidators, options) {
@@ -279,7 +280,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         onSubmit={this.submit}
         validation={{
           requiredValidatorName: false,
@@ -297,7 +298,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -305,7 +306,7 @@ class MyForm extends React.Component {
 
 #### Server validations:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 const mockServerValidations = {
@@ -340,7 +341,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         onSubmit={this.submit}
         validations={this.state.mockServerValidations}
       >
@@ -352,7 +353,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -360,7 +361,7 @@ class MyForm extends React.Component {
 
 #### Form autoComplete and "on error" submission:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -370,7 +371,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         autoComplete="on"
         disableSubmitButtonOnError={false}
         onSubmit={this.submit}
@@ -384,7 +385,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -392,7 +393,7 @@ class MyForm extends React.Component {
 
 #### Getting form values on field change:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -406,7 +407,7 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <Form
+      <MaterialUIForm
         onSubmit={this.submit}
         onValuesChange={this.handleValuesChange}
       >
@@ -418,7 +419,7 @@ class MyForm extends React.Component {
         />
 
         <Button variant="raised" type="submit">Submit</Button>
-      </Form>
+      </MaterialUIForm>
     )
   }
 }
@@ -427,7 +428,7 @@ class MyForm extends React.Component {
 #### Multi-page form:
 ```jsx
 import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 function getSteps() {
@@ -471,7 +472,7 @@ class MyForm extends React.Component {
           ))}
         </Stepper>
 
-        <Form onSubmit={this.submit}>
+        <MaterialUIForm onSubmit={this.submit}>
           {this.state.activeStep === 0 &&
             <React.Fragment>
               <TextField
@@ -496,7 +497,7 @@ class MyForm extends React.Component {
               <Button variant="raised" type="submit">Submit</Button>
             </React.Fragment>
           }
-        </Form>
+        </MaterialUIForm>
       </div>
     )
   }
@@ -505,7 +506,7 @@ class MyForm extends React.Component {
 
 #### Custom components with custom handlers:
 ```jsx
-import Form from 'material-ui-form'
+import MaterialUIForm from 'material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -516,7 +517,7 @@ class MyForm extends React.Component {
   render() {
     return (
       <div>
-        <Form>
+        <MaterialUIForm>
           {'Upload file: '}
           <input
             accept="image/*"
@@ -531,7 +532,7 @@ class MyForm extends React.Component {
               Upload
             </Button>
           </label>
-        </Form>
+        </MaterialUIForm>
       </div>
     )
   }
