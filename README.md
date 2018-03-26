@@ -13,14 +13,14 @@ Validation is done with [validator.js](https://github.com/chriso/validator.js) b
 #### use and requirements
 
 - requires React 16.2.0 or later
-- only supports official and unofficial [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (other input elements are rendered without state/validation support)
+- supports official and unofficial [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (other input elements are rendered without state/validation support)
 - every input field must have `value` and `name` props
 - every input field should NOT have `onChange` and `onBlur` props (unless you need custom field-specific logic)
 - add a `data-validators` prop to any input field (or FormControl / FormControlLabel) to specify validation rules
 
 #### extra validators
 
-[_validator.js_ validators](https://github.com/chriso/validator.js#validators) are extended with these handy bad-boys:
+_material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso/validator.js#validators) with the following validators:
 
 - isAlias `/^[a-zA-Z0-9-_\.]*$/i`
 - isDate
@@ -171,7 +171,6 @@ class MyForm extends React.Component {
           name="email"
           value="invalid@email."
           data-validators="isEmail"
-          fullWidth
         />
 
         <TextField
@@ -180,7 +179,6 @@ class MyForm extends React.Component {
           name="number"
           value="3"
           data-validators={[{ isIn: [1, 2, 4] }]}
-          fullWidth
         />
 
         <TextField
@@ -189,7 +187,6 @@ class MyForm extends React.Component {
           name="whitelisted"
           value="abc1234"
           data-validators={[{ isWhitelisted: 'abc123' }]}
-          fullWidth
         />
 
         <TextField
@@ -198,7 +195,6 @@ class MyForm extends React.Component {
           name="length"
           value="123"
           data-validators={[{ isLength: { min: 4, max: 5 } }]}
-          fullWidth
         />
 
         <Button variant="raised" type="submit">Submit</Button>

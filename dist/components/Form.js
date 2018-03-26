@@ -131,7 +131,8 @@ var Form = (_temp = _class = function (_React$Component) {
       messageMapKeyPrefix: '',
       requiredValidatorName: _validation2.constants.REQUIRED_VALIDATOR_NAME,
       validators: _validation2.validators,
-      validate: _validation2.validate
+      validate: _validation2.validate,
+      validateInputOnBlur: false
     };
 
     _this.onFieldConstruct = function (fieldProps) {
@@ -390,7 +391,8 @@ var Form = (_temp = _class = function (_React$Component) {
           fieldComp: child,
           onConstruct: _this2.onFieldConstruct,
           onValueChange: _this2.onFieldValueChange,
-          useNativeRequiredValidator: !_this2.validation.requiredValidatorName
+          useNativeRequiredValidator: !_this2.validation.requiredValidatorName,
+          validateInputOnBlur: _this2.validation.validateInputOnBlur
         });
       });
     }

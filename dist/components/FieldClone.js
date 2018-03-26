@@ -131,11 +131,12 @@ var FieldClone = (_temp = _class = function (_React$Component) {
   this.onBlur = function (event) {
     var _props2 = _this2.props,
         fieldComp = _props2.fieldComp,
-        name = _props2.fieldComp.props.name;
+        name = _props2.fieldComp.props.name,
+        validateInputOnBlur = _props2.validateInputOnBlur;
     var value = event.target.value;
     // // /* TODO: create function for condition */
 
-    if (!fieldComp.props.select) {
+    if (validateInputOnBlur && !fieldComp.props.select) {
       _this2.props.onValueChange(name, value);
     }
     if (fieldComp.props.onBlur !== undefined) {
@@ -146,13 +147,16 @@ var FieldClone = (_temp = _class = function (_React$Component) {
   this.onChange = function (event) {
     var _props3 = _this2.props,
         fieldComp = _props3.fieldComp,
-        name = _props3.fieldComp.props.name;
+        name = _props3.fieldComp.props.name,
+        validateInputOnBlur = _props3.validateInputOnBlur;
     var value = event.target.value;
 
-    var helperText = _lodash2.default.get(fieldComp.props, 'helperText');
-    _this2.setState({ isError: false, helperText: helperText, value: value });
+    if (fieldComp.props.select || validateInputOnBlur) {
+      var _helperText2 = _lodash2.default.get(fieldComp.props, 'helperText');
+      _this2.setState({ isError: false, helperText: _helperText2, value: value });
+    }
     /* TODO: create function for condition */
-    if (fieldComp.props.select) {
+    if (!validateInputOnBlur || fieldComp.props.select) {
       _this2.props.onValueChange(name, value);
     }
     if (fieldComp.props.onChange !== undefined) {
