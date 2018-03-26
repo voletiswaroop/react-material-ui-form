@@ -1,12 +1,13 @@
-import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+// @flow
+
+import _ from 'lodash'
 
 import messageMap from './messageMap'
 import validators from './validators'
+import constants from './constants'
 
-export constants from './constants'
 
-
-function sprintf(str, args) {
+function sprintf(str: string, args: any): string {
   let predicate
   if (_.isString(args)) {
     predicate = args
@@ -26,14 +27,18 @@ function sprintf(str, args) {
   return str.replace(/{(\d+)}/g, predicate)
 }
 
-let validationMessageMap = _.clone(messageMap)
+let validationMessageMap: Object = _.clone(messageMap)
 
-export const createValidation = (validatorName, args, config) => {
+export const createValidation = (
+  validatorName: string,
+  args: any,
+  config: Object,
+): Object => {
   if (!_.isEmpty(config.messageMap)) {
     validationMessageMap = config.messageMap
   }
 
-  let code = validatorName
+  let code: string = validatorName
   // first check if prefix code exists
   if (!validatorName.startsWith(config.messageMapKeyPrefix)) {
     const prefixedCode = `${config.messageMapKeyPrefix}${validatorName}`
@@ -42,24 +47,24 @@ export const createValidation = (validatorName, args, config) => {
     }
   }
 
-  let message = validationMessageMap[code]
+  let message: string = validationMessageMap[code]
   if (message !== undefined && (_.isNumber(args) || !_.isEmpty(args))) {
     message = sprintf(message, args)
   }
   return { code, message }
 }
 
-export const validate = (value, fieldValidators, config) => {
+export const validate = (
+  value: any,
+  fieldValidators: [],
+  config: Object
+): Array<Object> => {
   const validations = []
-  if (_.isEmpty(fieldValidators)) {
+  if (!_.isArray(fieldValidators) || _.isEmpty(fieldValidators)) {
     return []
-  } else if (!_.isArray(fieldValidators)) {
-    // eslint-disable-next-line no-console
-    console.error('invalid validators format:', fieldValidators)
-    return false
   }
 
-  fieldValidators.forEach((validator) => {
+  fieldValidators.forEach((validator: any) => {
     let args
     let validatorName = validator
     if (_.isObject(validator) && _.size(validator) === 1) {
@@ -84,6 +89,7 @@ export const validate = (value, fieldValidators, config) => {
 }
 
 export {
+  constants,
   messageMap,
   validators,
 }

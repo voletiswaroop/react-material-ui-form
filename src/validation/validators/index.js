@@ -1,4 +1,4 @@
-import validators from 'validator' // eslint-disable-line import/no-extraneous-dependencies
+import validators from 'validator'
 
 import isAlias from './isAlias'
 import isDate from './isDate'

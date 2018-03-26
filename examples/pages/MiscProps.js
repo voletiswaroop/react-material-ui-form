@@ -48,10 +48,6 @@ export default class MiscProps extends React.Component {
     }, 3000)
   }
 
-  handleLastNameChange = (event) => {
-    console.log(event.target.value, event)
-  }
-
   handleValuesChange = (values, pristineValues) => {
     // eslint-disable-next-line no-console
     console.log('new values:', values, 'pristine values:', pristineValues)
@@ -94,7 +90,6 @@ export default class MiscProps extends React.Component {
               type="text"
               name="lastName"
               value=""
-              onChange={this.handleLastNameChange}
               helperText="let's see what you've got"
               fullWidth
             />

@@ -7,15 +7,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class, _temp, _initialiseProps; // eslint-disable-line import/no-extraneous-dependencies
+var _class, _temp, _initialiseProps;
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lodash = require('lodash');
 
@@ -46,6 +42,7 @@ function getErrorAndHelperText(field) {
 var FormControlClone = (_temp = _class = function (_React$Component) {
   _inherits(FormControlClone, _React$Component);
 
+  // eslint-disable-next-line react/sort-comp
   function FormControlClone(props) {
     _classCallCheck(this, FormControlClone);
 
@@ -53,9 +50,9 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
 
     _initialiseProps.call(_this);
 
-    var _props$formControlEle = props.formControlElement.props,
-        error = _props$formControlEle.error,
-        required = _props$formControlEle.required;
+    var _props$formControlCom = props.formControlComp.props,
+        error = _props$formControlCom.error,
+        required = _props$formControlCom.required;
 
 
     var name = void 0;
@@ -63,7 +60,7 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     var helperText = void 0;
     var isError = error;
 
-    _react2.default.Children.forEach(props.formControlElement.props.children, function (child) {
+    _react2.default.Children.forEach(props.formControlComp.props.children, function (child) {
       if (child.type === _Form.FormHelperText) {
         helperText = String(child.props.children);
         _this.helperText = helperText;
@@ -73,7 +70,7 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
       }
     });
 
-    if (props.formControlElement.type !== _Form.FormControl || name === undefined || value === undefined) {
+    if (props.formControlComp.type !== _Form.FormControl || name === undefined || value === undefined) {
       throw new Error('invalid FormControl control children');
     }
 
@@ -102,12 +99,12 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       if (!_lodash2.default.isEmpty(nextProps.field)) {
         var _getErrorAndHelperTex = getErrorAndHelperText(nextProps.field),
-            helperText = _getErrorAndHelperTex.helperText,
-            isError = _getErrorAndHelperTex.isError;
+            _helperText = _getErrorAndHelperTex.helperText,
+            _isError = _getErrorAndHelperTex.isError;
 
         this.setState({
-          helperText: helperText,
-          isError: isError,
+          helperText: _helperText,
+          isError: _isError,
           value: nextProps.field.value
         });
       }
@@ -118,8 +115,8 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
       var _this2 = this;
 
       var _props = this.props,
-          formControlElement = _props.formControlElement,
-          props = _props.formControlElement.props;
+          formControlComp = _props.formControlComp,
+          props = _props.formControlComp.props;
 
 
       var hasHelperText = false;
@@ -150,7 +147,7 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
         ));
       }
 
-      return _react2.default.cloneElement(formControlElement, {
+      return _react2.default.cloneElement(formControlComp, {
         error: this.state.isError,
         children: children
       });
@@ -158,14 +155,8 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
   }]);
 
   return FormControlClone;
-}(_react2.default.Component), _class.propTypes = {
-  field: _propTypes2.default.object,
-  formControlElement: _propTypes2.default.object.isRequired,
-  onValueChange: _propTypes2.default.func.isRequired,
-  onConstruct: _propTypes2.default.func.isRequired
-}, _class.defaultProps = {
-  field: {}
-}, _initialiseProps = function _initialiseProps() {
+}(_react2.default.Component), _class.defaultProps = {
+  field: {} }, _initialiseProps = function _initialiseProps() {
   var _this3 = this;
 
   this.onChange = function (event) {

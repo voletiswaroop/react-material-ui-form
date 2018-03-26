@@ -1,27 +1,32 @@
+// @flow
+
 import React from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+import _ from 'lodash'
 
 import Checkbox from 'material-ui/Checkbox'
 import Switch from 'material-ui/Switch'
 import { FormControlLabel } from 'material-ui/Form'
 
 
-export default class FormControlLabelClone extends React.Component {
-  static propTypes = {
-    /* eslint-disable-next-line */
-    control: PropTypes.object.isRequired,
-    field: PropTypes.object,
-    label: PropTypes.string.isRequired,
-    onToggle: PropTypes.func.isRequired,
-    onConstruct: PropTypes.func.isRequired,
-  }
+type Props = {
+  control: Object,
+  field?: Object,
+  label: string,
+  onToggle: Function,
+  onConstruct: Function,
+};
 
+type State = {
+  checked: boolean,
+  value: string,
+};
+
+export default class FormControlLabelClone extends React.Component<Props, State> {
   static defaultProps = {
     field: {},
   }
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props)
 
     if (![Checkbox, Switch].includes(props.control.type)) {
@@ -43,7 +48,7 @@ export default class FormControlLabelClone extends React.Component {
     }
   }
 
-  onToggle = (event, checked) => {
+  onToggle = (event: SyntheticInputEvent<Element>, checked: boolean) => {
     checked = _.get(event, 'target.checked') || checked
     let { value } = this.props.control.props // eslint-disable-line react/prop-types
     const { name } = this.props.control.props // eslint-disable-line react/prop-types

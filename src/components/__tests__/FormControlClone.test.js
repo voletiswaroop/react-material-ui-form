@@ -9,7 +9,7 @@ import {
   FormHelperText,
 } from 'material-ui/Form'
 import Radio, { RadioGroup } from 'material-ui/Radio'
-import Input, { InputLabel } from 'material-ui/Input'
+import { InputLabel } from 'material-ui/Input'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 
@@ -26,7 +26,7 @@ const field = {
 }
 
 describe('<FormControlClone>:<Select>', () => {
-  const formControlElement = (
+  const formControlComp = (
     <FormControl required>
       <InputLabel htmlFor="age-helper">Age</InputLabel>
       <Select value="" name="age">
@@ -43,7 +43,7 @@ describe('<FormControlClone>:<Select>', () => {
   const wrapper = shallow(
     <FormControlClone
       field={field}
-      formControlElement={formControlElement}
+      formControlComp={formControlComp}
       onConstruct={jest.fn()}
       onValueChange={jest.fn()}
     />
@@ -67,7 +67,7 @@ describe('<FormControlClone>:<Select>', () => {
 })
 
 describe('<FormControlClone>:<RadioGroup>', () => {
-  const formControlElement = (
+  const formControlComp = (
     <FormControl
       component="fieldset"
       required
@@ -101,7 +101,7 @@ describe('<FormControlClone>:<RadioGroup>', () => {
   const wrapper = shallow(
     <FormControlClone
       field={field}
-      formControlElement={formControlElement}
+      formControlComp={formControlComp}
       onConstruct={jest.fn()}
       onValueChange={jest.fn()}
     />
@@ -109,5 +109,52 @@ describe('<FormControlClone>:<RadioGroup>', () => {
 
   it('should render', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
+  })
+})
+
+describe('<FormControlClone> Invalid props', () => {
+  it('should throw if formControlComp type is other than FormControl', () => {
+    let error
+    try {
+      shallow(
+        <FormControlClone
+          field={field}
+          formControlComp={<input />}
+          onConstruct={jest.fn()}
+          onValueChange={jest.fn()}
+        />
+      )
+    } catch (e) {
+      error = e
+    }
+    expect(error).toBeInstanceOf(Error)
+  })
+
+  it('should throw if formControlComp group has no name or value props', () => {
+    const formControlComp = (
+      <FormControl>
+        <InputLabel>Age</InputLabel>
+        <Select>
+          <MenuItem value=""><em>Please select your age ...</em></MenuItem>
+          <MenuItem value={10}>Teens</MenuItem>
+        </Select>
+        <FormHelperText>Some important helper text</FormHelperText>
+      </FormControl>
+    )
+
+    let error
+    try {
+      shallow(
+        <FormControlClone
+          field={field}
+          formControlComp={formControlComp}
+          onConstruct={jest.fn()}
+          onValueChange={jest.fn()}
+        />
+      )
+    } catch (e) {
+      error = e
+    }
+    expect(error).toBeInstanceOf(Error)
   })
 })

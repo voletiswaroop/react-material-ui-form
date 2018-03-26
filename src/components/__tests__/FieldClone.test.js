@@ -156,46 +156,53 @@ describe('<FieldClone>:<Select>', () => {
   })
 })
 
-/* see https://stackoverflow.com/questions/49420305/how-to-get-coverage-for-jest-tothrow-without-failing-test */
+describe('<FieldClone> Invalid props', () => {
+  const field = {
+    isPristine: true,
+    isRequired: null,
+    pristineValue: null,
+    validations: [{ code: 'error', message: 'invalid' }],
+    validators: [],
+    value: undefined,
+  }
 
-// describe('<FieldClone> Invalid fieldComp type and props', () => {
-//   const field = {
-//     isPristine: true,
-//     isRequired: null,
-//     pristineValue: null,
-//     validations: [{ code: 'error', message: 'invalid' }],
-//     validators: [],
-//     value: undefined,
-//   }
+  it('should throw if field type prop is undefined', () => {
+    let error
+    try {
+      shallow(
+        <FieldClone
+          field={field}
+          fieldComp={(
+            <div>invalid</div>
+          )}
+          onConstruct={jest.fn()}
+          onValueChange={jest.fn()}
+          useNativeRequiredValidator
+        />
+      )
+    } catch (e) {
+      error = e
+    }
+    expect(error).toBeInstanceOf(Error)
+  })
 
-//   const wrapper = shallow(
-//     <FieldClone
-//       field={field}
-//       fieldComp={(
-//         <div>invalid</div>
-//       )}
-//       onConstruct={jest.fn()}
-//       onValueChange={jest.fn()}
-//       useNativeRequiredValidator
-//     />
-//   )
-
-//   it('should throw if field type prop is undefined', () => {
-//     function checkTypeName() {
-//       if (wrapper.instance().props.fieldComp.type.name === undefined) {
-//         throw new Error('FieldClone does not support native elements')
-//       }
-//     }
-//     expect(checkTypeName).toThrow()
-//   })
-
-//   it('should throw if field component name and value are undefined', () => {
-//     function testNameAndValueProps() {
-//       const { name, value } = wrapper.instance().props.fieldComp.props
-//       if (name === undefined || value === undefined) {
-//         throw new Error('FieldClone name and value must be defined')
-//       }
-//     }
-//     expect(testNameAndValueProps).toThrow()
-//   })
-// })
+  it('should throw if field component name and value are undefined', () => {
+    let error
+    try {
+      shallow(
+        <FieldClone
+          field={field}
+          fieldComp={(
+            <TextField type="text" />
+          )}
+          onConstruct={jest.fn()}
+          onValueChange={jest.fn()}
+          useNativeRequiredValidator
+        />
+      )
+    } catch (e) {
+      error = e
+    }
+    expect(error).toBeInstanceOf(Error)
+  })
+})

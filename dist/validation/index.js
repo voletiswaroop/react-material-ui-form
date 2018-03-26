@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.validators = exports.messageMap = exports.validate = exports.createValidation = exports.constants = undefined;
+exports.validators = exports.messageMap = exports.constants = exports.validate = exports.createValidation = undefined;
 
 var _lodash = require('lodash');
 
@@ -17,13 +17,11 @@ var _validators = require('./validators');
 
 var _validators2 = _interopRequireDefault(_validators);
 
-var _constants2 = require('./constants');
+var _constants = require('./constants');
 
-var _constants3 = _interopRequireDefault(_constants2);
+var _constants2 = _interopRequireDefault(_constants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.constants = _constants3.default; // eslint-disable-line import/no-extraneous-dependencies
 
 function sprintf(str, args) {
   var predicate = void 0;
@@ -70,12 +68,8 @@ var createValidation = exports.createValidation = function createValidation(vali
 
 var validate = exports.validate = function validate(value, fieldValidators, config) {
   var validations = [];
-  if (_lodash2.default.isEmpty(fieldValidators)) {
+  if (!_lodash2.default.isArray(fieldValidators) || _lodash2.default.isEmpty(fieldValidators)) {
     return [];
-  } else if (!_lodash2.default.isArray(fieldValidators)) {
-    // eslint-disable-next-line no-console
-    console.error('invalid validators format:', fieldValidators);
-    return false;
   }
 
   fieldValidators.forEach(function (validator) {
@@ -102,5 +96,6 @@ var validate = exports.validate = function validate(value, fieldValidators, conf
   return validations;
 };
 
+exports.constants = _constants2.default;
 exports.messageMap = _messageMap2.default;
 exports.validators = _validators2.default;

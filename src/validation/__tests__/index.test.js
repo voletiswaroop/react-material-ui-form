@@ -27,7 +27,7 @@ describe('validate method', () => {
   })
 
   it('should be false if validators is not an array', () => {
-    expect(validate('x', 'isRequired', config)).toBe(false)
+    expect(validate('x', 'isRequired', config)).toEqual([])
   })
 
   it('should be an empty array if validator is invalid', () => {

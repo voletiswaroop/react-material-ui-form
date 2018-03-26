@@ -14,9 +14,6 @@ var _lodash2 = _interopRequireDefault(_lodash);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// eslint-disable-line import/no-extraneous-dependencies
-
-
 function isSize(value, rest) {
   var min = void 0;
   var max = void 0;

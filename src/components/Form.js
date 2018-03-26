@@ -1,6 +1,7 @@
+// @flow
+
 import React from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+import _ from 'lodash'
 
 import {
   FormControl,
@@ -26,7 +27,7 @@ import {
 
 const FIELD_VALIDATORS_PROP_NAME = 'data-validators'
 
-function checkElementInteractivity(component) {
+function checkElementInteractivity(component: any): boolean {
   const whitelist = [
     FormControlLabel,
   ]
@@ -35,11 +36,11 @@ function checkElementInteractivity(component) {
    || (_.has(component, 'props.name') && _.has(component, 'props.value'))
 }
 
-function isValidForm(fields) {
+function isValidForm(fields: Object): boolean {
   return _.size(_.filter(fields, field => field.validations.length > 0)) === 0
 }
 
-function getFieldValues(fields) {
+function getFieldValues(fields: Object): Object {
   const values = {}
   _.each(fields, (field, name) => {
     if (_.get(field, 'checked') !== false) {
@@ -49,7 +50,7 @@ function getFieldValues(fields) {
   return values
 }
 
-function getPristineFieldValues(fields) {
+function getPristineFieldValues(fields: Object): Object {
   const values = {}
   _.each(fields, (field, name) => {
     if (!field.isPristine && _.get(field, 'checked') !== false) {
@@ -59,7 +60,7 @@ function getPristineFieldValues(fields) {
   return values
 }
 
-function extractFieldValidators(fieldProps) {
+function extractFieldValidators(fieldProps: Object): Array<mixed> {
   let validators = _.get(fieldProps, FIELD_VALIDATORS_PROP_NAME)
   if (validators !== undefined) {
     if (_.isString(validators)) {
@@ -83,52 +84,58 @@ function getFieldTemplate() {
   }
 }
 
-export default class Form extends React.Component {
-  static propTypes = {
-    autoComplete: PropTypes.string,
-    children: PropTypes.array.isRequired,
-    disableSubmitButtonOnError: PropTypes.bool,
-    onSubmit: PropTypes.func.isRequired,
-    onValuesChange: PropTypes.func,
-    validation: PropTypes.shape({
-      messageMap: PropTypes.object,
-      messageMapKeyPrefix: PropTypes.string,
-      requiredValidatorName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.bool,
-      ]),
-      validators: PropTypes.object,
-      validate: PropTypes.func,
-    }),
-    validations: PropTypes.object,
-  }
+type Props = {
+  autoComplete?: string,
+  children: Array<mixed>,
+  disableSubmitButtonOnError?: boolean,
+  onSubmit: Function,
+  onValuesChange?: void | Function,
+  validation?: {
+    messageMap?: Object,
+    messageMapKeyPrefix?: string,
+    requiredValidatorName?: string | boolean,
+    validators?: Object,
+    validate?: Function,
+  },
+  validations: Object,
+};
 
+type State = {
+  disableSubmitButton: boolean,
+  fields: Object,
+};
+
+export default class Form extends React.Component<Props, State> {
   static defaultProps = {
     autoComplete: 'off',
     disableSubmitButtonOnError: true,
-    onValuesChange: null,
+    onValuesChange: undefined,
     validation: {},
     validations: {},
   }
 
-  constructor(props) {
+  // eslint-disable-next-line react/sort-comp
+  onValuesChange: void
+  validation = {
+    messageMap,
+    messageMapKeyPrefix: '',
+    requiredValidatorName: validationConstants.REQUIRED_VALIDATOR_NAME,
+    validators: defaultValidators,
+    validate,
+  }
+
+  constructor(props: Object) {
     super(props)
 
-    this.validation = Object.assign({
-      messageMap,
-      messageMapKeyPrefix: '',
-      requiredValidatorName: validationConstants.REQUIRED_VALIDATOR_NAME,
-      validators: defaultValidators,
-      validate,
-    }, props.validation)
-
+    this.onValuesChange = props.onValuesChange
+    this.validation = Object.assign(this.validation, props.validation)
     this.state = {
       disableSubmitButton: false,
       fields: {},
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Object) {
     const { fields } = this.state
     _.each(nextProps.validations, (validations, name) => {
       if (_.has(fields, name)) {
@@ -141,7 +148,7 @@ export default class Form extends React.Component {
     this.setState({ fields })
   }
 
-  onFieldConstruct = (fieldProps) => {
+  onFieldConstruct = (fieldProps: Object) => {
     const {
       checked,
       name,
@@ -173,7 +180,6 @@ export default class Form extends React.Component {
           validators.unshift(requiredValidatorName)
         }
         const isRequired = required || validators.includes(requiredValidatorName)
-
         // set any validations on first construct
         let validations = []
         if (!_.has(this.state.fields, name)
@@ -205,7 +211,7 @@ export default class Form extends React.Component {
     }
   }
 
-  onFieldValueChange = (name, value) => {
+  onFieldValueChange = (name: string, value: mixed) => {
     _.defer(() => {
       this.setState({
         fields: {
@@ -221,19 +227,19 @@ export default class Form extends React.Component {
 
       if (isValidForm(this.state.fields)) {
         this.enableSubmitButton()
-        if (this.props.onValuesChange !== null) {
-          this.props.onValuesChange(
-            getFieldValues(this.state.fields),
-            getPristineFieldValues(this.state.fields)
-          )
-        }
+      }
+      if (this.onValuesChange !== undefined) {
+        this.onValuesChange(
+          getFieldValues(this.state.fields),
+          getPristineFieldValues(this.state.fields)
+        )
       }
 
       this.validateField(name, value)
     })
   }
 
-  onFieldToggle = (name, value, checked) => {
+  onFieldToggle = (name: string, value: mixed, checked: boolean) => {
     this.setState({
       fields: {
         ...this.state.fields,
@@ -248,7 +254,7 @@ export default class Form extends React.Component {
     })
   }
 
-  validateField = (name, value) => {
+  validateField = (name: string, value: mixed) => {
     const field = this.state.fields[name]
     if (!_.isEmpty(field.validators)) {
       const { validation } = this
@@ -285,7 +291,7 @@ export default class Form extends React.Component {
     })
   }
 
-  submit = (event) => {
+  submit = (event: Event) => {
     event.preventDefault()
     let isValid = true
     const { fields } = this.state
@@ -315,7 +321,7 @@ export default class Form extends React.Component {
     }
   }
 
-  cloneChildrenRecursively(children) {
+  cloneChildrenRecursively(children: any): any {
     return React.Children.map(children, (child) => {
       if (_.isEmpty(child)) {
         return null
@@ -343,7 +349,7 @@ export default class Form extends React.Component {
               <FormControlClone
                 key={name}
                 field={this.state.fields[name]}
-                formControlElement={child}
+                formControlComp={child}
                 onConstruct={this.onFieldConstruct}
                 onValueChange={this.onFieldValueChange}
               />

@@ -13,10 +13,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
@@ -31,14 +27,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// eslint-disable-line import/no-extraneous-dependencies
-
-
 function getRequiredProp(required, useNativeRequiredValidator) {
   if (!useNativeRequiredValidator) {
     return false;
   }
-  return required;
+  return required || false;
 }
 
 function makeLabel(fieldComp, props) {
@@ -100,12 +93,12 @@ var FieldClone = (_temp = _class = function (_React$Component) {
     value: function componentWillReceiveProps(nextProps) {
       if (!_lodash2.default.isEmpty(nextProps.field)) {
         var _makeErrorAndHelperTe2 = makeErrorAndHelperText(nextProps),
-            helperText = _makeErrorAndHelperTe2.helperText,
-            isError = _makeErrorAndHelperTe2.isError;
+            _helperText = _makeErrorAndHelperTe2.helperText,
+            _isError = _makeErrorAndHelperTe2.isError;
 
         this.setState({
-          helperText: helperText,
-          isError: isError,
+          helperText: _helperText,
+          isError: _isError,
           value: nextProps.field.value
         });
       }
@@ -130,13 +123,7 @@ var FieldClone = (_temp = _class = function (_React$Component) {
   }]);
 
   return FieldClone;
-}(_react2.default.Component), _class.propTypes = {
-  field: _propTypes2.default.object,
-  fieldComp: _propTypes2.default.object.isRequired,
-  onValueChange: _propTypes2.default.func.isRequired,
-  onConstruct: _propTypes2.default.func.isRequired,
-  useNativeRequiredValidator: _propTypes2.default.bool.isRequired
-}, _class.defaultProps = {
+}(_react2.default.Component), _class.defaultProps = {
   field: {}
 }, _initialiseProps = function _initialiseProps() {
   var _this2 = this;

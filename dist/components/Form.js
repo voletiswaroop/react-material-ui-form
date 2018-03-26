@@ -9,15 +9,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class, _temp; // eslint-disable-line import/no-extraneous-dependencies
+var _class, _temp;
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lodash = require('lodash');
 
@@ -51,7 +47,7 @@ var _CheckableFieldClone = require('./CheckableFieldClone');
 
 var _CheckableFieldClone2 = _interopRequireDefault(_CheckableFieldClone);
 
-var _validation = require('../validation');
+var _validation2 = require('../validation');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -124,10 +120,19 @@ function getFieldTemplate() {
 var Form = (_temp = _class = function (_React$Component) {
   _inherits(Form, _React$Component);
 
+  // eslint-disable-next-line react/sort-comp
   function Form(props) {
     _classCallCheck(this, Form);
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
+
+    _this.validation = {
+      messageMap: _validation2.messageMap,
+      messageMapKeyPrefix: '',
+      requiredValidatorName: _validation2.constants.REQUIRED_VALIDATOR_NAME,
+      validators: _validation2.validators,
+      validate: _validation2.validate
+    };
 
     _this.onFieldConstruct = function (fieldProps) {
       var checked = fieldProps.checked,
@@ -148,20 +153,19 @@ var Form = (_temp = _class = function (_React$Component) {
         });
         // other inputs
       } else if (!_lodash2.default.isBoolean(checked)) {
-        var requiredValidatorName = _this.validation.requiredValidatorName;
+        var _requiredValidatorName = _this.validation.requiredValidatorName;
 
         if (!_lodash2.default.has(_this.state.fields, name)) {
-          var validators = extractFieldValidators(fieldProps);
+          var _validators = extractFieldValidators(fieldProps);
 
-          if (required && !_lodash2.default.isEmpty(requiredValidatorName)) {
-            validators.unshift(requiredValidatorName);
+          if (required && !_lodash2.default.isEmpty(_requiredValidatorName)) {
+            _validators.unshift(_requiredValidatorName);
           }
-          var isRequired = required || validators.includes(requiredValidatorName);
-
+          var isRequired = required || _validators.includes(_requiredValidatorName);
           // set any validations on first construct
-          var validations = [];
+          var _validations = [];
           if (!_lodash2.default.has(_this.state.fields, name) && _lodash2.default.has(_this.props.validations, name)) {
-            validations = _this.props.validations[name];
+            _validations = _this.props.validations[name];
           }
 
           _lodash2.default.defer(function () {
@@ -169,8 +173,8 @@ var Form = (_temp = _class = function (_React$Component) {
               fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, getFieldTemplate(), {
                 isRequired: isRequired,
                 pristineValue: value,
-                validators: validators,
-                validations: validations,
+                validators: _validators,
+                validations: _validations,
                 value: value
               })))
             });
@@ -195,9 +199,9 @@ var Form = (_temp = _class = function (_React$Component) {
 
         if (isValidForm(_this.state.fields)) {
           _this.enableSubmitButton();
-          if (_this.props.onValuesChange !== null) {
-            _this.props.onValuesChange(getFieldValues(_this.state.fields), getPristineFieldValues(_this.state.fields));
-          }
+        }
+        if (_this.onValuesChange !== undefined) {
+          _this.onValuesChange(getFieldValues(_this.state.fields), getPristineFieldValues(_this.state.fields));
         }
 
         _this.validateField(name, value);
@@ -218,16 +222,16 @@ var Form = (_temp = _class = function (_React$Component) {
     _this.validateField = function (name, value) {
       var field = _this.state.fields[name];
       if (!_lodash2.default.isEmpty(field.validators)) {
-        var validation = _this.validation;
+        var _validation = _this.validation;
 
-        var validations = validation.validate(value, field.validators, validation);
+        var _validations2 = _validation.validate(value, field.validators, _validation);
 
-        field.validations = validations;
+        field.validations = _validations2;
         _this.setState({
           fields: _extends({}, _this.state.fields, _defineProperty({}, name, field))
         });
 
-        if (!_lodash2.default.isEmpty(validations)) {
+        if (!_lodash2.default.isEmpty(_validations2)) {
           _this.disableSubmitButton();
         }
       }
@@ -263,14 +267,8 @@ var Form = (_temp = _class = function (_React$Component) {
       }
     };
 
-    _this.validation = Object.assign({
-      messageMap: _validation.messageMap,
-      messageMapKeyPrefix: '',
-      requiredValidatorName: _validation.constants.REQUIRED_VALIDATOR_NAME,
-      validators: _validation.validators,
-      validate: _validation.validate
-    }, props.validation);
-
+    _this.onValuesChange = props.onValuesChange;
+    _this.validation = Object.assign(_this.validation, props.validation);
     _this.state = {
       disableSubmitButton: false,
       fields: {}
@@ -338,7 +336,7 @@ var Form = (_temp = _class = function (_React$Component) {
               return _react2.default.createElement(_FormControlClone2.default, {
                 key: _name,
                 field: _this2.state.fields[_name],
-                formControlElement: child,
+                formControlComp: child,
                 onConstruct: _this2.onFieldConstruct,
                 onValueChange: _this2.onFieldValueChange
               });
@@ -412,25 +410,10 @@ var Form = (_temp = _class = function (_React$Component) {
   }]);
 
   return Form;
-}(_react2.default.Component), _class.propTypes = {
-  autoComplete: _propTypes2.default.string,
-  children: _propTypes2.default.array.isRequired,
-  disableSubmitButtonOnError: _propTypes2.default.bool,
-  onSubmit: _propTypes2.default.func.isRequired,
-  onValuesChange: _propTypes2.default.func,
-  validation: _propTypes2.default.shape({
-    messageMap: _propTypes2.default.object,
-    messageMapKeyPrefix: _propTypes2.default.string,
-    requiredValidatorName: _propTypes2.default.oneOfType([_propTypes2.default.string, _propTypes2.default.bool]),
-    validators: _propTypes2.default.object,
-    validate: _propTypes2.default.func
-  }),
-  validations: _propTypes2.default.object
-}, _class.defaultProps = {
+}(_react2.default.Component), _class.defaultProps = {
   autoComplete: 'off',
   disableSubmitButtonOnError: true,
-  onValuesChange: null,
+  onValuesChange: undefined,
   validation: {},
-  validations: {}
-}, _temp);
+  validations: {} }, _temp);
 exports.default = Form;

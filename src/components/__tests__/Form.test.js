@@ -16,7 +16,19 @@ import { messageMap, validators } from '../../validation'
 
 /* eslint-disable react/self-closing-comp */
 
-describe('<Form>', () => {
+describe('<Form> (no props)', () => {
+  const wrapper = shallow(
+    <Form>
+      <input type="text" />
+    </Form>
+  )
+
+  it('should render', () => {
+    expect(toJson(wrapper)).toMatchSnapshot()
+  })
+})
+
+describe('<Form> (all props)', () => {
   validators.isBorat = value => value === 'borat'
   const customMessageMap = Object.assign(messageMap, {
     isBorat: 'NAAAAAT! You can only write "borat" lol',
@@ -86,14 +98,6 @@ describe('<Form>', () => {
   it('should have 2 children', () => {
     expect(wrapper.children()).toHaveLength(5)
   })
-
-  // it('should have a cloned TextField', () => {
-  //   expect(wrapper.find(TextField)).toBeInstanceOf(FieldClone)
-  // })
-
-  // it('should have a non-cloned Button', () => {
-  //   expect(wrapper.find(Button)).not.toBeInstanceOf(FieldClone)
-  // })
 
   it('should handle submit event', () => {
     const { onSubmit } = wrapper.instance().props

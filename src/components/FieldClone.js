@@ -1,25 +1,29 @@
+// @flow
+
 import React from 'react'
-import PropTypes from 'prop-types'
-import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+import _ from 'lodash'
 
 
-function getRequiredProp(required, useNativeRequiredValidator) {
+function getRequiredProp(
+  required: ?boolean,
+  useNativeRequiredValidator: boolean
+): boolean {
   if (!useNativeRequiredValidator) {
     return false
   }
-  return required
+  return required || false
 }
 
-function makeLabel(fieldComp, props) {
-  const label = fieldComp.props.label || ''
+function makeLabel(fieldComp: Object, props: Object): string {
+  const label: string = fieldComp.props.label || ''
   return props.field.isRequired && !props.useNativeRequiredValidator
     ? `${label} *`
     : label
 }
 
-function makeErrorAndHelperText(props) {
-  let helperText = _.get(props.fieldComp.props, 'helperText')
-  let isError = false
+function makeErrorAndHelperText(props: Object): Object {
+  let helperText: ?string = _.get(props.fieldComp.props, 'helperText')
+  let isError: boolean = false
 
   if (!_.isEmpty(props.field) && props.field.validations.length > 0) {
     helperText = props.field.validations[0].message
@@ -28,20 +32,26 @@ function makeErrorAndHelperText(props) {
   return { helperText, isError }
 }
 
-export default class FieldClone extends React.Component {
-  static propTypes = {
-    field: PropTypes.object,
-    fieldComp: PropTypes.object.isRequired,
-    onValueChange: PropTypes.func.isRequired,
-    onConstruct: PropTypes.func.isRequired,
-    useNativeRequiredValidator: PropTypes.bool.isRequired,
-  }
+type Props = {
+  field?: Object,
+  fieldComp: Object,
+  onConstruct: Function,
+  onValueChange: Function,
+  useNativeRequiredValidator: boolean,
+};
 
+type State = {
+  helperText: ?string,
+  isError: boolean,
+  value: mixed,
+};
+
+export default class FieldClone extends React.Component<Props, State> {
   static defaultProps = {
     field: {},
   }
 
-  constructor(props) {
+  constructor(props: Object) {
     super(props)
     const { fieldComp } = props
 
@@ -66,7 +76,7 @@ export default class FieldClone extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Object) {
     if (!_.isEmpty(nextProps.field)) {
       const { helperText, isError } = makeErrorAndHelperText(nextProps)
       this.setState({
@@ -77,7 +87,7 @@ export default class FieldClone extends React.Component {
     }
   }
 
-  onBlur = (event) => {
+  onBlur = (event: SyntheticInputEvent<Element>) => {
     const { fieldComp, fieldComp: { props: { name } } } = this.props
     const { value } = event.target
     // // /* TODO: create function for condition */
@@ -89,10 +99,10 @@ export default class FieldClone extends React.Component {
     }
   }
 
-  onChange = (event) => {
+  onChange = (event: SyntheticInputEvent<Element>) => {
     const { fieldComp, fieldComp: { props: { name } } } = this.props
     const { value } = event.target
-    const helperText = _.get(fieldComp.props, 'helperText')
+    const helperText: ?string = _.get(fieldComp.props, 'helperText')
     this.setState({ isError: false, helperText, value })
     /* TODO: create function for condition */
     if (fieldComp.props.select) {

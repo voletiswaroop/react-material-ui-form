@@ -7,15 +7,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class, _temp, _initialiseProps; // eslint-disable-line import/no-extraneous-dependencies
+var _class, _temp, _initialiseProps;
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _lodash = require('lodash');
 
@@ -95,14 +91,7 @@ var FormControlLabelClone = (_temp = _class = function (_React$Component) {
   }]);
 
   return FormControlLabelClone;
-}(_react2.default.Component), _class.propTypes = {
-  /* eslint-disable-next-line */
-  control: _propTypes2.default.object.isRequired,
-  field: _propTypes2.default.object,
-  label: _propTypes2.default.string.isRequired,
-  onToggle: _propTypes2.default.func.isRequired,
-  onConstruct: _propTypes2.default.func.isRequired
-}, _class.defaultProps = {
+}(_react2.default.Component), _class.defaultProps = {
   field: {}
 }, _initialiseProps = function _initialiseProps() {
   var _this2 = this;

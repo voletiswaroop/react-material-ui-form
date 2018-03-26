@@ -1,7 +1,7 @@
 import React from 'react'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import PropTypes from 'prop-types'
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import TextField from 'material-ui/TextField'
@@ -11,17 +11,15 @@ import {
   FormLabel,
   FormControl,
   FormControlLabel,
-  FormGroup,
   FormHelperText,
 } from 'material-ui/Form'
 import Radio, { RadioGroup } from 'material-ui/Radio'
-/* eslint-enable import/no-extraneous-dependencies */
 
-import Input, { InputLabel } from 'material-ui/Input'
+import { InputLabel } from 'material-ui/Input'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 
-import MaterialUIForm from '../../src/index'
+import MaterialUIForm from '../../dist/index'
 import styles from '../styles'
 
 

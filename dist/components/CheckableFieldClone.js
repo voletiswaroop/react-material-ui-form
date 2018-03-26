@@ -7,19 +7,11 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _class, _temp, _initialiseProps; // eslint-disable-line import/no-extraneous-dependencies
+var _class, _temp, _initialiseProps;
 
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = require('prop-types');
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _lodash = require('lodash');
-
-var _lodash2 = _interopRequireDefault(_lodash);
 
 var _Checkbox = require('material-ui/Checkbox');
 
@@ -53,9 +45,6 @@ var CheckableFieldClone = (_temp = _class = function (_React$Component) {
     if (![_Checkbox2.default, _Switch2.default].includes(fieldComp.type)) {
       throw new Error('CheckableFieldClone should be a Checkbox or Switch');
     }
-    if (fieldComp.type.name === undefined) {
-      throw new Error('CheckableFieldClone does not support native elements');
-    }
     if (fieldComp.props.name === undefined || fieldComp.props.value === undefined) {
       throw new Error('CheckableFieldClone name and value must be defined');
     }
@@ -83,12 +72,7 @@ var CheckableFieldClone = (_temp = _class = function (_React$Component) {
   }]);
 
   return CheckableFieldClone;
-}(_react2.default.Component), _class.propTypes = {
-  field: _propTypes2.default.object,
-  fieldComp: _propTypes2.default.object.isRequired,
-  onToggle: _propTypes2.default.func.isRequired,
-  onConstruct: _propTypes2.default.func.isRequired
-}, _class.defaultProps = {
+}(_react2.default.Component), _class.defaultProps = {
   field: {}
 }, _initialiseProps = function _initialiseProps() {
   var _this2 = this;

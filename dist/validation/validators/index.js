@@ -38,8 +38,7 @@ var _isRequired2 = _interopRequireDefault(_isRequired);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_validator2.default.isAlias = _isAlias2.default; // eslint-disable-line import/no-extraneous-dependencies
-
+_validator2.default.isAlias = _isAlias2.default;
 _validator2.default.isDate = _isDate2.default;
 _validator2.default.isNumber = _isNumber2.default;
 _validator2.default.isSerial = _isSerial2.default;

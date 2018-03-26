@@ -1,4 +1,4 @@
-import _ from 'lodash' // eslint-disable-line import/no-extraneous-dependencies
+import _ from 'lodash'
 
 
 export default function isSize(value, rest) {

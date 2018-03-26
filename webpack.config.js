@@ -16,6 +16,7 @@ const rules = [
       ],
       presets: [
         'env',
+        'flow',
         'react',
         'stage-0',
       ],

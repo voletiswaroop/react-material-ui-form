@@ -8,16 +8,16 @@ import Switch from 'material-ui/Switch'
 import FormControlLabelClone from '../FormControlLabelClone'
 
 
-describe('<FormControlLabelClone>:<Checkbox>', () => {
-  const field = {
-    isPristine: true,
-    isRequired: null,
-    pristineValue: null,
-    validations: [],
-    validators: [],
-    value: undefined,
-  }
+const field = {
+  isPristine: true,
+  isRequired: null,
+  pristineValue: null,
+  validations: [],
+  validators: [],
+  value: undefined,
+}
 
+describe('<FormControlLabelClone>:<Checkbox>', () => {
   const wrapper = shallow(
     <FormControlLabelClone
       control={<Checkbox checked={false} name="love" value="yes" />}
@@ -62,5 +62,38 @@ describe('<FormControlLabelClone>:<Checkbox>', () => {
       value: wrapper.state('value'),
     })
     expect(wrapper.instance().props.onToggle).toHaveBeenCalled()
+  })
+})
+
+describe('<FormControlLabelClone>:<Checkbox> (value defined)', () => {
+  field.value = 'x'
+  shallow(
+    <FormControlLabelClone
+      control={<Checkbox checked={false} name="love" value="yes" />}
+      field={field}
+      label="I love love"
+      onConstruct={jest.fn()}
+      onToggle={jest.fn()}
+    />
+  )
+})
+
+describe('<FormControlLabelClone> Invalid props', () => {
+  it('should throw if control type is other than Checkbox or Switch', () => {
+    let error
+    try {
+      shallow(
+        <FormControlLabelClone
+          control={<input />}
+          field={field}
+          label="I love love"
+          onConstruct={jest.fn()}
+          onToggle={jest.fn()}
+        />
+      )
+    } catch (e) {
+      error = e
+    }
+    expect(error).toBeInstanceOf(Error)
   })
 })
