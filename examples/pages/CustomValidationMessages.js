@@ -1,13 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
 
-/* eslint-disable import/no-extraneous-dependencies */
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import { withStyles } from 'material-ui/styles'
-/* eslint-enable import/no-extraneous-dependencies */
 
 import Form, { messageMap } from '../../src/index'
 import styles from '../styles'
@@ -52,6 +50,7 @@ export default class CustomValidationMessages extends React.Component {
           <Form
             onSubmit={this.submit}
             validation={{
+              validateInputOnBlur: true,
               messageMap: customMessageMap,
               messageKeyPrefix: 'myCustomPrefix_',
             }}

@@ -34,6 +34,7 @@ describe('<FieldClone>:<TextField>', () => {
       onConstruct={jest.fn()}
       onValueChange={jest.fn()}
       useNativeRequiredValidator={false}
+      validateInputOnBlur
     />
   )
 
@@ -135,6 +136,7 @@ describe('<FieldClone>:<Select>', () => {
       onConstruct={jest.fn()}
       onValueChange={jest.fn()}
       useNativeRequiredValidator
+      validateInputOnBlur={false}
     />
   )
 
@@ -178,6 +180,7 @@ describe('<FieldClone> Invalid props', () => {
           onConstruct={jest.fn()}
           onValueChange={jest.fn()}
           useNativeRequiredValidator
+          validateInputOnBlur={false}
         />
       )
     } catch (e) {
@@ -198,6 +201,7 @@ describe('<FieldClone> Invalid props', () => {
           onConstruct={jest.fn()}
           onValueChange={jest.fn()}
           useNativeRequiredValidator
+          validateInputOnBlur={false}
         />
       )
     } catch (e) {

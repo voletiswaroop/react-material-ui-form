@@ -24,6 +24,7 @@ exports[`<Form> (all props) should render 1`] = `
     onConstruct={[Function]}
     onValueChange={[Function]}
     useNativeRequiredValidator={true}
+    validateInputOnBlur={false}
   />
   <div
     key=".2"

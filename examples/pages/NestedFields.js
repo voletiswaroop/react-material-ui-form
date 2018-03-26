@@ -1,6 +1,5 @@
 import React from 'react'
-// eslint-disable-next-line import/no-extraneous-dependencies
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
 
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
@@ -19,7 +18,7 @@ import { InputLabel } from 'material-ui/Input'
 import Select from 'material-ui/Select'
 import { MenuItem } from 'material-ui/Menu'
 
-import MaterialUIForm from '../../dist/index'
+import MaterialUIForm from '../../src/index'
 import styles from '../styles'
 
 
@@ -77,7 +76,7 @@ export default class NestedFields extends React.Component {
               type="text"
               name="name"
               value=""
-              data-validators="isRequired,isAlpha"
+              data-validators="isInt"
               onChange={this.customInputHandler}
               fullWidth
             />

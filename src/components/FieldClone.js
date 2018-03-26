@@ -38,6 +38,7 @@ type Props = {
   onConstruct: Function,
   onValueChange: Function,
   useNativeRequiredValidator: boolean,
+  validateInputOnBlur: boolean,
 };
 
 type State = {
@@ -88,10 +89,14 @@ export default class FieldClone extends React.Component<Props, State> {
   }
 
   onBlur = (event: SyntheticInputEvent<Element>) => {
-    const { fieldComp, fieldComp: { props: { name } } } = this.props
+    const {
+      fieldComp,
+      fieldComp: { props: { name } },
+      validateInputOnBlur,
+    } = this.props
     const { value } = event.target
     // // /* TODO: create function for condition */
-    if (!fieldComp.props.select) {
+    if (validateInputOnBlur && !fieldComp.props.select) {
       this.props.onValueChange(name, value)
     }
     if (fieldComp.props.onBlur !== undefined) {
@@ -100,12 +105,18 @@ export default class FieldClone extends React.Component<Props, State> {
   }
 
   onChange = (event: SyntheticInputEvent<Element>) => {
-    const { fieldComp, fieldComp: { props: { name } } } = this.props
+    const {
+      fieldComp,
+      fieldComp: { props: { name } },
+      validateInputOnBlur,
+    } = this.props
     const { value } = event.target
-    const helperText: ?string = _.get(fieldComp.props, 'helperText')
-    this.setState({ isError: false, helperText, value })
+    if (fieldComp.props.select || validateInputOnBlur) {
+      const helperText: ?string = _.get(fieldComp.props, 'helperText')
+      this.setState({ isError: false, helperText, value })
+    }
     /* TODO: create function for condition */
-    if (fieldComp.props.select) {
+    if (!validateInputOnBlur || fieldComp.props.select) {
       this.props.onValueChange(name, value)
     }
     if (fieldComp.props.onChange !== undefined) {

@@ -96,6 +96,7 @@ type Props = {
     requiredValidatorName?: string | boolean,
     validators?: Object,
     validate?: Function,
+    validateInputOnBlur?: boolean,
   },
   validations: Object,
 };
@@ -122,6 +123,7 @@ export default class Form extends React.Component<Props, State> {
     requiredValidatorName: validationConstants.REQUIRED_VALIDATOR_NAME,
     validators: defaultValidators,
     validate,
+    validateInputOnBlur: false,
   }
 
   constructor(props: Object) {
@@ -410,6 +412,7 @@ export default class Form extends React.Component<Props, State> {
           onConstruct={this.onFieldConstruct}
           onValueChange={this.onFieldValueChange}
           useNativeRequiredValidator={!this.validation.requiredValidatorName}
+          validateInputOnBlur={this.validation.validateInputOnBlur}
         />
       )
     })
