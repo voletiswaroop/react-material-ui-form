@@ -129,6 +129,49 @@ exports[`<Form> (no props) should render 1`] = `
   onReset={[Function]}
   onSubmit={[Function]}
 >
+  <FieldClone
+    field={Object {}}
+    fieldComp={
+      <TextField
+        data-validators="isAlpha"
+        label="Name"
+        name="name"
+        required={true}
+        select={false}
+        type="text"
+        value="123!"
+      />
+    }
+    key="name/.0"
+    onConstruct={[Function]}
+    onValueChange={[Function]}
+    useNativeRequiredValidator={false}
+    validateInputOnBlur={false}
+  />
+  <WithStyles(Button)
+    key=".1"
+    type="reset"
+    variant="raised"
+  >
+    Reset
+  </WithStyles(Button)>
+  <WithStyles(Button)
+    disabled={false}
+    key=".2"
+    type="submit"
+    variant="raised"
+  >
+    Submit
+  </WithStyles(Button)>
+</form>
+`;
+
+exports[`<Form> (non-mui input) should render 1`] = `
+<form
+  autoComplete="off"
+  onReset={[Function]}
+  onSubmit={[Function]}
+>
   <input
     key=".0"
     type="text"

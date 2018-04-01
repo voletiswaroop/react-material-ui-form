@@ -53,6 +53,24 @@ function makeErrorAndHelperText(props) {
 var FieldClone = (_temp = _class = function (_React$Component) {
   _inherits(FieldClone, _React$Component);
 
+  _createClass(FieldClone, null, [{
+    key: 'getDerivedStateFromProps',
+    value: function getDerivedStateFromProps(nextProps) {
+      if (!_lodash2.default.isEmpty(nextProps.field)) {
+        var _makeErrorAndHelperTe = makeErrorAndHelperText(nextProps),
+            _helperText = _makeErrorAndHelperTe.helperText,
+            _isError = _makeErrorAndHelperTe.isError;
+
+        return {
+          helperText: _helperText,
+          isError: _isError,
+          value: nextProps.field.value
+        };
+      }
+      return null;
+    }
+  }]);
+
   function FieldClone(props) {
     _classCallCheck(this, FieldClone);
 
@@ -72,9 +90,9 @@ var FieldClone = (_temp = _class = function (_React$Component) {
 
     var value = _lodash2.default.isEmpty(props.field) ? fieldComp.props.value : props.field.value;
 
-    var _makeErrorAndHelperTe = makeErrorAndHelperText(props),
-        helperText = _makeErrorAndHelperTe.helperText,
-        isError = _makeErrorAndHelperTe.isError;
+    var _makeErrorAndHelperTe2 = makeErrorAndHelperText(props),
+        helperText = _makeErrorAndHelperTe2.helperText,
+        isError = _makeErrorAndHelperTe2.isError;
 
     _this.state = {
       helperText: helperText,
@@ -89,21 +107,6 @@ var FieldClone = (_temp = _class = function (_React$Component) {
   }
 
   _createClass(FieldClone, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      if (!_lodash2.default.isEmpty(nextProps.field)) {
-        var _makeErrorAndHelperTe2 = makeErrorAndHelperText(nextProps),
-            _helperText = _makeErrorAndHelperTe2.helperText,
-            _isError = _makeErrorAndHelperTe2.isError;
-
-        this.setState({
-          helperText: _helperText,
-          isError: _isError,
-          value: nextProps.field.value
-        });
-      }
-    }
-  }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
@@ -130,14 +133,15 @@ var FieldClone = (_temp = _class = function (_React$Component) {
 
   this.onBlur = function (event) {
     var _props2 = _this2.props,
+        isDirty = _props2.field.isDirty,
         fieldComp = _props2.fieldComp,
         name = _props2.fieldComp.props.name,
         validateInputOnBlur = _props2.validateInputOnBlur;
     var value = event.target.value;
     // // /* TODO: create function for condition */
 
-    if (validateInputOnBlur && !fieldComp.props.select) {
-      _this2.props.onValueChange(name, value);
+    if ((!isDirty || validateInputOnBlur) && !fieldComp.props.select) {
+      _this2.props.onValueChange(name, value, true);
     }
     if (fieldComp.props.onBlur !== undefined) {
       fieldComp.props.onBlur(value, { name: name }, event);
@@ -157,7 +161,7 @@ var FieldClone = (_temp = _class = function (_React$Component) {
     }
     /* TODO: create function for condition */
     if (!validateInputOnBlur || fieldComp.props.select) {
-      _this2.props.onValueChange(name, value);
+      _this2.props.onValueChange(name, value, fieldComp.props.select);
     }
     if (fieldComp.props.onChange !== undefined) {
       fieldComp.props.onChange(value, { name: name }, event);

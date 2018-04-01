@@ -16,7 +16,7 @@ import { messageMap, validators } from '../../validation'
 
 /* eslint-disable react/self-closing-comp */
 
-describe('<Form> (no props)', () => {
+describe('<Form> (non-mui input)', () => {
   const wrapper = shallow(
     <Form>
       <input type="text" />
@@ -25,6 +25,35 @@ describe('<Form> (no props)', () => {
 
   it('should render', () => {
     expect(toJson(wrapper)).toMatchSnapshot()
+  })
+})
+
+describe('<Form> (no props)', () => {
+  const validations = { name: [{ code: 'isAlpha', message: 'invalid' }] }
+  const wrapper = shallow(
+    <Form
+      onSubmit={jest.fn()}
+      validations={validations}
+    >
+      <TextField
+        label="Name"
+        type="text"
+        name="name"
+        value="123!"
+        required
+        data-validators="isAlpha"
+      />
+      <Button variant="raised" type="reset">Reset</Button>
+      <Button variant="raised" type="submit">Submit</Button>
+    </Form>
+  )
+
+  it('should render', () => {
+    expect(toJson(wrapper)).toMatchSnapshot()
+  })
+
+  it('should have submit button enabled', () => {
+    expect(wrapper.instance().props.disableSubmitButtonOnError).toEqual(true)
   })
 })
 

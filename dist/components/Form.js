@@ -47,6 +47,10 @@ var _CheckableFieldClone = require('./CheckableFieldClone');
 
 var _CheckableFieldClone2 = _interopRequireDefault(_CheckableFieldClone);
 
+var _constants = require('../constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 var _validation2 = require('../validation');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -58,8 +62,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var FIELD_VALIDATORS_PROP_NAME = 'data-validators';
 
 function checkElementInteractivity(component) {
   var whitelist = [_Form.FormControlLabel];
@@ -94,7 +96,7 @@ function getPristineFieldValues(fields) {
 }
 
 function extractFieldValidators(fieldProps) {
-  var validators = _lodash2.default.get(fieldProps, FIELD_VALIDATORS_PROP_NAME);
+  var validators = _lodash2.default.get(fieldProps, _constants2.default.FIELD_VALIDATORS_PROP_NAME);
   if (validators !== undefined) {
     if (_lodash2.default.isString(validators)) {
       validators = validators.replace(/\s/g, '').split(',');
@@ -108,6 +110,7 @@ function extractFieldValidators(fieldProps) {
 
 function getFieldTemplate() {
   return {
+    isDirty: false,
     isPristine: true,
     isRequired: null,
     pristineValue: null,
@@ -120,7 +123,29 @@ function getFieldTemplate() {
 var Form = (_temp = _class = function (_React$Component) {
   _inherits(Form, _React$Component);
 
-  // eslint-disable-next-line react/sort-comp
+  _createClass(Form, null, [{
+    key: 'getDerivedStateFromProps',
+    value: function getDerivedStateFromProps(nextProps, nextState) {
+      var fields = nextState.fields;
+
+      if (!_lodash2.default.isEmpty(fields)) {
+        _lodash2.default.each(nextProps.validations, function (validations, name) {
+          if (_lodash2.default.has(fields, name)) {
+            fields[name].validations = validations;
+          } else {
+            // eslint-disable-next-line no-console
+            console.warn('validations field "' + name + '" does not exist');
+          }
+        });
+        return fields;
+      }
+      return null;
+    }
+
+    // eslint-disable-next-line react/sort-comp
+
+  }]);
+
   function Form(props) {
     _classCallCheck(this, Form);
 
@@ -189,9 +214,12 @@ var Form = (_temp = _class = function (_React$Component) {
     };
 
     _this.onFieldValueChange = function (name, value) {
+      var isDirty = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
       _lodash2.default.defer(function () {
         _this.setState({
           fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, _this.state.fields[name], {
+            isDirty: isDirty || _this.state.fields[name].isDirty,
             isPristine: false,
             validations: [],
             value: value
@@ -205,7 +233,9 @@ var Form = (_temp = _class = function (_React$Component) {
           _this.onValuesChange(getFieldValues(_this.state.fields), getPristineFieldValues(_this.state.fields));
         }
 
-        _this.validateField(name, value);
+        if (_this.state.fields[name].isDirty) {
+          _this.validateField(name, value);
+        }
       });
     };
 
@@ -245,6 +275,8 @@ var Form = (_temp = _class = function (_React$Component) {
         _lodash2.default.each(fields, function (field, name) {
           _this.setState({
             fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, _this.state.fields[name], {
+              isDirty: false,
+              isPristine: true,
               value: ''
             })))
           });
@@ -278,21 +310,6 @@ var Form = (_temp = _class = function (_React$Component) {
   }
 
   _createClass(Form, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
-      var fields = this.state.fields;
-
-      _lodash2.default.each(nextProps.validations, function (validations, name) {
-        if (_lodash2.default.has(fields, name)) {
-          fields[name].validations = validations;
-        } else {
-          // eslint-disable-next-line no-console
-          console.warn('validations field "' + name + '" does not exist');
-        }
-      });
-      this.setState({ fields: fields });
-    }
-  }, {
     key: 'enableSubmitButton',
     value: function enableSubmitButton() {
       if (this.state.disableSubmitButton) {
@@ -417,5 +434,6 @@ var Form = (_temp = _class = function (_React$Component) {
   disableSubmitButtonOnError: true,
   onValuesChange: undefined,
   validation: {},
-  validations: {} }, _temp);
+  validations: {}
+}, _temp);
 exports.default = Form;

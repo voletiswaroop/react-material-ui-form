@@ -21,7 +21,13 @@ var _Form = require('material-ui/Form');
 
 var _Input = require('material-ui/Input');
 
+var _constants = require('../constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -75,7 +81,12 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     }
 
     if (props.field.value === undefined) {
-      props.onConstruct({ name: name, value: value, required: required });
+      var validatorsPropName = _constants2.default.FIELD_VALIDATORS_PROP_NAME;
+      props.onConstruct(_defineProperty({
+        name: name,
+        value: value,
+        required: required
+      }, validatorsPropName, props.formControlComp.props[validatorsPropName]));
     } else {
       value = props.field.value; // eslint-disable-line prefer-destructuring
       if (!_lodash2.default.isEmpty(props.field) && props.field.validations.length > 0) {
@@ -94,9 +105,12 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     return _this;
   }
 
+  // eslint-disable-next-line
+
+
   _createClass(FormControlClone, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {
+    key: 'UNSAFE_componentWillReceiveProps',
+    value: function UNSAFE_componentWillReceiveProps(nextProps) {
       if (!_lodash2.default.isEmpty(nextProps.field)) {
         var _getErrorAndHelperTex = getErrorAndHelperText(nextProps.field),
             _helperText = _getErrorAndHelperTex.helperText,
@@ -163,7 +177,7 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     var value = event.target.value;
 
     _this3.setState({ isError: false, helperText: _this3.helperText, value: value });
-    _this3.props.onValueChange(_this3.name, value);
+    _this3.props.onValueChange(_this3.name, value, true);
   };
 }, _temp);
 exports.default = FormControlClone;

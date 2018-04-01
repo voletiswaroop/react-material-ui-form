@@ -17,6 +17,7 @@ import FormControlClone from './FormControlClone'
 import FormControlLabelClone from './FormControlLabelClone'
 import FieldClone from './FieldClone'
 import CheckableFieldClone from './CheckableFieldClone'
+import constants from '../constants'
 import {
   messageMap,
   validate,
@@ -24,8 +25,6 @@ import {
   constants as validationConstants,
 } from '../validation'
 
-
-const FIELD_VALIDATORS_PROP_NAME = 'data-validators'
 
 function checkElementInteractivity(component: any): boolean {
   const whitelist = [
@@ -61,7 +60,7 @@ function getPristineFieldValues(fields: Object): Object {
 }
 
 function extractFieldValidators(fieldProps: Object): Array<mixed> {
-  let validators = _.get(fieldProps, FIELD_VALIDATORS_PROP_NAME)
+  let validators = _.get(fieldProps, constants.FIELD_VALIDATORS_PROP_NAME)
   if (validators !== undefined) {
     if (_.isString(validators)) {
       validators = validators.replace(/\s/g, '').split(',')
@@ -75,6 +74,7 @@ function extractFieldValidators(fieldProps: Object): Array<mixed> {
 
 function getFieldTemplate() {
   return {
+    isDirty: false,
     isPristine: true,
     isRequired: null,
     pristineValue: null,
@@ -115,6 +115,22 @@ export default class Form extends React.Component<Props, State> {
     validations: {},
   }
 
+  static getDerivedStateFromProps(nextProps: Object, nextState: Object) {
+    const { fields } = nextState
+    if (!_.isEmpty(fields)) {
+      _.each(nextProps.validations, (validations, name) => {
+        if (_.has(fields, name)) {
+          fields[name].validations = validations
+        } else {
+          // eslint-disable-next-line no-console
+          console.warn(`validations field "${name}" does not exist`)
+        }
+      })
+      return fields
+    }
+    return null
+  }
+
   // eslint-disable-next-line react/sort-comp
   onValuesChange: void
   validation = {
@@ -135,19 +151,6 @@ export default class Form extends React.Component<Props, State> {
       disableSubmitButton: false,
       fields: {},
     }
-  }
-
-  componentWillReceiveProps(nextProps: Object) {
-    const { fields } = this.state
-    _.each(nextProps.validations, (validations, name) => {
-      if (_.has(fields, name)) {
-        fields[name].validations = validations
-      } else {
-        // eslint-disable-next-line no-console
-        console.warn(`validations field "${name}" does not exist`)
-      }
-    })
-    this.setState({ fields })
   }
 
   onFieldConstruct = (fieldProps: Object) => {
@@ -213,13 +216,14 @@ export default class Form extends React.Component<Props, State> {
     }
   }
 
-  onFieldValueChange = (name: string, value: mixed) => {
+  onFieldValueChange = (name: string, value: any, isDirty: boolean = false) => {
     _.defer(() => {
       this.setState({
         fields: {
           ...this.state.fields,
           [name]: {
             ...this.state.fields[name],
+            isDirty: isDirty || this.state.fields[name].isDirty,
             isPristine: false,
             validations: [],
             value,
@@ -237,11 +241,13 @@ export default class Form extends React.Component<Props, State> {
         )
       }
 
-      this.validateField(name, value)
+      if (this.state.fields[name].isDirty) {
+        this.validateField(name, value)
+      }
     })
   }
 
-  onFieldToggle = (name: string, value: mixed, checked: boolean) => {
+  onFieldToggle = (name: string, value: any, checked: boolean) => {
     this.setState({
       fields: {
         ...this.state.fields,
@@ -256,7 +262,7 @@ export default class Form extends React.Component<Props, State> {
     })
   }
 
-  validateField = (name: string, value: mixed) => {
+  validateField = (name: string, value: any) => {
     const field = this.state.fields[name]
     if (!_.isEmpty(field.validators)) {
       const { validation } = this
@@ -285,6 +291,8 @@ export default class Form extends React.Component<Props, State> {
             ...this.state.fields,
             [name]: {
               ...this.state.fields[name],
+              isDirty: false,
+              isPristine: true,
               value: '',
             },
           },

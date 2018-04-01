@@ -33,7 +33,7 @@ function makeErrorAndHelperText(props: Object): Object {
 }
 
 type Props = {
-  field?: Object,
+  field: Object,
   fieldComp: Object,
   onConstruct: Function,
   onValueChange: Function,
@@ -44,12 +44,24 @@ type Props = {
 type State = {
   helperText: ?string,
   isError: boolean,
-  value: mixed,
+  value: any,
 };
 
 export default class FieldClone extends React.Component<Props, State> {
   static defaultProps = {
     field: {},
+  }
+
+  static getDerivedStateFromProps(nextProps: Object) {
+    if (!_.isEmpty(nextProps.field)) {
+      const { helperText, isError } = makeErrorAndHelperText(nextProps)
+      return {
+        helperText,
+        isError,
+        value: nextProps.field.value,
+      }
+    }
+    return null
   }
 
   constructor(props: Object) {
@@ -77,27 +89,17 @@ export default class FieldClone extends React.Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps(nextProps: Object) {
-    if (!_.isEmpty(nextProps.field)) {
-      const { helperText, isError } = makeErrorAndHelperText(nextProps)
-      this.setState({
-        helperText,
-        isError,
-        value: nextProps.field.value,
-      })
-    }
-  }
-
   onBlur = (event: SyntheticInputEvent<Element>) => {
     const {
+      field: { isDirty },
       fieldComp,
       fieldComp: { props: { name } },
       validateInputOnBlur,
     } = this.props
     const { value } = event.target
     // // /* TODO: create function for condition */
-    if (validateInputOnBlur && !fieldComp.props.select) {
-      this.props.onValueChange(name, value)
+    if ((!isDirty || validateInputOnBlur) && !fieldComp.props.select) {
+      this.props.onValueChange(name, value, true)
     }
     if (fieldComp.props.onBlur !== undefined) {
       fieldComp.props.onBlur(value, { name }, event)
@@ -117,7 +119,7 @@ export default class FieldClone extends React.Component<Props, State> {
     }
     /* TODO: create function for condition */
     if (!validateInputOnBlur || fieldComp.props.select) {
-      this.props.onValueChange(name, value)
+      this.props.onValueChange(name, value, fieldComp.props.select)
     }
     if (fieldComp.props.onChange !== undefined) {
       fieldComp.props.onChange(value, { name }, event)

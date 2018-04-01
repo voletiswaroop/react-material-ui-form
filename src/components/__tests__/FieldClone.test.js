@@ -97,7 +97,7 @@ describe('<FieldClone>:<TextField>', () => {
     const event = { target: { value } }
     const { onValueChange } = wrapper.instance().props
     wrapper.find(TextField).simulate('blur', event)
-    expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value)
+    expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value, true)
   })
 
   it('should update props', () => {
@@ -154,7 +154,7 @@ describe('<FieldClone>:<Select>', () => {
       isError: false,
       value,
     })
-    expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value)
+    expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value, true)
   })
 })
 

@@ -6,6 +6,8 @@ import _ from 'lodash'
 import { FormControl, FormHelperText, FormLabel } from 'material-ui/Form'
 import { InputLabel } from 'material-ui/Input'
 
+import constants from '../constants'
+
 
 function getErrorAndHelperText(field: Object): Object {
   let helperText: ?string
@@ -71,7 +73,13 @@ export default class FormControlClone extends React.Component<Props, State> {
     }
 
     if (props.field.value === undefined) {
-      props.onConstruct({ name, value, required })
+      const validatorsPropName = constants.FIELD_VALIDATORS_PROP_NAME
+      props.onConstruct({
+        name,
+        value,
+        required,
+        [validatorsPropName]: props.formControlComp.props[validatorsPropName],
+      })
     } else {
       value = props.field.value // eslint-disable-line prefer-destructuring
       if (!_.isEmpty(props.field) && props.field.validations.length > 0) {
@@ -89,7 +97,8 @@ export default class FormControlClone extends React.Component<Props, State> {
     }
   }
 
-  componentWillReceiveProps(nextProps: Object) {
+  // eslint-disable-next-line
+  UNSAFE_componentWillReceiveProps(nextProps: Object) {
     if (!_.isEmpty(nextProps.field)) {
       const { helperText, isError } = getErrorAndHelperText(nextProps.field)
       this.setState({
@@ -103,7 +112,7 @@ export default class FormControlClone extends React.Component<Props, State> {
   onChange = (event: SyntheticInputEvent<Element>) => {
     const { value } = event.target
     this.setState({ isError: false, helperText: this.helperText, value })
-    this.props.onValueChange(this.name, value)
+    this.props.onValueChange(this.name, value, true)
   }
 
   render() {

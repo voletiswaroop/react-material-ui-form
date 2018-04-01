@@ -73,11 +73,17 @@ export default class NestedFields extends React.Component {
             {'Please fill in the required fields (*)'}
             <TextField
               label="Name"
-              type="text"
               name="name"
               value=""
-              data-validators="isInt"
+              data-validators="isInt,isRequired"
               onChange={this.customInputHandler}
+              fullWidth
+            />
+            <TextField
+              label="Email"
+              name="email"
+              value=""
+              data-validators="isEmail"
               fullWidth
             />
 
@@ -101,7 +107,7 @@ export default class NestedFields extends React.Component {
 
             <fieldset>
               <legend>FormControl Select</legend>
-              <FormControl required>
+              <FormControl required data-validators="isInt">
                 <InputLabel htmlFor="age-helper">Age</InputLabel>
                 <Select value="" name="age">
                   <MenuItem value=""><em>Please select your age ...</em></MenuItem>
