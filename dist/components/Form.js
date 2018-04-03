@@ -47,6 +47,10 @@ var _CheckableFieldClone = require('./CheckableFieldClone');
 
 var _CheckableFieldClone2 = _interopRequireDefault(_CheckableFieldClone);
 
+var _DeleteFieldRowButton = require('./DeleteFieldRowButton');
+
+var _DeleteFieldRowButton2 = _interopRequireDefault(_DeleteFieldRowButton);
+
 var _constants = require('../constants');
 
 var _constants2 = _interopRequireDefault(_constants);
@@ -63,16 +67,23 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-function checkElementInteractivity(component) {
+function verifyFieldElement(component) {
   var whitelist = [_Form.FormControlLabel];
 
   return whitelist.includes(component.type) || _lodash2.default.has(component, 'props.name') && _lodash2.default.has(component, 'props.value');
 }
 
-function isValidForm(fields) {
-  return _lodash2.default.size(_lodash2.default.filter(fields, function (field) {
-    return field.validations.length > 0;
-  })) === 0;
+function extractFieldValidators(fieldProps) {
+  var validators = _lodash2.default.get(fieldProps, _constants2.default.FIELD_VALIDATORS_PROP_NAME);
+  if (validators !== undefined) {
+    if (_lodash2.default.isString(validators)) {
+      validators = validators.replace(/\s/g, '').split(',');
+    } else if (!_lodash2.default.isArray(validators)) {
+      validators = [validators];
+    }
+    return validators;
+  }
+  return [];
 }
 
 function getFieldValues(fields) {
@@ -95,19 +106,6 @@ function getPristineFieldValues(fields) {
   return values;
 }
 
-function extractFieldValidators(fieldProps) {
-  var validators = _lodash2.default.get(fieldProps, _constants2.default.FIELD_VALIDATORS_PROP_NAME);
-  if (validators !== undefined) {
-    if (_lodash2.default.isString(validators)) {
-      validators = validators.replace(/\s/g, '').split(',');
-    } else if (!_lodash2.default.isArray(validators)) {
-      validators = [validators];
-    }
-    return validators;
-  }
-  return [];
-}
-
 function getFieldTemplate() {
   return {
     isDirty: false,
@@ -120,15 +118,22 @@ function getFieldTemplate() {
   };
 }
 
+function isValidForm(fields) {
+  return _lodash2.default.size(_lodash2.default.filter(fields, function (field) {
+    return field.validations.length > 0;
+  })) === 0;
+}
+
 var Form = (_temp = _class = function (_React$Component) {
   _inherits(Form, _React$Component);
 
   _createClass(Form, null, [{
     key: 'getDerivedStateFromProps',
-    value: function getDerivedStateFromProps(nextProps, nextState) {
-      var fields = nextState.fields;
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      var fields = prevState.fields;
 
       if (!_lodash2.default.isEmpty(fields)) {
+        // add validations to fields
         _lodash2.default.each(nextProps.validations, function (validations, name) {
           if (_lodash2.default.has(fields, name)) {
             fields[name].validations = validations;
@@ -137,7 +142,7 @@ var Form = (_temp = _class = function (_React$Component) {
             console.warn('validations field "' + name + '" does not exist');
           }
         });
-        return fields;
+        return { fields: fields };
       }
       return null;
     }
@@ -171,6 +176,7 @@ var Form = (_temp = _class = function (_React$Component) {
       if (checked === true) {
         _lodash2.default.defer(function () {
           _this.setState({
+            // arrayFieldLengths,
             fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, getFieldTemplate(), {
               checked: checked || false,
               value: value
@@ -196,6 +202,7 @@ var Form = (_temp = _class = function (_React$Component) {
 
           _lodash2.default.defer(function () {
             _this.setState({
+              // arrayFieldLengths,
               fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, getFieldTemplate(), {
                 isRequired: isRequired,
                 pristineValue: value,
@@ -300,6 +307,29 @@ var Form = (_temp = _class = function (_React$Component) {
       }
     };
 
+    _this.deleteRow = function (row) {
+      var pos = row.indexOf('[');
+      var rowName = row.substr(0, pos);
+      var rowIndex = parseInt(row.substr(pos + 1), 10);
+
+      var fields = _this.state.fields;
+
+      _lodash2.default.each(fields, function (field, fieldName) {
+        if (fieldName.startsWith(row)) {
+          delete fields[fieldName];
+        } else if (fieldName.startsWith(rowName)) {
+          var index = parseInt(fieldName.substr(pos + 1), 10);
+          if (index > rowIndex) {
+            var newRow = fieldName.replace(/\[\d+\]/, '[' + (index - 1) + ']');
+            delete fields[fieldName];
+            fields[newRow] = field;
+          }
+        }
+      });
+
+      _this.setState({ fields: fields });
+    };
+
     _this.onValuesChange = props.onValuesChange;
     _this.validation = Object.assign(_this.validation, props.validation);
     _this.state = {
@@ -336,8 +366,8 @@ var Form = (_temp = _class = function (_React$Component) {
           return child;
         }
 
-        var isInteractiveElement = checkElementInteractivity(child);
-        var nestedChildren = _lodash2.default.isArray(child.props.children) && !isInteractiveElement ? _lodash2.default.filter(child.props.children, function (v) {
+        var isFieldElement = verifyFieldElement(child);
+        var nestedChildren = _lodash2.default.isArray(child.props.children) && !isFieldElement ? _lodash2.default.filter(child.props.children, function (v) {
           return _lodash2.default.isObject(v) || _lodash2.default.isString(v);
         }) : false;
 
@@ -371,7 +401,15 @@ var Form = (_temp = _class = function (_React$Component) {
             disabled: _this2.state.disableSubmitButton
           });
           // non-interactive elements should be rendered as is
-        } else if (!isInteractiveElement) {
+        } else if (!isFieldElement) {
+          // delete row button
+          if (child.props[_constants2.default.DELETE_FIELD_ROW] !== undefined) {
+            return _react2.default.createElement(_DeleteFieldRowButton2.default, {
+              buttonComp: child,
+              onRequestRowDelete: _this2.deleteRow
+            });
+          }
+          // any other element
           return child;
         }
         // clone control label

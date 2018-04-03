@@ -12,11 +12,12 @@ import Button from 'material-ui/Button'
 
 import './styles.less'
 import './markdown.css'
-import MultiStep from './pages/MultiStep'
 import NestedFields from './pages/NestedFields'
 import CustomValidationMessages from './pages/CustomValidationMessages'
 import CustomValidators from './pages/CustomValidators'
 import CustomValidateFunction from './pages/CustomValidateFunction'
+import Steppers from './pages/Steppers'
+import DynamicArrayFields from './pages/DynamicArrayFields'
 import MiscProps from './pages/MiscProps'
 import ReadmeHTML from '../README.md'
 
@@ -60,7 +61,10 @@ const Root = () => (
               </Link>
             </Button>
             <Button>
-              <Link to="/stepper">Stepper</Link>
+              <Link to="/steppers">Steppers</Link>
+            </Button>
+            <Button>
+              <Link to="/dynamic-array-fields">Dynamic Array Fields</Link>
             </Button>
             <Button>
               <Link to="/misc-props">Misc Props</Link>
@@ -81,7 +85,8 @@ const Root = () => (
           path="/custom-validate-function"
           component={CustomValidateFunction}
         />
-        <Route path="/stepper" component={MultiStep} />
+        <Route path="/steppers" component={Steppers} />
+        <Route path="/dynamic-array-fields" component={DynamicArrayFields} />
         <Route path="/misc-props" component={MiscProps} />
         <Route path="/readme" component={Readme} />
       </div>

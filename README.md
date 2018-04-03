@@ -8,7 +8,7 @@
 
 _material-ui-form_ is a React wrapper for Material-UI form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
 
-Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers (multi-page forms) and conditional form fields are also supported without extra configuration. 
+Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers (multi-page forms) and dynamic array fields are also supported without extra configuration. 
 
 #### use and requirements
 
@@ -494,6 +494,72 @@ class MyForm extends React.Component {
           }
         </MaterialUIForm>
       </div>
+    )
+  }
+}
+```
+
+#### Dynamic array fields (notice `deletefieldrow` prop on delete row button):
+```jsx
+import MaterialUIForm from 'material-ui-form'
+ 
+
+class MyForm extends React.Component {
+  state = {
+    rows: [{ label: '', value: '' }],
+    onSubmitValues: null,
+  }
+
+  addRow = () => {
+    const { rows } = this.state
+    rows.push({ label: '', value: '' })
+    this.setState({ rows })
+  }
+
+  deleteRow = (index) => {
+    const { rows } = this.state
+    if (rows.length > 1) {
+      rows.splice(index, 1)
+      this.setState({ rows })
+    }
+  }
+
+  submit = (values, pristineValues) => {
+    // on form submission you get the values and pristineValues
+  }
+
+  render() {
+    const steps = getSteps()
+
+    return (
+      <MaterialUIForm onSubmit={this.submit}>
+        {this.state.rows.map((row, i) => (
+          <Fragment key={_.uniqueId()}>
+            <TextField
+              label="Label"
+              name={`rows[${i}][label]`}
+              value=""
+              required
+            />
+            <TextField
+              label="Value"
+              name={`rows[${i}][value]`}
+              value=""
+            />
+            { this.state.rows.length > 1 &&
+              <Button
+                onClick={() => this.deleteRow(i)}
+                deletefieldrow={`rows[${i}]`}
+              >
+                Remove Row
+              </Button>
+            }
+          </Fragment>
+        ))}
+        
+        <Button variant="raised" onClick={this.addRow}>Add row</Button>
+        <Button variant="raised" color="primary" type="submit">Submit</Button>
+      </MaterialUIForm>
     )
   }
 }

@@ -81,6 +81,9 @@ if (!args.p) {
 
 module.exports = {
   devtool,
+  devServer: {
+    historyApiFallback: true,
+  },
   externals,
   output: {
     filename: 'material-ui-form.min.js',

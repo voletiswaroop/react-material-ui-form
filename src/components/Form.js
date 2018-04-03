@@ -17,6 +17,7 @@ import FormControlClone from './FormControlClone'
 import FormControlLabelClone from './FormControlLabelClone'
 import FieldClone from './FieldClone'
 import CheckableFieldClone from './CheckableFieldClone'
+import DeleteFieldRowButton from './DeleteFieldRowButton'
 import constants from '../constants'
 import {
   messageMap,
@@ -26,7 +27,7 @@ import {
 } from '../validation'
 
 
-function checkElementInteractivity(component: any): boolean {
+function verifyFieldElement(component: any): boolean {
   const whitelist = [
     FormControlLabel,
   ]
@@ -35,8 +36,17 @@ function checkElementInteractivity(component: any): boolean {
    || (_.has(component, 'props.name') && _.has(component, 'props.value'))
 }
 
-function isValidForm(fields: Object): boolean {
-  return _.size(_.filter(fields, field => field.validations.length > 0)) === 0
+function extractFieldValidators(fieldProps: Object): Array<mixed> {
+  let validators = _.get(fieldProps, constants.FIELD_VALIDATORS_PROP_NAME)
+  if (validators !== undefined) {
+    if (_.isString(validators)) {
+      validators = validators.replace(/\s/g, '').split(',')
+    } else if (!_.isArray(validators)) {
+      validators = [validators]
+    }
+    return validators
+  }
+  return []
 }
 
 function getFieldValues(fields: Object): Object {
@@ -59,19 +69,6 @@ function getPristineFieldValues(fields: Object): Object {
   return values
 }
 
-function extractFieldValidators(fieldProps: Object): Array<mixed> {
-  let validators = _.get(fieldProps, constants.FIELD_VALIDATORS_PROP_NAME)
-  if (validators !== undefined) {
-    if (_.isString(validators)) {
-      validators = validators.replace(/\s/g, '').split(',')
-    } else if (!_.isArray(validators)) {
-      validators = [validators]
-    }
-    return validators
-  }
-  return []
-}
-
 function getFieldTemplate() {
   return {
     isDirty: false,
@@ -82,6 +79,10 @@ function getFieldTemplate() {
     validators: [],
     value: undefined,
   }
+}
+
+function isValidForm(fields: Object): boolean {
+  return _.size(_.filter(fields, field => field.validations.length > 0)) === 0
 }
 
 type Props = {
@@ -115,9 +116,10 @@ export default class Form extends React.Component<Props, State> {
     validations: {},
   }
 
-  static getDerivedStateFromProps(nextProps: Object, nextState: Object) {
-    const { fields } = nextState
+  static getDerivedStateFromProps(nextProps: Object, prevState: Object) {
+    const { fields } = prevState
     if (!_.isEmpty(fields)) {
+      // add validations to fields
       _.each(nextProps.validations, (validations, name) => {
         if (_.has(fields, name)) {
           fields[name].validations = validations
@@ -126,7 +128,7 @@ export default class Form extends React.Component<Props, State> {
           console.warn(`validations field "${name}" does not exist`)
         }
       })
-      return fields
+      return { fields }
     }
     return null
   }
@@ -165,6 +167,7 @@ export default class Form extends React.Component<Props, State> {
     if (checked === true) {
       _.defer(() => {
         this.setState({
+          // arrayFieldLengths,
           fields: {
             ...this.state.fields,
             [name]: {
@@ -195,6 +198,7 @@ export default class Form extends React.Component<Props, State> {
 
         _.defer(() => {
           this.setState({
+            // arrayFieldLengths,
             fields: {
               ...this.state.fields,
               [name]: {
@@ -331,6 +335,28 @@ export default class Form extends React.Component<Props, State> {
     }
   }
 
+  deleteRow = (row: string) => {
+    const pos: number = row.indexOf('[')
+    const rowName: string = row.substr(0, pos)
+    const rowIndex: number = parseInt(row.substr(pos + 1), 10)
+
+    const { fields } = this.state
+    _.each(fields, (field, fieldName) => {
+      if (fieldName.startsWith(row)) {
+        delete fields[fieldName]
+      } else if (fieldName.startsWith(rowName)) {
+        const index = parseInt(fieldName.substr(pos + 1), 10)
+        if (index > rowIndex) {
+          const newRow = fieldName.replace(/\[\d+\]/, `[${(index - 1)}]`)
+          delete fields[fieldName]
+          fields[newRow] = field
+        }
+      }
+    })
+
+    this.setState({ fields })
+  }
+
   cloneChildrenRecursively(children: any): any {
     return React.Children.map(children, (child) => {
       if (_.isEmpty(child)) {
@@ -340,8 +366,8 @@ export default class Form extends React.Component<Props, State> {
         return child
       }
 
-      const isInteractiveElement = checkElementInteractivity(child)
-      const nestedChildren = _.isArray(child.props.children) && !isInteractiveElement
+      const isFieldElement = verifyFieldElement(child)
+      const nestedChildren = _.isArray(child.props.children) && !isFieldElement
         ? _.filter(child.props.children, v => (_.isObject(v) || _.isString(v)))
         : false
 
@@ -379,7 +405,15 @@ export default class Form extends React.Component<Props, State> {
           disabled: this.state.disableSubmitButton,
         })
       // non-interactive elements should be rendered as is
-      } else if (!isInteractiveElement) {
+      } else if (!isFieldElement) {
+        // delete row button
+        if (child.props[constants.DELETE_FIELD_ROW] !== undefined) {
+          return (<DeleteFieldRowButton
+            buttonComp={child}
+            onRequestRowDelete={this.deleteRow}
+          />)
+        }
+        // any other element
         return child
       }
       // clone control label

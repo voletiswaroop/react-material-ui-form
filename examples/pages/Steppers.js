@@ -38,7 +38,7 @@ function getSteps() {
 }
 
 @withStyles(styles)
-export default class MultiStep extends Component {
+export default class Steppers extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
   }

@@ -1,6 +1,6 @@
 {
   "name": "material-ui-form",
-  "version": "1.0.0-alpha.18",
+  "version": "1.0.0-alpha.19",
   "description": "State and validation management for Material-UI form components",
   "main": "dist/index.js",
   "scripts": {
