@@ -1,8 +1,28 @@
+### material-ui-form
+
 [![npm](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
 [![David](https://david-dm.org/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form.svg)
 [![Build Status](https://travis-ci.org/unitedhubs/material-ui-form.svg?branch=dev)](https://travis-ci.org/unitedhubs/material-ui-form)
 [![Coverage Status](https://coveralls.io/repos/github/unitedhubs/material-ui-form/badge.svg)](https://coveralls.io/github/unitedhubs/material-ui-form)
 [![tested with jest](https://img.shields.io/badge/tested_with-jest-99424f.svg)](https://github.com/facebook/jest)
+
+1. [About](#about)
+2. [Setup](#setup)
+3. [Props](#props)
+ - [Form props](#form-props-optional)
+ - [Field props](#field-props)
+ - [Other props](#other-props)
+4. [Examples](#examples)
+ - [Nested fields](#nested-fields)
+ - [Custom validation messages](#custom-validation-messages)
+ - [Custom validators](#custom-validators)
+ - [Custom validation logic](#custom-validation-logic)
+ - [Misc form settings](#form-autocomplete-and-on-error-submission)
+ - [Getting values on field update](#getting-form-values-on-field-change)
+ - [Multi-page form](#multi-page-form)
+ - [Dynamic array fields](#dynamic-array-fields-notice-the-deletefieldrow-prop-on-the-remove-row-button)
+ - [Custom component handler](#custom-components-with-custom-handlers)
+5. [Contributing](#contributing)
 
 ## About
 
