@@ -79,7 +79,7 @@ Prop                          | Description               | Required
 
 Prop                     | Value             | Description       
 -------------------------| ------------------|------------------------
-[***deletefieldrow***](#dynamic-array-fields-notice-deletefieldrow-prop-on-delete-row-button) _[string]_ | Field **name** prop up to and including the row index (i.e. _rooms[2]_) | Add to button components that use _onClick_ to remove any array field rows
+[***deletefieldrow***](#dynamic-array-fields-notice-the-deletefieldrow-prop-on-the-remove-row-button) _[string]_ | Field **name** prop up to and including the row index (i.e. _rooms[2]_) | Add to button components that use _onClick_ to remove any array field rows
 
 ## Examples
 
