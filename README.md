@@ -57,11 +57,11 @@ Prop                          | Description               | Default
 ***onSubmit*** _[func]_       | Returns _@values_ and _@pristineValues_ on form submission |
 ***onValuesChange*** _[func]_ | Returns _@values_ and _@pristineValues_ on field value change |
 ***validation*** _[object]_   | Object specifing validation config options (prefixed below with ↳) |
-↳ ***messageMap*** _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ parameter | _object_
+↳ ***messageMap*** _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ export parameter | _object_
 ↳ ***messageKeyPrefix*** _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
 ↳ ***requiredValidatorName*** _[boolean, string]_ | Specifies the validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
 ↳ ***validate*** _[func]_ | Overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | _func_
-↳ ***validators*** _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ parameter | _object_
+↳ ***validators*** _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ export parameter | _object_
 ↳ ***validateInputOnBlur*** _[boolean]_ | Makes text input validations happen on blur instead of on change | false
 ***validations*** _[object]_ | Validations to pass to the form (i.e. from the server). Should be an object with keys representing field _name_ props and values as arrays of field error messages. The first error message will be displayed per field | 
 
@@ -74,6 +74,12 @@ Prop                          | Description               | Required
 ***data-validators*** _[string, array[object]]_ | Validators to apply to the field. Multiple validator names can be specified with a comma-delimited string |  
 ***onBlur*** _[func]_ | A custom handler that will be called after the field's `onBlur` event. Provides _@value/checked_, _@field_ and _@event_ parameters | 
 ***onChange*** _[func]_ | A custom handler that will be called after the field's `onChange` event. Provides _@value/checked_, _@field_ and _@event_ parameters |  
+
+#### Other props:
+
+Prop                     | Value             | Description       
+-------------------------| ------------------|------------------------
+[***deletefieldrow***](#dynamic-array-fields-notice-deletefieldrow-prop-on-delete-row-button) _[string]_ | Field *name* prop up to and including the row index (i.e. _rooms[2]_) | Add to button components that use _onClick_ to remove any array field rows
 
 ## Examples
 
