@@ -505,7 +505,7 @@ class MyForm extends React.Component {
 }
 ```
 
-#### Dynamic array fields (notice `deletefieldrow` prop on delete row button):
+#### Dynamic array fields (notice the `deletefieldrow` prop on the "Remove Row" button):
 ```jsx
 import MaterialUIForm from 'material-ui-form'
  
@@ -522,7 +522,7 @@ class MyForm extends React.Component {
     this.setState({ rows })
   }
 
-  deleteRow = (index) => {
+  removeRow = (index) => {
     const { rows } = this.state
     if (rows.length > 1) {
       rows.splice(index, 1)
@@ -554,7 +554,7 @@ class MyForm extends React.Component {
             />
             { this.state.rows.length > 1 &&
               <Button
-                onClick={() => this.deleteRow(i)}
+                onClick={() => this.removeRow(i)}
                 deletefieldrow={`rows[${i}]`}
               >
                 Remove Row
