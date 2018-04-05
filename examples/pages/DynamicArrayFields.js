@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
-// import formDataToObject from 'form-data-to-object'
 
 import Grid from 'material-ui/Grid'
 import Button from 'material-ui/Button'
