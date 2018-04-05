@@ -26,14 +26,14 @@
 
 ## About
 
-_material-ui-form_ is a React wrapper for Material-UI form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
+_material-ui-form_ is a React wrapper for [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
 
 Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers (multi-page forms) and dynamic array fields are also supported without extra configuration. 
 
 #### use and requirements
 
 - requires React 16.2.0 or later
-- supports official and unofficial [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) fields (other input elements are rendered without state/validation support)
+- supports official and unofficial Material-UI fields (other input elements are rendered without state/validation support)
 - every input field must have `value` and `name` props
 - every input field should NOT have `onChange` and `onBlur` props (unless you need custom field-specific logic)
 - add a `data-validators` prop to any input field (or FormControl / FormControlLabel) to specify validation rules
@@ -110,15 +110,17 @@ import MaterialUIForm from 'material-ui-form'
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   customInputHandler = (value, { name }, event) => {
     // the form will update the field as usual, and then call this handler
+    // if you want to have complete control of the field, change the "value" prop to "defaultValue"
   }
 
   customToggleHandler = (checked, { name, value }, event) => {
     // the form will update the field as usual, and then call this handler
+    // if you want to have complete control of the field, change the "value" prop to "defaultValue"
   }
 
   render() {
@@ -179,7 +181,7 @@ const customMessageMap = Object.assign(messageMap, {
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -242,7 +244,7 @@ const customMessageMap = Object.assign(messageMap, {
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -296,7 +298,7 @@ const validationOptions = {
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -357,7 +359,7 @@ class MyForm extends React.Component {
   }
 
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -387,7 +389,7 @@ import MaterialUIForm from 'material-ui-form'
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -419,11 +421,11 @@ import MaterialUIForm from 'material-ui-form'
 
 class MyForm extends React.Component {
   handleValuesChange = (values, pristineValues) => {
-    // on field change you get the form values and pristineValues
+    // get all values and pristineValues when any field updates
   }
 
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -477,7 +479,7 @@ class MyForm extends React.Component {
   }
 
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
@@ -551,7 +553,7 @@ class MyForm extends React.Component {
   }
 
   submit = (values, pristineValues) => {
-    // on form submission you get the values and pristineValues
+    // get all values and pristineValues on form submission
   }
 
   render() {
