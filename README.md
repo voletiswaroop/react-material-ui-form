@@ -32,7 +32,7 @@ Validation is done with [validator.js](https://github.com/chriso/validator.js) b
 
 #### use and requirements
 
-- requires React 16.2.0 or later
+- requires React 16.3.0 or newer
 - supports official and unofficial Material-UI fields (other input elements are rendered without state/validation support)
 - every input field must have `value` and `name` props
 - every input field should NOT have `onChange` and `onBlur` props (unless you need custom field-specific logic)
