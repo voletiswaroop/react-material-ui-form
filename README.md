@@ -534,13 +534,13 @@ import MaterialUIForm from 'material-ui-form'
 
 class MyForm extends React.Component {
   state = {
-    rows: [{ label: '', value: '' }],
+    rows: [{ _id: _.uniqueId() }],
     onSubmitValues: null,
   }
 
   addRow = () => {
     const { rows } = this.state
-    rows.push({ label: '', value: '' })
+    rows.push({ _id: _.uniqueId() })
     this.setState({ rows })
   }
 
@@ -562,7 +562,7 @@ class MyForm extends React.Component {
     return (
       <MaterialUIForm onSubmit={this.submit}>
         {this.state.rows.map((row, i) => (
-          <Fragment key={_.uniqueId()}>
+          <Fragment key={row._id}>
             <TextField
               label="Label"
               name={`rows[${i}][label]`}
