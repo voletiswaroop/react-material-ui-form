@@ -23,6 +23,7 @@
     - [Dynamic array fields](#dynamic-array-fields-notice-the-deletefieldrow-prop-on-the-remove-row-button)
     - [Custom component handler](#custom-components-with-custom-handlers)
 5. [Contributing](#contributing)
+6. [License](#license)
 
 ## About
 
