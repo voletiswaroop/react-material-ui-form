@@ -259,7 +259,8 @@ var Form = (_temp = _class = function (_React$Component) {
 
     _this.validateField = function (name, value) {
       var field = _this.state.fields[name];
-      if (!_lodash2.default.isEmpty(field.validators)) {
+
+      if (!(field.value === '' && !field.isRequired) && !_lodash2.default.isEmpty(field.validators)) {
         var _validation = _this.validation;
 
         var _validations2 = _validation.validate(value, field.validators, _validation);

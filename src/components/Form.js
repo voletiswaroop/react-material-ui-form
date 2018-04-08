@@ -268,7 +268,8 @@ export default class Form extends React.Component<Props, State> {
 
   validateField = (name: string, value: any) => {
     const field = this.state.fields[name]
-    if (!_.isEmpty(field.validators)) {
+
+    if (!(field.value === '' && !field.isRequired) && !_.isEmpty(field.validators)) {
       const { validation } = this
       const validations = validation.validate(value, field.validators, validation)
 
