@@ -1,7 +1,10 @@
 language: node_js
 node_js:
   - "stable"
+install:
+  - npm install -g codecov
+  - npm install
 script:
-  - coveralls < coverage/lcov.info
+  - codecov
 notifications:
   email: false

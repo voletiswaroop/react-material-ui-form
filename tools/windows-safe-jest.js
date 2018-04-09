@@ -6,4 +6,4 @@ if (process.env.TERM === 'msys' && process.env.TMP.endsWith('\\')) {
   shell.env['TMP'] = process.env.TMP.substr(0, process.env.TMP.length - 1)
 }
 
-shell.exec('jest --coverage')
+shell.exec('jest')

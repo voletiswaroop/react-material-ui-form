@@ -8,7 +8,7 @@
     "check": "npm run lint && npm run flow && npm run test",
     "dev": "webpack-dev-server --mode development --entry=./examples/Root --open",
     "flow": "flow",
-    "lint": "eslint -c eslintrc.json ./src --no-eslintrc",
+    "lint": "eslint -c .eslintrc.json ./src --no-eslintrc",
     "prepublish": "npm run check && npm run build",
     "test": "node ./tools/windows-safe-jest.js"
   },
@@ -37,6 +37,8 @@
   },
   "homepage": "https://github.com/unitedhubs/material-ui-form#readme",
   "jest": {
+    "coverageDirectory": "./coverage/",
+    "collectCoverage": true,
     "globals": {
       "_": true
     },
@@ -64,7 +66,6 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
-    "coveralls": "^3.0.0",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.10",
     "enzyme": "^3.3.0",
