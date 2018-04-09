@@ -9,7 +9,7 @@
     "dev": "webpack-dev-server --mode development --entry=./examples/Root --open",
     "flow": "flow",
     "lint": "eslint -c .eslintrc.json ./src --no-eslintrc",
-    "prepublish": "npm run check && npm run build",
+    "prepare": "npm run check && npm run build",
     "test": "node ./tools/windows-safe-jest.js"
   },
   "repository": {
