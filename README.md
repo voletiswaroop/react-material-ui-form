@@ -16,9 +16,10 @@
     - [Custom validation messages](#custom-validation-messages)
     - [Custom validators](#custom-validators)
     - [Custom validation logic](#custom-validation-logic)
+    - [Server validations](#server-validations)
     - [Misc form settings](#form-autocomplete-and-on-error-submission)
-    - [Getting values on field update](#getting-form-values-on-field-change)
-    - [Multi-page form](#multi-page-form)
+    - [Getting values on field update](#getting-form-values-on-field-update)
+    - [Stepper](#stepper)
     - [Dynamic array fields](#dynamic-array-fields-notice-the-deletefieldrow-prop-on-the-remove-row-button)
     - [Custom component handler](#custom-components-with-custom-handlers)
 5. [Contributing](#contributing)
@@ -28,7 +29,7 @@
 
 _material-ui-form_ is a React wrapper for [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
 
-Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers (multi-page forms) and dynamic array fields are also supported without extra configuration. 
+Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers, dynamic array fields and custom components are also supported.
 
 #### use and requirements
 
@@ -72,18 +73,20 @@ npm install --save material-ui-form
 
 Prop                          | Description               | Default
 ------------------------------| --------------------------|------------
-***autoComplete*** _[string]_ | Sets form _autoComplete_ prop. Accepts one of ["on", "off"] | "off"
-***disableSubmitButtonOnError*** _[boolean]_ | Disables submit button if any errors exist | true 
-***onSubmit*** _[func]_       | Returns _@values_ and _@pristineValues_ on form submission |
-***onValuesChange*** _[func]_ | Returns _@values_ and _@pristineValues_ on field value change |
+[***activeStep***](#stepper) _[number]_ | Use together with `onFieldValidation` for better Stepper support | 
+[***autoComplete***](#form-autocomplete-and-on-error-submission) _[string]_ | Sets form _autoComplete_ prop. Accepts one of ["on", "off"] | "off"
+[***disableSubmitButtonOnError***](#form-autocomplete-and-on-error-submission) _[boolean]_ | Disables submit button if any errors exist | true 
+[***onFieldValidation***](#stepper) _[func]_ | Returns _@field_ and _@errorSteps_ (if `activeStep` prop is provided) on field validation |
+[***onSubmit***](#nested-fields) _[func]_ | Returns _@values_ and _@pristineValues_ on form submission |
+[***onValuesChange***](#getting-form-values-on-field-update) _[func]_ | Returns _@values_ and _@pristineValues_ on field value change |
 ***validation*** _[object]_   | Object specifing validation config options (prefixed below with ↳) |
-↳ ***messageMap*** _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ export parameter | _object_
-↳ ***messageKeyPrefix*** _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
-↳ ***requiredValidatorName*** _[boolean, string]_ | Specifies the validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
-↳ ***validate*** _[func]_ | Overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | _func_
-↳ ***validators*** _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ export parameter | _object_
+↳ [***messageMap***](#custom-validation-messages) _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ export parameter | _object_
+↳ [***messageKeyPrefix***](#custom-validation-messages) _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
+↳ [***requiredValidatorName***](#custom-validation-logic) _[boolean, string]_ | Specifies the validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
+↳ [***validate***](#custom-validation-logic) _[func]_ | Overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | _func_
+↳ [***validators***](#custom-validators) _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ export parameter | _object_
 ↳ ***validateInputOnBlur*** _[boolean]_ | Makes text input validations happen on blur instead of on change | false
-***validations*** _[object]_ | Validations to pass to the form (i.e. from the server). Should be an object with keys representing field _name_ props and values as arrays of field error messages. The first error message will be displayed per field | 
+[***validations***](#server-validations) _[object]_ | Validations to pass to the form (i.e. from the server). Should be an object with keys representing field _name_ props and values as arrays of field error messages. The first error message will be displayed per field | 
 
 #### Field props:
 
@@ -414,7 +417,7 @@ class MyForm extends React.Component {
 }
 ```
 
-#### Getting form values on field change:
+#### Getting form values on field update:
 ```jsx
 import MaterialUIForm from 'material-ui-form'
  
@@ -422,6 +425,10 @@ import MaterialUIForm from 'material-ui-form'
 class MyForm extends React.Component {
   handleValuesChange = (values, pristineValues) => {
     // get all values and pristineValues when any field updates
+  }
+
+  handleFieldValidations = (field) => {
+    // get field object when its validation status updates
   }
 
   submit = (values, pristineValues) => {
@@ -433,12 +440,13 @@ class MyForm extends React.Component {
       <MaterialUIForm
         onSubmit={this.submit}
         onValuesChange={this.handleValuesChange}
+        onFieldValidation={this.handleFieldValidations}
       >
         <TextField
           label="Name"
-          type="text"
           name="name"
           value="doge"
+          required
         />
 
         <Button variant="raised" type="submit">Submit</Button>
@@ -448,7 +456,7 @@ class MyForm extends React.Component {
 }
 ```
 
-#### Multi-page form:
+#### Stepper:
 ```jsx
 import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
 import MaterialUIForm from 'material-ui-form'
@@ -464,6 +472,7 @@ function getSteps() {
 class MyForm extends React.Component {
   state = {
     activeStep: 0,
+    errorSteps: [],
   }
 
   clickNext = () => {
@@ -482,21 +491,32 @@ class MyForm extends React.Component {
     // get all values and pristineValues on form submission
   }
 
+  updateErrorSteps = (field, errorSteps) => {
+    this.setState({ errorSteps })
+  }
+
   render() {
     const steps = getSteps()
+    const { activeStep } = this.state
 
     return (
       <div>
-        <Stepper activeStep={this.state.activeStep} alternativeLabel>
-          {steps.map(label => (
+        <Stepper activeStep={activeStep} alternativeLabel>
+          {steps.map((label, i) => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel error={errorSteps.includes(i)}>
+                {label}
+              </StepLabel>
             </Step>
           ))}
         </Stepper>
 
-        <MaterialUIForm onSubmit={this.submit}>
-          {this.state.activeStep === 0 &&
+        <MaterialUIForm
+          activeStep={activeStep}
+          onFieldValidation={this.updateErrorSteps}
+          onSubmit={this.submit}
+        >
+          {activeStep === 0 &&
             <React.Fragment>
               <TextField
                 label="Name"
@@ -508,7 +528,7 @@ class MyForm extends React.Component {
             </React.Fragment>
           }
 
-          {this.state.activeStep === 1 &&
+          {activeStep === 1 &&
             <React.Fragment>
               <TextField
                 label="Address"

@@ -18,7 +18,7 @@ import FormControlLabelClone from './FormControlLabelClone'
 import FieldClone from './FieldClone'
 import CheckableFieldClone from './CheckableFieldClone'
 import DeleteFieldRowButton from './DeleteFieldRowButton'
-import constants from '../constants'
+import propNames from '../propNames'
 import {
   messageMap,
   validate,
@@ -37,7 +37,7 @@ function verifyFieldElement(component: any): boolean {
 }
 
 function extractFieldValidators(fieldProps: Object): Array<mixed> {
-  let validators = _.get(fieldProps, constants.FIELD_VALIDATORS_PROP_NAME)
+  let validators = _.get(fieldProps, propNames.FIELD_VALIDATORS)
   if (validators !== undefined) {
     if (_.isString(validators)) {
       validators = validators.replace(/\s/g, '').split(',')
@@ -75,10 +75,21 @@ function getFieldTemplate() {
     isPristine: true,
     isRequired: null,
     pristineValue: null,
+    step: undefined,
     validations: [],
     validators: [],
     value: undefined,
   }
+}
+
+function deriveErrorSteps(fields: Object): Array<number> {
+  const errorSteps = []
+  _.each(fields, (field) => {
+    if (field.validations.length > 0 && !errorSteps.includes(field.step)) {
+      errorSteps.push(field.step)
+    }
+  })
+  return errorSteps
 }
 
 function isValidForm(fields: Object): boolean {
@@ -86,9 +97,11 @@ function isValidForm(fields: Object): boolean {
 }
 
 type Props = {
+  activeStep?: number,
   autoComplete?: string,
   children: Array<mixed>,
   disableSubmitButtonOnError?: boolean,
+  onFieldValidation?: Function,
   onSubmit: Function,
   onValuesChange?: void | Function,
   validation?: {
@@ -111,6 +124,7 @@ export default class Form extends React.Component<Props, State> {
   static defaultProps = {
     autoComplete: 'off',
     disableSubmitButtonOnError: true,
+    onFieldValidation: undefined,
     onValuesChange: undefined,
     validation: {},
     validations: {},
@@ -118,6 +132,7 @@ export default class Form extends React.Component<Props, State> {
 
   static getDerivedStateFromProps(nextProps: Object, prevState: Object) {
     const { fields } = prevState
+
     if (!_.isEmpty(fields)) {
       // add validations to fields
       _.each(nextProps.validations, (validations, name) => {
@@ -167,12 +182,12 @@ export default class Form extends React.Component<Props, State> {
     if (checked === true) {
       _.defer(() => {
         this.setState({
-          // arrayFieldLengths,
           fields: {
             ...this.state.fields,
             [name]: {
               ...getFieldTemplate(),
               checked: checked || false,
+              step: this.props.activeStep,
               value,
             },
           },
@@ -198,13 +213,13 @@ export default class Form extends React.Component<Props, State> {
 
         _.defer(() => {
           this.setState({
-            // arrayFieldLengths,
             fields: {
               ...this.state.fields,
               [name]: {
                 ...getFieldTemplate(),
                 isRequired,
                 pristineValue: value,
+                step: this.props.activeStep,
                 validators,
                 validations,
                 value,
@@ -273,6 +288,7 @@ export default class Form extends React.Component<Props, State> {
       const { validation } = this
       const validations = validation.validate(value, field.validators, validation)
 
+      // update state
       field.validations = validations
       this.setState({
         fields: {
@@ -280,9 +296,17 @@ export default class Form extends React.Component<Props, State> {
           [name]: field,
         },
       })
-
+      // disable submit button
       if (!_.isEmpty(validations)) {
         this.disableSubmitButton()
+      }
+      // propogate validation
+      if (this.props.onFieldValidation !== undefined) {
+        let errorSteps
+        if (field.step !== undefined) {
+          errorSteps = deriveErrorSteps(this.state.fields)
+        }
+        this.props.onFieldValidation(field, errorSteps)
       }
     }
   }
@@ -408,7 +432,7 @@ export default class Form extends React.Component<Props, State> {
       // non-interactive elements should be rendered as is
       } else if (!isFieldElement) {
         // delete row button
-        if (child.props[constants.DELETE_FIELD_ROW] !== undefined) {
+        if (child.props[propNames.DELETE_FIELD_ROW] !== undefined) {
           return (<DeleteFieldRowButton
             buttonComp={child}
             onRequestRowDelete={this.deleteRow}

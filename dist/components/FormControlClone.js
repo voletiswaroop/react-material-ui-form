@@ -21,9 +21,9 @@ var _Form = require('material-ui/Form');
 
 var _Input = require('material-ui/Input');
 
-var _constants = require('../constants');
+var _propNames = require('../propNames');
 
-var _constants2 = _interopRequireDefault(_constants);
+var _propNames2 = _interopRequireDefault(_propNames);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -81,7 +81,7 @@ var FormControlClone = (_temp = _class = function (_React$Component) {
     }
 
     if (props.field.value === undefined) {
-      var validatorsPropName = _constants2.default.FIELD_VALIDATORS_PROP_NAME;
+      var validatorsPropName = _propNames2.default.FIELD_VALIDATORS;
       props.onConstruct(_defineProperty({
         name: name,
         value: value,

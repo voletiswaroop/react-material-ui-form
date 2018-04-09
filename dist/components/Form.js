@@ -51,9 +51,9 @@ var _DeleteFieldRowButton = require('./DeleteFieldRowButton');
 
 var _DeleteFieldRowButton2 = _interopRequireDefault(_DeleteFieldRowButton);
 
-var _constants = require('../constants');
+var _propNames = require('../propNames');
 
-var _constants2 = _interopRequireDefault(_constants);
+var _propNames2 = _interopRequireDefault(_propNames);
 
 var _validation2 = require('../validation');
 
@@ -74,7 +74,7 @@ function verifyFieldElement(component) {
 }
 
 function extractFieldValidators(fieldProps) {
-  var validators = _lodash2.default.get(fieldProps, _constants2.default.FIELD_VALIDATORS_PROP_NAME);
+  var validators = _lodash2.default.get(fieldProps, _propNames2.default.FIELD_VALIDATORS);
   if (validators !== undefined) {
     if (_lodash2.default.isString(validators)) {
       validators = validators.replace(/\s/g, '').split(',');
@@ -112,10 +112,21 @@ function getFieldTemplate() {
     isPristine: true,
     isRequired: null,
     pristineValue: null,
+    step: undefined,
     validations: [],
     validators: [],
     value: undefined
   };
+}
+
+function deriveErrorSteps(fields) {
+  var errorSteps = [];
+  _lodash2.default.each(fields, function (field) {
+    if (field.validations.length > 0 && !errorSteps.includes(field.step)) {
+      errorSteps.push(field.step);
+    }
+  });
+  return errorSteps;
 }
 
 function isValidForm(fields) {
@@ -131,6 +142,7 @@ var Form = (_temp = _class = function (_React$Component) {
     key: 'getDerivedStateFromProps',
     value: function getDerivedStateFromProps(nextProps, prevState) {
       var fields = prevState.fields;
+
 
       if (!_lodash2.default.isEmpty(fields)) {
         // add validations to fields
@@ -176,9 +188,9 @@ var Form = (_temp = _class = function (_React$Component) {
       if (checked === true) {
         _lodash2.default.defer(function () {
           _this.setState({
-            // arrayFieldLengths,
             fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, getFieldTemplate(), {
               checked: checked || false,
+              step: _this.props.activeStep,
               value: value
             })))
           });
@@ -202,10 +214,10 @@ var Form = (_temp = _class = function (_React$Component) {
 
           _lodash2.default.defer(function () {
             _this.setState({
-              // arrayFieldLengths,
               fields: _extends({}, _this.state.fields, _defineProperty({}, name, _extends({}, getFieldTemplate(), {
                 isRequired: isRequired,
                 pristineValue: value,
+                step: _this.props.activeStep,
                 validators: _validators,
                 validations: _validations,
                 value: value
@@ -265,13 +277,22 @@ var Form = (_temp = _class = function (_React$Component) {
 
         var _validations2 = _validation.validate(value, field.validators, _validation);
 
+        // update state
         field.validations = _validations2;
         _this.setState({
           fields: _extends({}, _this.state.fields, _defineProperty({}, name, field))
         });
-
+        // disable submit button
         if (!_lodash2.default.isEmpty(_validations2)) {
           _this.disableSubmitButton();
+        }
+        // propogate validation
+        if (_this.props.onFieldValidation !== undefined) {
+          var errorSteps = void 0;
+          if (field.step !== undefined) {
+            errorSteps = deriveErrorSteps(_this.state.fields);
+          }
+          _this.props.onFieldValidation(field, errorSteps);
         }
       }
     };
@@ -404,7 +425,7 @@ var Form = (_temp = _class = function (_React$Component) {
           // non-interactive elements should be rendered as is
         } else if (!isFieldElement) {
           // delete row button
-          if (child.props[_constants2.default.DELETE_FIELD_ROW] !== undefined) {
+          if (child.props[_propNames2.default.DELETE_FIELD_ROW] !== undefined) {
             return _react2.default.createElement(_DeleteFieldRowButton2.default, {
               buttonComp: child,
               onRequestRowDelete: _this2.deleteRow
@@ -471,6 +492,7 @@ var Form = (_temp = _class = function (_React$Component) {
 }(_react2.default.Component), _class.defaultProps = {
   autoComplete: 'off',
   disableSubmitButtonOnError: true,
+  onFieldValidation: undefined,
   onValuesChange: undefined,
   validation: {},
   validations: {}

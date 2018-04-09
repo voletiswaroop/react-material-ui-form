@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { FormControl, FormHelperText, FormLabel } from 'material-ui/Form'
 import { InputLabel } from 'material-ui/Input'
 
-import constants from '../constants'
+import propNames from '../propNames'
 
 
 function getErrorAndHelperText(field: Object): Object {
@@ -73,7 +73,7 @@ export default class FormControlClone extends React.Component<Props, State> {
     }
 
     if (props.field.value === undefined) {
-      const validatorsPropName = constants.FIELD_VALIDATORS_PROP_NAME
+      const validatorsPropName = propNames.FIELD_VALIDATORS
       props.onConstruct({
         name,
         value,

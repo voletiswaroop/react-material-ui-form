@@ -36,7 +36,7 @@ var DeleteFieldRowButton = (_temp = _class = function (_React$Component) {
     if (deletefieldrow === undefined) {
       throw new Error('DeleteFieldRowButton element requires "deletefieldrow" prop');
     }
-    if (deletefieldrow.match(/\w+\[\d\]/) === null) {
+    if (deletefieldrow.match(/\w+\[\d+\]/) === null) {
       throw new Error('"deletefieldrow" prop should match /\\w+\\[\\d+\\]/');
     }
     return _this;

@@ -47,6 +47,7 @@ export default class Steppers extends Component {
     activeStep: 0,
     amounts: [true], // hack
     onSubmitValues: null,
+    errorSteps: [],
   }
 
   clickNext = () => {
@@ -73,9 +74,14 @@ export default class Steppers extends Component {
     this.setState({ onSubmitValues: values })
   }
 
+  updateErrorSteps = (field, errorSteps) => {
+    this.setState({ errorSteps })
+  }
+
   render() {
     const steps = getSteps()
     const { classes } = this.props
+    const { activeStep, errorSteps } = this.state
 
     return (
       <Grid
@@ -84,16 +90,22 @@ export default class Steppers extends Component {
         wrap="nowrap"
       >
         <Grid item xs className={classes.gridItem}>
-          <Stepper activeStep={this.state.activeStep} alternativeLabel>
-            {steps.map(label => (
+          <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label, i) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel error={errorSteps.includes(i)}>
+                  {label}
+                </StepLabel>
               </Step>
             ))}
           </Stepper>
 
-          <Form onSubmit={this.submit}>
-            {this.state.activeStep === 0 &&
+          <Form
+            activeStep={activeStep}
+            onSubmit={this.submit}
+            onFieldValidation={this.updateErrorSteps}
+          >
+            {activeStep === 0 &&
               <Fragment>
                 <TextField
                   label="Name"
@@ -104,11 +116,13 @@ export default class Steppers extends Component {
                   fullWidth
                 />
                 <Divider style={dividerStyle} />
-                <Button variant="raised" onClick={this.clickNext}>Next</Button>
+                <Button variant="raised" onClick={this.clickNext}>
+                  Next
+                </Button>
               </Fragment>
             }
 
-            {this.state.activeStep === 1 &&
+            {activeStep === 1 &&
               <Fragment>
                 {this.state.amounts.map((amount, i) => (
                   // eslint-disable-next-line react/no-array-index-key

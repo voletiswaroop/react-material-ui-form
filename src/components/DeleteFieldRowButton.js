@@ -16,7 +16,7 @@ export default class DeleteFieldRowButton extends React.Component<Props> {
     if (deletefieldrow === undefined) {
       throw new Error('DeleteFieldRowButton element requires "deletefieldrow" prop')
     }
-    if (deletefieldrow.match(/\w+\[\d\]/) === null) {
+    if (deletefieldrow.match(/\w+\[\d+\]/) === null) {
       throw new Error('"deletefieldrow" prop should match /\\w+\\[\\d+\\]/')
     }
   }

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = {
+  ACTIVE_STEP: 'activestep',
   DELETE_FIELD_ROW: 'deletefieldrow',
-  FIELD_VALIDATORS_PROP_NAME: 'data-validators'
+  FIELD_VALIDATORS: 'data-validators'
 };
