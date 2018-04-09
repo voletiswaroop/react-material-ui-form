@@ -3,7 +3,7 @@
 [![npm](https://img.shields.io/npm/v/material-ui-form.svg)](https://www.npmjs.com/package/material-ui-form)
 [![David](https://david-dm.org/unitedhubs/material-ui-form.svg)](https://david-dm.org/unitedhubs/material-ui-form.svg)
 [![Build Status](https://travis-ci.org/unitedhubs/material-ui-form.svg?branch=dev)](https://travis-ci.org/unitedhubs/material-ui-form)
-[![Codecov](https://img.shields.io/codecov/c/github/unitedhubs/material-ui-form.svg)](https://coveralls.io/github/unitedhubs/material-ui-form)
+[![Codecov](https://img.shields.io/codecov/c/github/unitedhubs/material-ui-form.svg)](https://codecov.io/gh/unitedhubs/material-ui-form)
 
 1. [About](#about)
 2. [Setup](#setup)
