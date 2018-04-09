@@ -520,9 +520,9 @@ class MyForm extends React.Component {
             <React.Fragment>
               <TextField
                 label="Name"
-                type="text"
                 name="name"
                 value=""
+                required
               />
               <Button variant="raised" onClick={this.clickNext}>Next</Button>
             </React.Fragment>
@@ -532,9 +532,9 @@ class MyForm extends React.Component {
             <React.Fragment>
               <TextField
                 label="Address"
-                type="text"
                 name="address"
                 value=""
+                required
               />
               <Button variant="raised" onClick={this.clickBack}>Back</Button>
               <Button variant="raised" type="submit">Submit</Button>
