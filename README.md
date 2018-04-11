@@ -550,6 +550,7 @@ class MyForm extends React.Component {
 #### Dynamic array fields (notice the `deletefieldrow` prop on the "Remove Row" button):
 ```jsx
 import MaterialUIForm from 'material-ui-form'
+import formData from 'form-data-to-object'
  
 
 class MyForm extends React.Component {
@@ -573,7 +574,11 @@ class MyForm extends React.Component {
   }
 
   submit = (values, pristineValues) => {
-    // get all values and pristineValues on form submission
+    // you can parse values to turn:
+    // rows[0][label]: "label"
+    // into:
+    // rows: [{ label: "label" }]
+    const parsedValues = formData.toObj(values)
   }
 
   render() {
