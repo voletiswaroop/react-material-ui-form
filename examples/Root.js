@@ -4,10 +4,10 @@ import ReactDOM from 'react-dom'
 /* eslint-disable import/no-extraneous-dependencies */
 import { BrowserRouter, Link, Route } from 'react-router-dom'
 
-import CssBaseline from 'material-ui/CssBaseline'
-import AppBar from 'material-ui/AppBar'
-import Toolbar from 'material-ui/Toolbar'
-import Button from 'material-ui/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Button from '@material-ui/core/Button'
 /* eslint-enable import/no-extraneous-dependencies */
 
 import './styles.less'

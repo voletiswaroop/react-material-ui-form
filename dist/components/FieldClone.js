@@ -53,24 +53,6 @@ function makeErrorAndHelperText(props) {
 var FieldClone = (_temp = _class = function (_React$Component) {
   _inherits(FieldClone, _React$Component);
 
-  _createClass(FieldClone, null, [{
-    key: 'getDerivedStateFromProps',
-    value: function getDerivedStateFromProps(nextProps) {
-      if (!_lodash2.default.isEmpty(nextProps.field)) {
-        var _makeErrorAndHelperTe = makeErrorAndHelperText(nextProps),
-            _helperText = _makeErrorAndHelperTe.helperText,
-            _isError = _makeErrorAndHelperTe.isError;
-
-        return {
-          helperText: _helperText,
-          isError: _isError,
-          value: nextProps.field.value
-        };
-      }
-      return null;
-    }
-  }]);
-
   function FieldClone(props) {
     _classCallCheck(this, FieldClone);
 
@@ -90,9 +72,9 @@ var FieldClone = (_temp = _class = function (_React$Component) {
 
     var value = _lodash2.default.isEmpty(props.field) ? fieldComp.props.value : props.field.value;
 
-    var _makeErrorAndHelperTe2 = makeErrorAndHelperText(props),
-        helperText = _makeErrorAndHelperTe2.helperText,
-        isError = _makeErrorAndHelperTe2.isError;
+    var _makeErrorAndHelperTe = makeErrorAndHelperText(props),
+        helperText = _makeErrorAndHelperTe.helperText,
+        isError = _makeErrorAndHelperTe.isError;
 
     _this.state = {
       helperText: helperText,
@@ -122,6 +104,22 @@ var FieldClone = (_temp = _class = function (_React$Component) {
         onChange: this.onChange,
         required: getRequiredProp(fieldComp.props.required, this.props.useNativeRequiredValidator)
       });
+    }
+  }], [{
+    key: 'getDerivedStateFromProps',
+    value: function getDerivedStateFromProps(nextProps) {
+      if (!_lodash2.default.isEmpty(nextProps.field)) {
+        var _makeErrorAndHelperTe2 = makeErrorAndHelperText(nextProps),
+            _helperText = _makeErrorAndHelperTe2.helperText,
+            _isError = _makeErrorAndHelperTe2.isError;
+
+        return {
+          helperText: _helperText,
+          isError: _isError,
+          value: nextProps.field.value
+        };
+      }
+      return null;
     }
   }]);
 

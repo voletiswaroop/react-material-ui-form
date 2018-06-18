@@ -52,18 +52,6 @@ export default class FieldClone extends React.Component<Props, State> {
     field: {},
   }
 
-  static getDerivedStateFromProps(nextProps: Object) {
-    if (!_.isEmpty(nextProps.field)) {
-      const { helperText, isError } = makeErrorAndHelperText(nextProps)
-      return {
-        helperText,
-        isError,
-        value: nextProps.field.value,
-      }
-    }
-    return null
-  }
-
   constructor(props: Object) {
     super(props)
     const { fieldComp } = props
@@ -87,6 +75,18 @@ export default class FieldClone extends React.Component<Props, State> {
     if (props.field.value === undefined) {
       this.props.onConstruct(fieldComp.props)
     }
+  }
+
+  static getDerivedStateFromProps(nextProps: Object) {
+    if (!_.isEmpty(nextProps.field)) {
+      const { helperText, isError } = makeErrorAndHelperText(nextProps)
+      return {
+        helperText,
+        isError,
+        value: nextProps.field.value,
+      }
+    }
+    return null
   }
 
   onBlur = (event: SyntheticInputEvent<Element>) => {

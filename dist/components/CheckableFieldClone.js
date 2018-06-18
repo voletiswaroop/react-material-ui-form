@@ -13,11 +13,11 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Checkbox = require('material-ui/Checkbox');
+var _Checkbox = require('@material-ui/core/Checkbox');
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
-var _Switch = require('material-ui/Switch');
+var _Switch = require('@material-ui/core/Switch');
 
 var _Switch2 = _interopRequireDefault(_Switch);
 

@@ -3,15 +3,13 @@
 import React from 'react'
 import _ from 'lodash'
 
-import {
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-  FormLabel,
-} from 'material-ui/Form'
-import { InputLabel } from 'material-ui/Input'
-import Checkbox from 'material-ui/Checkbox'
-import Switch from 'material-ui/Switch'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import FormHelperText from '@material-ui/core/FormHelperText'
+import FormLabel from '@material-ui/core/FormLabel'
+import InputLabel from '@material-ui/core/InputLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Switch from '@material-ui/core/Switch'
 
 import FormControlClone from './FormControlClone'
 import FormControlLabelClone from './FormControlLabelClone'
@@ -100,10 +98,12 @@ type Props = {
   activeStep?: number,
   autoComplete?: string,
   children: Array<mixed>,
+  className?: Object,
   disableSubmitButtonOnError?: boolean,
   onFieldValidation?: Function,
   onSubmit: Function,
   onValuesChange?: void | Function,
+  style?: Object,
   validation?: {
     messageMap?: Object,
     messageMapKeyPrefix?: string,
@@ -122,12 +122,29 @@ type State = {
 
 export default class Form extends React.Component<Props, State> {
   static defaultProps = {
+    activeStep: 0,
     autoComplete: 'off',
+    className: undefined,
     disableSubmitButtonOnError: true,
     onFieldValidation: undefined,
     onValuesChange: undefined,
+    style: {},
     validation: {},
     validations: {},
+  }
+
+  // eslint-disable-next-line react/sort-comp
+  onValuesChange: void
+
+  constructor(props: Object) {
+    super(props)
+
+    this.onValuesChange = props.onValuesChange
+    this.validation = Object.assign(this.validation, props.validation)
+    this.state = {
+      disableSubmitButton: false,
+      fields: {},
+    }
   }
 
   static getDerivedStateFromProps(nextProps: Object, prevState: Object) {
@@ -148,8 +165,6 @@ export default class Form extends React.Component<Props, State> {
     return null
   }
 
-  // eslint-disable-next-line react/sort-comp
-  onValuesChange: void
   validation = {
     messageMap,
     messageMapKeyPrefix: '',
@@ -157,17 +172,6 @@ export default class Form extends React.Component<Props, State> {
     validators: defaultValidators,
     validate,
     validateInputOnBlur: false,
-  }
-
-  constructor(props: Object) {
-    super(props)
-
-    this.onValuesChange = props.onValuesChange
-    this.validation = Object.assign(this.validation, props.validation)
-    this.state = {
-      disableSubmitButton: false,
-      fields: {},
-    }
   }
 
   onFieldConstruct = (fieldProps: Object) => {
@@ -488,9 +492,11 @@ export default class Form extends React.Component<Props, State> {
   render() {
     return (
       <form
+        autoComplete={this.props.autoComplete}
+        className={this.props.className}
         onReset={this.reset}
         onSubmit={this.submit}
-        autoComplete={this.props.autoComplete}
+        style={this.props.style}
       >
         { this.cloneChildrenRecursively(this.props.children) }
       </form>

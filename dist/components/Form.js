@@ -19,15 +19,31 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _Form = require('material-ui/Form');
+var _FormControl = require('@material-ui/core/FormControl');
 
-var _Input = require('material-ui/Input');
+var _FormControl2 = _interopRequireDefault(_FormControl);
 
-var _Checkbox = require('material-ui/Checkbox');
+var _FormControlLabel = require('@material-ui/core/FormControlLabel');
+
+var _FormControlLabel2 = _interopRequireDefault(_FormControlLabel);
+
+var _FormHelperText = require('@material-ui/core/FormHelperText');
+
+var _FormHelperText2 = _interopRequireDefault(_FormHelperText);
+
+var _FormLabel = require('@material-ui/core/FormLabel');
+
+var _FormLabel2 = _interopRequireDefault(_FormLabel);
+
+var _InputLabel = require('@material-ui/core/InputLabel');
+
+var _InputLabel2 = _interopRequireDefault(_InputLabel);
+
+var _Checkbox = require('@material-ui/core/Checkbox');
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
-var _Switch = require('material-ui/Switch');
+var _Switch = require('@material-ui/core/Switch');
 
 var _Switch2 = _interopRequireDefault(_Switch);
 
@@ -68,7 +84,7 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function verifyFieldElement(component) {
-  var whitelist = [_Form.FormControlLabel];
+  var whitelist = [_FormControlLabel2.default];
 
   return whitelist.includes(component.type) || _lodash2.default.has(component, 'props.name') && _lodash2.default.has(component, 'props.value');
 }
@@ -137,31 +153,6 @@ function isValidForm(fields) {
 
 var Form = (_temp = _class = function (_React$Component) {
   _inherits(Form, _React$Component);
-
-  _createClass(Form, null, [{
-    key: 'getDerivedStateFromProps',
-    value: function getDerivedStateFromProps(nextProps, prevState) {
-      var fields = prevState.fields;
-
-
-      if (!_lodash2.default.isEmpty(fields)) {
-        // add validations to fields
-        _lodash2.default.each(nextProps.validations, function (validations, name) {
-          if (_lodash2.default.has(fields, name)) {
-            fields[name].validations = validations;
-          } else {
-            // eslint-disable-next-line no-console
-            console.warn('validations field "' + name + '" does not exist');
-          }
-        });
-        return { fields: fields };
-      }
-      return null;
-    }
-
-    // eslint-disable-next-line react/sort-comp
-
-  }]);
 
   function Form(props) {
     _classCallCheck(this, Form);
@@ -361,6 +352,9 @@ var Form = (_temp = _class = function (_React$Component) {
     return _this;
   }
 
+  // eslint-disable-next-line react/sort-comp
+
+
   _createClass(Form, [{
     key: 'enableSubmitButton',
     value: function enableSubmitButton() {
@@ -396,9 +390,9 @@ var Form = (_temp = _class = function (_React$Component) {
         // nested elements
         if (nestedChildren !== false) {
           // FormControl element with field/group name-value props
-          if (child.type === _Form.FormControl) {
+          if (child.type === _FormControl2.default) {
             var fieldElement = nestedChildren.find(function (el) {
-              return ![_Form.FormLabel, _Input.InputLabel, _Form.FormHelperText].includes(el.type) && el.props.name !== undefined && el.props.value !== undefined;
+              return ![_FormLabel2.default, _InputLabel2.default, _FormHelperText2.default].includes(el.type) && el.props.name !== undefined && el.props.value !== undefined;
             });
             if (fieldElement !== undefined) {
               var _name = fieldElement.props.name;
@@ -435,7 +429,7 @@ var Form = (_temp = _class = function (_React$Component) {
           return child;
         }
         // clone control label
-        if (child.type === _Form.FormControlLabel) {
+        if (child.type === _FormControlLabel2.default) {
           var _name2 = child.props.control.props.name;
 
           return _react2.default.createElement(_FormControlLabelClone2.default, {
@@ -479,22 +473,46 @@ var Form = (_temp = _class = function (_React$Component) {
       return _react2.default.createElement(
         'form',
         {
+          autoComplete: this.props.autoComplete,
+          className: this.props.className,
           onReset: this.reset,
           onSubmit: this.submit,
-          autoComplete: this.props.autoComplete
+          style: this.props.style
         },
         this.cloneChildrenRecursively(this.props.children)
       );
+    }
+  }], [{
+    key: 'getDerivedStateFromProps',
+    value: function getDerivedStateFromProps(nextProps, prevState) {
+      var fields = prevState.fields;
+
+
+      if (!_lodash2.default.isEmpty(fields)) {
+        // add validations to fields
+        _lodash2.default.each(nextProps.validations, function (validations, name) {
+          if (_lodash2.default.has(fields, name)) {
+            fields[name].validations = validations;
+          } else {
+            // eslint-disable-next-line no-console
+            console.warn('validations field "' + name + '" does not exist');
+          }
+        });
+        return { fields: fields };
+      }
+      return null;
     }
   }]);
 
   return Form;
 }(_react2.default.Component), _class.defaultProps = {
+  activeStep: 0,
   autoComplete: 'off',
+  className: undefined,
   disableSubmitButtonOnError: true,
   onFieldValidation: undefined,
   onValuesChange: undefined,
+  style: {},
   validation: {},
-  validations: {}
-}, _temp);
+  validations: {} }, _temp);
 exports.default = Form;

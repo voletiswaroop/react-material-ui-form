@@ -2,8 +2,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
-import Checkbox from 'material-ui/Checkbox'
-import Switch from 'material-ui/Switch'
+import Checkbox from '@material-ui/core/Checkbox'
+import Switch from '@material-ui/core/Switch'
 
 import FormControlLabelClone from '../FormControlLabelClone'
 

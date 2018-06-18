@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
 
-import Grid from 'material-ui/Grid'
-import Button from 'material-ui/Button'
-import Divider from 'material-ui/Divider'
-import TextField from 'material-ui/TextField'
-import { withStyles } from 'material-ui/styles'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import Divider from '@material-ui/core/Divider'
+import TextField from '@material-ui/core/TextField'
+import { withStyles } from '@material-ui/core/styles'
 
 import Form, { messageMap, validators } from '../../src/index'
 import styles from '../styles'

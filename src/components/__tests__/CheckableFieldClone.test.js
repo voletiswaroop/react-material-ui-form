@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
-import Checkbox from 'material-ui/Checkbox'
+import Checkbox from '@material-ui/core/Checkbox'
 
 import CheckableFieldClone from '../CheckableFieldClone'
 

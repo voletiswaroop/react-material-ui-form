@@ -2,7 +2,7 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
-import TextField from 'material-ui/TextField'
+import TextField from '@material-ui/core/TextField'
 
 import FieldClone from '../FieldClone'
 
@@ -82,7 +82,7 @@ describe('<FieldClone>:<TextField>', () => {
   })
 
   it('should handle onChange events', () => {
-    const value = 'x'
+    const value = undefined
     const event = { target: { value } }
     wrapper.find(TextField).simulate('change', event)
     expect(wrapper.state()).toMatchObject({
@@ -145,13 +145,13 @@ describe('<FieldClone>:<Select>', () => {
   })
 
   it('should handle onChange events', () => {
-    const value = 'blue'
+    const value = undefined
     const event = { target: { value } }
     const { onValueChange } = wrapper.instance().props
     wrapper.find(TextField).simulate('change', event)
     expect(wrapper.state()).toMatchObject({
-      helperText: undefined,
-      isError: false,
+      helperText: 'invalid',
+      isError: true,
       value,
     })
     expect(onValueChange).toBeCalledWith(wrapper.prop('name'), value, true)

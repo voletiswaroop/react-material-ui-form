@@ -3,9 +3,9 @@
 import React from 'react'
 import _ from 'lodash'
 
-import Checkbox from 'material-ui/Checkbox'
-import Switch from 'material-ui/Switch'
-import { FormControlLabel } from 'material-ui/Form'
+import Checkbox from '@material-ui/core/Checkbox'
+import Switch from '@material-ui/core/Switch'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 
 
 type Props = {

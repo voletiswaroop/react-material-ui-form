@@ -1,4 +1,7 @@
 const styles = () => ({
+  form: {
+    borderTop: '1px dotted #ccc',
+  },
   gridItem: {
     margin: '100px',
     '& pre': {

@@ -17,15 +17,17 @@ var _lodash = require('lodash');
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _Checkbox = require('material-ui/Checkbox');
+var _Checkbox = require('@material-ui/core/Checkbox');
 
 var _Checkbox2 = _interopRequireDefault(_Checkbox);
 
-var _Switch = require('material-ui/Switch');
+var _Switch = require('@material-ui/core/Switch');
 
 var _Switch2 = _interopRequireDefault(_Switch);
 
-var _Form = require('material-ui/Form');
+var _FormControlLabel = require('@material-ui/core/FormControlLabel');
+
+var _FormControlLabel2 = _interopRequireDefault(_FormControlLabel);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -80,7 +82,7 @@ var FormControlLabelClone = (_temp = _class = function (_React$Component) {
         value: this.state.value
       };
 
-      return _react2.default.createElement(_Form.FormControlLabel, {
+      return _react2.default.createElement(_FormControlLabel2.default, {
         checked: this.state.checked,
         control: _react2.default.cloneElement(control, controlOptions),
         onChange: onChange,

@@ -1,34 +1,21 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types' // eslint-disable-line import/no-extraneous-dependencies
 
-import Grid from 'material-ui/Grid'
-import Button from 'material-ui/Button'
-import { MenuItem } from 'material-ui/Menu'
-import TextField from 'material-ui/TextField'
-import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
-import { withStyles } from 'material-ui/styles'
-
-import {
-  FormLabel,
-  FormControl,
-  FormControlLabel,
-  FormHelperText,
-} from 'material-ui/Form'
-import Radio, { RadioGroup } from 'material-ui/Radio'
-import Divider from 'material-ui/Divider'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import MenuItem from '@material-ui/core/MenuItem'
+import TextField from '@material-ui/core/TextField'
+import Stepper from '@material-ui/core/Stepper'
+import Step from '@material-ui/core/Step'
+import StepLabel from '@material-ui/core/StepLabel'
+import { withStyles } from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
 
 import Form from '../../src/index'
 import styles from '../styles'
 
 
 const dividerStyle = { margin: '20px 0' }
-
-const formControlStyle = {
-  padding: '20px',
-  margin: '20px 0 0',
-  display: 'inherit',
-  border: '1px solid gray',
-}
 
 function getSteps() {
   return [

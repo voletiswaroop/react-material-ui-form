@@ -2,13 +2,14 @@ import React from 'react'
 import { shallow } from 'enzyme' // eslint-disable-line import/no-extraneous-dependencies
 import toJson from 'enzyme-to-json' // eslint-disable-line import/no-extraneous-dependencies
 
-import Button from 'material-ui/Button'
-import TextField from 'material-ui/TextField'
-import Checkbox from 'material-ui/Checkbox'
-import { FormControl, FormControlLabel } from 'material-ui/Form'
-import { InputLabel } from 'material-ui/Input'
-import Select from 'material-ui/Select'
-import { MenuItem } from 'material-ui/Menu'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
+import Checkbox from '@material-ui/core/Checkbox'
+import FormControl from '@material-ui/core/FormControl'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import MenuItem from '@material-ui/core/MenuItem'
 
 import Form from '../Form'
 import { messageMap, validators } from '../../validation'

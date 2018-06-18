@@ -5,6 +5,7 @@ exports[`<Form> (all props) should render 1`] = `
   autoComplete="on"
   onReset={[Function]}
   onSubmit={[Function]}
+  style={Object {}}
 >
   fill out the form!
   <FieldClone
@@ -128,6 +129,7 @@ exports[`<Form> (no props) should render 1`] = `
   autoComplete="off"
   onReset={[Function]}
   onSubmit={[Function]}
+  style={Object {}}
 >
   <FieldClone
     field={Object {}}
@@ -171,6 +173,7 @@ exports[`<Form> (non-mui input) should render 1`] = `
   autoComplete="off"
   onReset={[Function]}
   onSubmit={[Function]}
+  style={Object {}}
 >
   <input
     key=".0"
