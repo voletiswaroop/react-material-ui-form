@@ -477,7 +477,11 @@ var Form = (_temp = _class = function (_React$Component) {
           className: this.props.className,
           onReset: this.reset,
           onSubmit: this.submit,
-          style: this.props.style
+          style: this.props.style,
+          id: this.props.id,
+          method: this.props.method,
+          action: this.props.action,
+          name: this.props.name
         },
         this.cloneChildrenRecursively(this.props.children)
       );
@@ -514,5 +518,9 @@ var Form = (_temp = _class = function (_React$Component) {
   onValuesChange: undefined,
   style: {},
   validation: {},
-  validations: {} }, _temp);
+  validations: {},
+  id: undefined,
+  method: undefined,
+  action: undefined,
+  name: undefined }, _temp);
 exports.default = Form;
