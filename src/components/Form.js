@@ -135,7 +135,7 @@ export default class Form extends React.Component<Props, State> {
     style: {},
     validation: {},
     validations: {},
-    id:undefined,
+    id: undefined,
     method: undefined,
     action: undefined,
     name: undefined,
@@ -504,8 +504,8 @@ export default class Form extends React.Component<Props, State> {
         className={this.props.className}
         onReset={this.reset}
         onSubmit={this.submit}
-        style={this.props.style} 
-        id={this.props.id} 
+        style={this.props.style}
+        id={this.props.id}
         method={this.props.method}
         action={this.props.action}
         name={this.props.name}
