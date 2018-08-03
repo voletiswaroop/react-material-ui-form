@@ -134,11 +134,11 @@ export default class Form extends React.Component<Props, State> {
     onValuesChange: undefined,
     style: {},
     validation: {},
-    validations: {}, 
-    id:undefined, 
+    validations: {},
+    id:undefined,
     method: undefined,
-    action:undefined,
-    name:undefined,
+    action: undefined,
+    name: undefined,
   }
 
   // eslint-disable-next-line react/sort-comp
