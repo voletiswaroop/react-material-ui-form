@@ -13,6 +13,7 @@
     - [Other props](#other-props)
 4. [Examples](#examples)
     - [Nested fields](#nested-fields)
+    - [Custom validation messages](#custom-validation-messages)
     - [Custom validators](#custom-validators)
     - [Custom validation logic](#custom-validation-logic)
     - [Server validations](#server-validations)
@@ -72,6 +73,10 @@ npm install --save react-material-ui-form
 
 Prop                          | Description               | Default
 ------------------------------| --------------------------|------------
+[***class***] _[string]_ | Sets `className` attribute to the form |
+[***id***] _[string]_ | Sets `id` attribute to the form |
+[***name***] _[string]_ | Sets `name` attribute to the form |
+[***action***] _[string]_ | Sets `action` attribute to the form |
 [***activeStep***](#stepper) _[number]_ | Use together with `onFieldValidation` for better Stepper support | 
 [***autoComplete***](#form-autocomplete-and-on-error-submission) _[string]_ | Sets form _autoComplete_ prop. Accepts one of ["on", "off"] | "off"
 [***disableSubmitButtonOnError***](#form-autocomplete-and-on-error-submission) _[boolean]_ | Disables submit button if any errors exist | true 
@@ -206,6 +211,31 @@ class MyForm extends React.Component {
     )
   }
 }
+
+```
+
+#### Custom validation messages:
+```jsx
+const customFormMsg = Object.assign(messageMap, {
+  isRequired: 'This field is required', 
+  isEmail: 'Please enter a valid email address',  
+  isLength:'Must be 2-50 characters', 
+})
+class MyForm extends React.Component {
+  submit = (values, pristineValues) => {
+    // get all values and pristineValues on form submission
+  }
+render() {
+  return (
+    <MaterialUIForm onSubmit={this.submit} validation={{ messageMap: customFormMsg}}>
+      <TextField label="Name" type="text" name="FirstName" value="Name" data-validators="isRequired,isLength" />
+      <TextField label="Email" type="text" name="Email" value="abc@xyz.com" data-validators="isRequired,isEmail" />
+      <Button variant="raised" type="submit">Submit</Button>
+      </MaterialUIForm>
+    )
+  }
+}
+
 ```
 
 #### Custom validation logic:
@@ -592,7 +622,7 @@ This is a new project and contributions are welcome so feel free to [open an iss
 
 ## Special Thanks to unitedhubs 
 
-This project is extended version of https://github.com/unitedhubs/material-ui-form/
+This project is an extended version of https://github.com/unitedhubs/material-ui-form/
 
 ## License
 
