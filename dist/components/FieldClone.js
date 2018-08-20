@@ -36,7 +36,7 @@ function getRequiredProp(required, useNativeRequiredValidator) {
 
 function makeLabel(fieldComp, props) {
   var label = fieldComp.props.label || '';
-  return props.field.isRequired && !props.useNativeRequiredValidator ? label + ' *' : label;
+  return props.field.isRequired && !props.useNativeRequiredValidator ? '' + label : label;
 }
 
 function makeErrorAndHelperText(props) {

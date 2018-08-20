@@ -13,7 +13,6 @@
     - [Other props](#other-props)
 4. [Examples](#examples)
     - [Nested fields](#nested-fields)
-    - [Custom validation messages](#custom-validation-messages)
     - [Custom validators](#custom-validators)
     - [Custom validation logic](#custom-validation-logic)
     - [Server validations](#server-validations)
@@ -59,12 +58,12 @@ While most Material-UI field components are supported there may be some that are
 
 #### install
 ```
-npm install --save material-ui-form
+npm install --save react-material-ui-form
 ```
 
 #### demo
-1. `$ git clone https://github.com/unitedhubs/material-ui-form.git`
-2. `$ cd material-ui-form`
+1. `$ git clone https://github.com/voletiswaroop/react-material-ui-form.git`
+2. `$ cd react-material-ui-form`
 3. `$ npm install && npm run dev`
 
 ## Props
@@ -80,11 +79,11 @@ Prop                          | Description               | Default
 [***onSubmit***](#nested-fields) _[func]_ | Returns _@values_ and _@pristineValues_ on form submission |
 [***onValuesChange***](#getting-form-values-on-field-update) _[func]_ | Returns _@values_ and _@pristineValues_ on field value change |
 ***validation*** _[object]_   | Object specifing validation config options (prefixed below with ↳) |
-↳ [***messageMap***](#custom-validation-messages) _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _material-ui-form_ export parameter | _object_
+↳ [***messageMap***](#custom-validation-messages) _[object]_ | A key-value list where the key is the validator name and the value is the error message. Is exposed as a _react-material-ui-form_ export parameter | _object_
 ↳ [***messageKeyPrefix***](#custom-validation-messages) _[string]_ | Optional prefix to apply to all messageMap keys. If specified, field validator names will automatically be appended the prefix | ""
 ↳ [***requiredValidatorName***](#custom-validation-logic) _[boolean, string]_ | Specifies the validator name and matching messegeMap key for required fields. To disable and rely on the native _required_ field prop, set to `false` | "isRequired"
 ↳ [***validate***](#custom-validation-logic) _[func]_ | Overrides the internal validate method. Receives the following parameters: _@fieldValue_, _@fieldValidators_, and _@...rest_ (where _@...rest_ is the **validation** prop object) | _func_
-↳ [***validators***](#custom-validators) _[object]_ | Defaults to an extended validator.js object. Is exposed as a _material-ui-form_ export parameter | _object_
+↳ [***validators***](#custom-validators) _[object]_ | Defaults to an extended validator.js object. Is exposed as a _react-material-ui-form_ export parameter | _object_
 ↳ ***validateInputOnBlur*** _[boolean]_ | Makes text input validations happen on blur instead of on change | false
 [***validations***](#server-validations) _[object]_ | Validations to pass to the form (i.e. from the server). Should be an object with keys representing field _name_ props and values as arrays of field error messages. The first error message will be displayed per field | 
 
@@ -108,7 +107,7 @@ Prop                     | Value             | Description
 
 #### Nested fields:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
 
 
 class MyForm extends React.Component {
@@ -169,72 +168,6 @@ class MyForm extends React.Component {
 }
 ```
 
-#### Custom validation messages:
-```jsx
-import Form, { messageMap } from '../../src/index'
- 
-
-const customMessageMap = Object.assign(messageMap, {
-  myCustomPrefix_isInt: 'Invalid integer',
-  myCustomPrefix_isEmail: 'メールアドレスが無効です',
-  myCustomPrefix_isIn: '「{0}」のいずれかを記入してください',
-  myCustomPrefix_isWhitelisted: '文字は「{0}」から選択してください',
-  myCustomPrefix_isLength: '文字数は{0}以上{1}以下であることは条件',
-})
-
-class MyForm extends React.Component {
-  submit = (values, pristineValues) => {
-    // get all values and pristineValues on form submission
-  }
-
-  render() {
-    return (
-      <MaterialUIForm
-        onSubmit={this.submit}
-        validation={{
-          messageMap: customMessageMap,
-          messageKeyPrefix: 'myCustomPrefix_',
-        }}
-      >
-        <TextField
-          label="Email"
-          type="text"
-          name="email"
-          value="invalid@email."
-          data-validators="isEmail"
-        />
-
-        <TextField
-          label="Inclusion"
-          type="number"
-          name="number"
-          value="3"
-          data-validators={[{ isIn: [1, 2, 4] }]}
-        />
-
-        <TextField
-          label="Whitelisted characters"
-          type="text"
-          name="whitelisted"
-          value="abc1234"
-          data-validators={[{ isWhitelisted: 'abc123' }]}
-        />
-
-        <TextField
-          label="Lenght test"
-          type="text"
-          name="length"
-          value="123"
-          data-validators={[{ isLength: { min: 4, max: 5 } }]}
-        />
-
-        <Button variant="raised" type="submit">Submit</Button>
-      </MaterialUIForm>
-    )
-  }
-}
-```
-
 #### Custom validators:
 ```jsx
 import Form, { messageMap, validators } from '../../src/index'
@@ -277,7 +210,7 @@ class MyForm extends React.Component {
 
 #### Custom validation logic:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 function validate(value, fieldValidators, options) {
@@ -332,7 +265,7 @@ class MyForm extends React.Component {
 
 #### Server validations:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 const mockServerValidations = {
@@ -387,7 +320,7 @@ class MyForm extends React.Component {
 
 #### Form autoComplete and "on error" submission:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -419,7 +352,7 @@ class MyForm extends React.Component {
 
 #### Getting form values on field update:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -459,7 +392,7 @@ class MyForm extends React.Component {
 #### Stepper:
 ```jsx
 import Stepper, { Step, StepLabel } from 'material-ui/Stepper'
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 function getSteps() {
@@ -549,7 +482,7 @@ class MyForm extends React.Component {
 
 #### Dynamic array fields (notice the `deletefieldrow` prop on the "Remove Row" button):
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
 import formData from 'form-data-to-object'
  
 
@@ -620,7 +553,7 @@ class MyForm extends React.Component {
 
 #### Custom components with custom handlers:
 ```jsx
-import MaterialUIForm from 'material-ui-form'
+import MaterialUIForm from 'react-material-ui-form'
  
 
 class MyForm extends React.Component {
@@ -655,8 +588,12 @@ class MyForm extends React.Component {
 
 ## Contributing
 
-This is a new project and contributions are welcome so feel free to [open an issue](https://github.com/unitedhubs/material-ui-form/issues) or fork and create a pull request. Collaborators are also welcome - please send an email to info@unitedhubs.com.
+This is a new project and contributions are welcome so feel free to [open an issue](https://github.com/voletiswaroop/react-material-ui-form/issues) or fork and create a pull request. Collaborators are also welcome - please send an email to swaroop.voleti@gmail.com.
+
+## Special Thanks to unitedhubs 
+
+This project is extended version of https://github.com/unitedhubs/material-ui-form/
 
 ## License
 
-This project is licensed under the terms of the [MIT license](https://github.com/unitedhubs/material-ui-form/blob/dev/LICENSE).
+This project is licensed under the terms of the [MIT license](https://github.com/voletiswaroop/react-material-ui-form/blob/dev/LICENSE).

@@ -17,7 +17,7 @@ function getRequiredProp(
 function makeLabel(fieldComp: Object, props: Object): string {
   const label: string = fieldComp.props.label || ''
   return props.field.isRequired && !props.useNativeRequiredValidator
-    ? `${label} *`
+    ? `${label}`
     : label
 }
 

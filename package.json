@@ -1,6 +1,6 @@
 {
-  "name": "material-ui-form",
-  "version": "1.0.0-alpha.22",
+  "name": "react-material-ui-form",
+  "version": "1.0.0",
   "description": "State and validation management for Material-UI form components",
   "main": "dist/index.js",
   "scripts": {
@@ -14,12 +14,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/unitedhubs/material-ui-form.git"
+    "url": "git+https://github.com/voletiswaroop/react-material-ui-form.git"
   },
   "keywords": [
     "form",
     "forms",
     "material-ui",
+    "material-ui-form",
+    "material-ui-forms",
+    "react-material-ui-form",
+    "react-form",
+    "react-form-validation",
+    "react-form-radio-button",
+    "react-form-dropdown",
+    "react-form-select",
+    "react-form-checkbox",
     "react",
     "react-component",
     "state-management",
@@ -30,12 +39,12 @@
   "files": [
     "dist"
   ],
-  "author": "unitedhubs",
+  "author": "voletiswaroop",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/unitedhubs/material-ui-form/issues"
+    "url": "https://github.com/voletiswaroop/react-material-ui-form/issues"
   },
-  "homepage": "https://github.com/unitedhubs/material-ui-form#readme",
+  "homepage": "https://github.com/voletiswaroop/react-material-ui-form#readme",
   "jest": {
     "coverageDirectory": "./coverage/",
     "collectCoverage": true,
