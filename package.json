@@ -19,11 +19,11 @@
   "keywords": [
     "form",
     "forms",
-    "material-ui",
+    "react-form",
+    "material-form",
     "material-ui-form",
     "material-ui-forms",
     "react-material-ui-form",
-    "react-form",
     "react-form-validation",
     "react-form-radio-button",
     "react-form-dropdown",
