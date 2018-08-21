@@ -2,8 +2,8 @@
 
 [![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 [![npm](https://img.shields.io/npm/v/react-material-ui-form.svg)](https://www.npmjs.com/package/react-material-ui-form)
-[![Build Status](https://travis-ci.org/voletiswaroop/react-material-ui-form.svg?branch=dev)](https://travis-ci.org/voletiswaroop/react-material-ui-form)
-[![Codecov](https://img.shields.io/codecov/c/github/voletiswaroop/react-material-ui-form.svg)](https://codecov.io/gh/voletiswaroop/react-material-ui-form/branch/dev)
+[![Build Status](https://travis-ci.org/voletiswaroop/react-material-ui-form.svg)](https://travis-ci.org/voletiswaroop/react-material-ui-form)
+[![Codecov](https://img.shields.io/codecov/c/github/voletiswaroop/react-material-ui-form.svg)](https://codecov.io/gh/voletiswaroop/react-material-ui-form/)
 
 1. [About](#about)
 2. [Setup](#setup)
