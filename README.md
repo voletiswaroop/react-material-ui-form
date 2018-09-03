@@ -1,8 +1,8 @@
-### material-ui-form
+### react-material-ui-form
 
 [![MIT](https://img.shields.io/github/license/mashape/apistatus.svg)](https://opensource.org/licenses/MIT)
 [![npm](https://img.shields.io/npm/v/react-material-ui-form.svg)](https://www.npmjs.com/package/react-material-ui-form)
-[![Build Status](https://travis-ci.org/voletiswaroop/react-material-ui-form.svg)](https://travis-ci.org/voletiswaroop/react-material-ui-form)
+[![Build Status](https://travis-ci.com/voletiswaroop/react-material-ui-form.svg)](https://travis-ci.com/voletiswaroop/react-material-ui-form)
 [![Codecov](https://img.shields.io/codecov/c/github/voletiswaroop/react-material-ui-form.svg)](https://codecov.io/gh/voletiswaroop/react-material-ui-form/)
 
 1. [About](#about)
@@ -27,7 +27,7 @@
 
 ## About
 
-_material-ui-form_ is a React wrapper for [Material-UI](https://material-ui-1dab0.firebaseapp.com/getting-started/usage/) form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
+_react-material-ui-form_ is a React wrapper for [Material-UI](https://material-ui.com/getting-started/usage/) form components. Simply replace the `<form>` element with `<MaterialUIForm>` to get out-of-the-box state and validation support ***as-is***. There's no need to use any other components, alter your form's nesting structure, or write onChange handlers.
 
 Validation is done with [validator.js](https://github.com/chriso/validator.js) but you can extend/customize validation messages, validators, and use your own validation logic too. Steppers, dynamic array fields and custom components are also supported.
 
@@ -51,9 +51,17 @@ _material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso
 - isSize `value >= min && value <= max`
 - isTime
 
-#### _NOTE!_
+#### _Supported field components_
 
-While most Material-UI field components are supported there may be some that are not. Support for Material-UI field component props is another issue. Please [check here](https://github.com/unitedhubs/material-ui-form/issues/5) to see what is currently tested to be working.  
+- TextField
+- TextField { select }
+- TextField { multiline }
+- Checkbox 
+- RadioGroup
+- Radio
+- FormControlLabel (control prop)
+- FormLabel
+- InputLabel
 
 ## Setup
 
