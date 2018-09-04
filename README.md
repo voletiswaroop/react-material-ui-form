@@ -50,7 +50,7 @@ _material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso
 - isSerial `/^([-\s\da-zA-Z]+)$/`
 - isSize `value >= min && value <= max`
 - isTime
-- isLength(min,max) [{ isLength: { min: 2, max: 50 } }]
+- isLength(min,max) [{ isLength: { min: 2, max: 50 } }] (#custom-validation-messages)
 
 #### _Supported field components_
 
