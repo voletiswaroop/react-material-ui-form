@@ -41,7 +41,7 @@ Validation is done with [validator.js](https://github.com/chriso/validator.js) b
 
 #### extra validators
 
-_material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso/validator.js#validators) with the following validators:
+_react-material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso/validator.js#validators) with the following validators:
 
 - isAlias `/^[a-zA-Z0-9-_\.]*$/i`
 - isDate
@@ -50,7 +50,7 @@ _material-ui-form_ extends [_validator.js_ validators](https://github.com/chriso
 - isSerial `/^([-\s\da-zA-Z]+)$/`
 - isSize `value >= min && value <= max`
 - isTime
-- isLength(min,max) [{ isLength: { min: 2, max: 50 } }]
+- [isLength(min,max)](#custom-validation-messages) `[{ isLength: { min: 2, max: 50 } }]`
 
 #### _Supported field components_
 
@@ -174,6 +174,14 @@ class MyForm extends React.Component {
           </FormControl>
 
         </fieldset>
+        <FormControl>
+          <FormLabel component="legend">Gender</FormLabel>
+          <RadioGroup aria-label="Gender" name="gender"  value="male">
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="male" control={<Radio />} label="Male" /> 
+          </RadioGroup>
+        </FormControl>
+        
         <Button variant="raised" type="reset">Reset</Button>
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
