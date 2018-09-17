@@ -50,7 +50,7 @@ export default {
   isWhitelisted: 'Characters should be one of "{0}"',
   // material-ui-form
   isAlias: 'Invalid alias - use letters, numbers, dots, hyphens, underscores',
-  isRequired: 'Required field',
+  isRequired: 'This field is required',
   isDate: 'Invalid date',
   isNumber: 'Invalid number',
   isTime: 'Invalid time',

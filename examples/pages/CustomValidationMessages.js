@@ -10,16 +10,14 @@ import { withStyles } from '@material-ui/core/styles'
 import Form, { messageMap } from '../../src/index'
 import styles from '../styles'
 
-
 const dividerStyle = { margin: '20px 0' }
 
-const customMessageMap = Object.assign(messageMap, {
-  myCustomPrefix_isInt: 'Invalid integer',
-  myCustomPrefix_isEmail: 'メールアドレスが無効です',
-  myCustomPrefix_isIn: '「{0}」のいずれかを記入してください',
-  myCustomPrefix_isWhitelisted: '文字は「{0}」から選択してください',
-  myCustomPrefix_isLength: '文字数は{0}以上{1}以下であることは条件',
+const customFormMsg = Object.assign(messageMap, {
+  isRequired: 'This field is required', 
+  isEmail: 'Please enter a valid email address',  
+  isLength:'Must be 2-50 characters', 
 })
+
 
 @withStyles(styles)
 export default class CustomValidationMessages extends React.Component {
@@ -51,8 +49,7 @@ export default class CustomValidationMessages extends React.Component {
             onSubmit={this.submit}
             validation={{
               validateInputOnBlur: true,
-              messageMap: customMessageMap,
-              messageKeyPrefix: 'myCustomPrefix_',
+              messageMap: customFormMsg,
             }}
           >
             <TextField

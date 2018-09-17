@@ -24,11 +24,10 @@ const rules = [
     },
   },
   {
-    test: /\.(css|less)$/,
+    test: /\.(css)$/,
     use: [
       { loader: 'style-loader' },
-      { loader: 'css-loader' },
-      { loader: 'less-loader' },
+      { loader: 'css-loader' }, 
     ],
   },
   {
@@ -84,8 +83,8 @@ module.exports = {
   },
   externals,
   output: {
-    filename: 'material-ui-form.min.js',
-    library: 'MaterialUIForm',
+    filename: 'react-material-ui-form.min.js',
+    library: 'ReactMaterialUIForm',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'bundle'),
     umdNamedDefine: true,

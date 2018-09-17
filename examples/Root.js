@@ -10,7 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Button from '@material-ui/core/Button'
 /* eslint-enable import/no-extraneous-dependencies */
 
-import './styles.less'
+import './styles.css'
 import './markdown.css'
 import NestedFields from './pages/NestedFields'
 import CustomValidationMessages from './pages/CustomValidationMessages'
