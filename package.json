@@ -1,6 +1,6 @@
 {
   "name": "react-material-ui-form",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "State and validation management for Material-UI form components",
   "main": "dist/index.js",
   "scripts": {
