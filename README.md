@@ -117,12 +117,16 @@ Prop                     | Value             | Description
 -------------------------| ------------------|------------------------
 [***deletefieldrow***](#dynamic-array-fields-notice-the-deletefieldrow-prop-on-the-remove-row-button) _[string]_ | Field **name** prop up to and including the row index (i.e. _rooms[2]_) | Add to button components that use _onClick_ to remove any array field rows
 
+## Material-UI form production build classnames conflict issues
+To avoid default material-ui production build classnames conflict issues include your entire form inside <JssProvider> 
+Example: [Nested fields](#nested-fields)
+
 ## Examples
 
 #### Nested fields:
 ```jsx
 import MaterialUIForm from 'react-material-ui-form'
-
+import JssProvider from 'react-jss/lib/JssProvider';
 
 class MyForm extends React.Component {
   submit = (values, pristineValues) => {
@@ -141,50 +145,40 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm onSubmit={this.submit}>
-        <TextField
-          label="Name"
-          type="text"
-          name="name"
-          value=""
-          data-validators="isRequired,isAlpha"
-          onChange={this.customInputHandler}
-        />
-
-        <fieldset>
-          <legend>Nested</legend>
-          <Checkbox
-            checked
-            name="love"
-            value="yes"
-            onChange={this.customToggleHandler}
-          />
-          <span>I love it</span>
-
-          <FormControl required>
-            <InputLabel>Age</InputLabel>
-            <Select value="" name="age">
-              <MenuItem value=""><em>Please select your age ...</em></MenuItem>
-              <MenuItem value={10}>Teens</MenuItem>
-              <MenuItem value={20}>Twenties</MenuItem>
-              <MenuItem value={30}>Thirties</MenuItem>
-              <MenuItem value="40+">Fourties +</MenuItem>
-            </Select>
-            <FormHelperText>Some important helper text</FormHelperText>
-          </FormControl>
-
-        </fieldset>
-        <FormControl>
-          <FormLabel component="legend">Gender</FormLabel>
-          <RadioGroup aria-label="Gender" name="gender"  value="male">
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" /> 
-          </RadioGroup>
-        </FormControl>
+      <JssProvider>
+        <MaterialUIForm onSubmit={this.submit}>
+          <TextField label="Name" type="text" name="name" value="" data-validators="isRequired,isAlpha" onChange={this.customInputHandler} />
         
-        <Button variant="raised" type="reset">Reset</Button>
-        <Button variant="raised" type="submit">Submit</Button>
-      </MaterialUIForm>
+          <fieldset>
+            <legend>Nested</legend>
+            <Checkbox checked name="love" value="yes" onChange={this.customToggleHandler} />
+            <span>I love it</span>
+
+            <FormControl required>
+              <InputLabel>Age</InputLabel>
+              <Select value="" name="age">
+                <MenuItem value=""><em>Please select your age ...</em></MenuItem>
+                <MenuItem value={10}>Teens</MenuItem>
+                <MenuItem value={20}>Twenties</MenuItem>
+                <MenuItem value={30}>Thirties</MenuItem>
+                <MenuItem value="40+">Fourties +</MenuItem>
+              </Select>
+              <FormHelperText>Some important helper text</FormHelperText>
+            </FormControl> 
+          </fieldset>
+          
+          <FormControl>
+            <FormLabel component="legend">Gender</FormLabel>
+            <RadioGroup aria-label="Gender" name="gender"  value="male">
+              <FormControlLabel value="female" control={<Radio />} label="Female" />
+              <FormControlLabel value="male" control={<Radio />} label="Male" /> 
+            </RadioGroup>
+          </FormControl>
+          
+          <Button variant="raised" type="reset">Reset</Button>
+          <Button variant="raised" type="submit">Submit</Button>
+        </MaterialUIForm>
+      </JssProvider>
     )
   }
 }
@@ -207,21 +201,8 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm
-        onSubmit={this.submit}
-        validation={{
-          messageMap: customMessageMap,
-          validators,
-        }}
-      >
-        <TextField
-          label="Write anything..."
-          type="text"
-          name="trickster"
-          value=""
-          helperText="this is not a trick"
-          data-validators="isBorat"
-        />
+      <MaterialUIForm onSubmit={this.submit} validation={{ messageMap: customMessageMap, validators, }}>
+        <TextField label="Write anything..." type="text" name="trickster" value="" helperText="this is not a trick" data-validators="isBorat" />
 
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
@@ -233,8 +214,7 @@ class MyForm extends React.Component {
 
 #### Custom validation messages:
 ```jsx
-const customFormMsg = Object.assign(messageMap, {
-  isRequired: 'This field is required', 
+const customFormMsg = Object.assign(messageMap, { 
   isEmail: 'Please enter a valid email address',  
   isLength:'Must be 2-50 characters', 
 })
@@ -245,10 +225,10 @@ class MyForm extends React.Component {
 render() {
   return (
     <MaterialUIForm onSubmit={this.submit} validation={{ messageMap: customFormMsg}}>
-      <TextField label="Name" type="text" name="FirstName" value="Name" data-validators="isRequired,isLength" />
+      <TextField label="Name" type="text" name="FirstName" value="Name" data-validators="isLength" />
       <TextField label="Email" type="text" name="Email" value="abc@xyz.com" data-validators="isRequired,isEmail" />
       <Button variant="raised" type="submit">Submit</Button>
-      </MaterialUIForm>
+    </MaterialUIForm>
     )
   }
 }
@@ -286,22 +266,8 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm
-        onSubmit={this.submit}
-        validation={{
-          requiredValidatorName: false,
-          validate,
-          ...validationOptions,
-        }}
-      >
-        <TextField
-          label="Whatever you write isn't gonna be good enough"
-          type="text"
-          name="test"
-          value=""
-          data-validators="whatever - our custom validator will ignore this"
-          required
-        />
+      <MaterialUIForm onSubmit={this.submit} validation={{ requiredValidatorName: false, validate, ...validationOptions, }}>
+        <TextField label="Whatever you write isn't gonna be good enough" type="text" name="test" value="" data-validators="whatever - our custom validator will ignore this" required />
 
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
@@ -347,16 +313,8 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm
-        onSubmit={this.submit}
-        validations={this.state.mockServerValidations}
-      >
-        <TextField
-          label="Name"
-          type="text"
-          name="name"
-          value="doge"
-        />
+      <MaterialUIForm onSubmit={this.submit} validations={this.state.mockServerValidations}>
+        <TextField label="Name" type="text" name="name" value="doge" />
 
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
@@ -377,18 +335,8 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm
-        autoComplete="on"
-        disableSubmitButtonOnError={false}
-        onSubmit={this.submit}
-      >
-        <TextField
-          label="Name"
-          type="text"
-          name="name"
-          value="doge"
-          data-validators="isInt"
-        />
+      <MaterialUIForm autoComplete="on" disableSubmitButtonOnError={false} onSubmit={this.submit}>
+        <TextField label="Name" type="text" name="name" value="doge" data-validators="isInt" />
 
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
@@ -417,17 +365,8 @@ class MyForm extends React.Component {
 
   render() {
     return (
-      <MaterialUIForm
-        onSubmit={this.submit}
-        onValuesChange={this.handleValuesChange}
-        onFieldValidation={this.handleFieldValidations}
-      >
-        <TextField
-          label="Name"
-          name="name"
-          value="doge"
-          required
-        />
+      <MaterialUIForm onSubmit={this.submit} onValuesChange={this.handleValuesChange} onFieldValidation={this.handleFieldValidations}>
+        <TextField label="Name" name="name" value="doge" required />
 
         <Button variant="raised" type="submit">Submit</Button>
       </MaterialUIForm>
@@ -491,31 +430,17 @@ class MyForm extends React.Component {
           ))}
         </Stepper>
 
-        <MaterialUIForm
-          activeStep={activeStep}
-          onFieldValidation={this.updateErrorSteps}
-          onSubmit={this.submit}
-        >
+        <MaterialUIForm activeStep={activeStep} onFieldValidation={this.updateErrorSteps} onSubmit={this.submit}>
           {activeStep === 0 &&
             <React.Fragment>
-              <TextField
-                label="Name"
-                name="name"
-                value=""
-                required
-              />
+              <TextField label="Name" name="name" value="" required />
               <Button variant="raised" onClick={this.clickNext}>Next</Button>
             </React.Fragment>
           }
 
           {activeStep === 1 &&
             <React.Fragment>
-              <TextField
-                label="Address"
-                name="address"
-                value=""
-                required
-              />
+              <TextField label="Address" name="address" value="" required />
               <Button variant="raised" onClick={this.clickBack}>Back</Button>
               <Button variant="raised" type="submit">Submit</Button>
             </React.Fragment>
@@ -568,24 +493,10 @@ class MyForm extends React.Component {
       <MaterialUIForm onSubmit={this.submit}>
         {this.state.rows.map((row, i) => (
           <Fragment key={row._id}>
-            <TextField
-              label="Label"
-              name={`rows[${i}][label]`}
-              value=""
-              required
-            />
-            <TextField
-              label="Value"
-              name={`rows[${i}][value]`}
-              value=""
-            />
+            <TextField label="Label" name={`rows[${i}][label]`} value="" required />
+            <TextField label="Value" name={`rows[${i}][value]`} value="" />
             { this.state.rows.length > 1 &&
-              <Button
-                onClick={() => this.removeRow(i)}
-                deletefieldrow={`rows[${i}]`}
-              >
-                Remove Row
-              </Button>
+              <Button onClick={()=> this.removeRow(i)} deletefieldrow={`rows[${i}]`}>Remove Row</Button>
             }
           </Fragment>
         ))}
@@ -613,18 +524,9 @@ class MyForm extends React.Component {
       <div>
         <MaterialUIForm>
           {'Upload file: '}
-          <input
-            accept="image/*"
-            style={{ display: 'none' }}
-            id="raised-button-file"
-            multiple
-            type="file"
-            onChange={this.uploadFile}
-          />
+          <input accept="image/*" style={{ display: 'none' }} id="raised-button-file" multiple type="file" onChange={this.uploadFile} />
           <label htmlFor="raised-button-file">
-            <Button variant="raised" component="span">
-              Upload
-            </Button>
+            <Button variant="raised" component="span">Upload</Button>
           </label>
         </MaterialUIForm>
       </div>
