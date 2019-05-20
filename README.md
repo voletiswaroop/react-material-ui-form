@@ -56,7 +56,7 @@ _react-material-ui-form_ extends [_validator.js_ validators](https://github.com/
 
 - TextField
 - TextField { select }
-- TextField { multiline }
+- TextField { multiline, textarea }
 - Checkbox 
 - RadioGroup
 - Radio
