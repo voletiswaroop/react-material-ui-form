@@ -28,7 +28,7 @@ describe('<FieldClone>:<TextField>', () => {
           name="name"
           onBlur={jest.fn()}
           onChange={jest.fn()}
-          value="mufasa"
+          value="swaroop"
         />
       )}
       onConstruct={jest.fn()}
