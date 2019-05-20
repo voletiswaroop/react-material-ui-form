@@ -240,9 +240,7 @@ var Form = (_temp = _class = function (_React$Component) {
           if (isValidForm(_this.state.fields) && document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
             _this.enableSubmitButton();
           }
-        }
-
-        if (isValidForm(_this.state.fields)) {
+        } else if (isValidForm(_this.state.fields)) {
           _this.enableSubmitButton();
         }
 

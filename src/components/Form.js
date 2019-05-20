@@ -266,9 +266,7 @@ export default class Form extends React.Component<Props, State> {
         if (isValidForm(this.state.fields) && document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
           this.enableSubmitButton();
         }
-      }
-
-      if (isValidForm(this.state.fields)) {
+      } else if (isValidForm(this.state.fields)) {
         this.enableSubmitButton();
       }
 
