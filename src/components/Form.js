@@ -261,10 +261,16 @@ export default class Form extends React.Component<Props, State> {
           },
         },
       })
-
-      if (isValidForm(this.state.fields)) {
-        this.enableSubmitButton()
+      if(document.getElementsByClassName('MuiCheckbox-root').length === 1){
+        if (isValidForm(this.state.fields) && document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
+            this.enableSubmitButton();
+        }
       }
+      else{
+        if (isValidForm(this.state.fields)) {
+          this.enableSubmitButton();
+        }
+      } 
       if (this.onValuesChange !== undefined) {
         this.onValuesChange(
           getFieldValues(this.state.fields),
@@ -345,6 +351,13 @@ export default class Form extends React.Component<Props, State> {
   submit = (event: Event) => {
     event.preventDefault()
     let isValid = true
+    if (document.getElementsByClassName('MuiCheckbox-root').length != 0){
+      if(document.getElementsByClassName('MuiCheckbox-checked').length ===0){
+        this.disableSubmitButton();
+        event.preventDefault();
+        isValid = false;
+      }
+    }
     const { fields } = this.state
     _.each(fields, (field, name) => {
       if (field.isRequired && field.value === '') {
