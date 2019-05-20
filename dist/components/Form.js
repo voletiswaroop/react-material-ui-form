@@ -235,15 +235,17 @@ var Form = (_temp = _class = function (_React$Component) {
             value: value
           })))
         });
+
         if (document.getElementsByClassName('MuiCheckbox-root').length === 1) {
           if (isValidForm(_this.state.fields) && document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
             _this.enableSubmitButton();
           }
-        } else {
-          if (isValidForm(_this.state.fields)) {
-            _this.enableSubmitButton();
-          }
         }
+
+        if (isValidForm(_this.state.fields)) {
+          _this.enableSubmitButton();
+        }
+
         if (_this.onValuesChange !== undefined) {
           _this.onValuesChange(getFieldValues(_this.state.fields), getPristineFieldValues(_this.state.fields));
         }
@@ -312,15 +314,15 @@ var Form = (_temp = _class = function (_React$Component) {
     _this.submit = function (event) {
       event.preventDefault();
       var isValid = true;
-      if (document.getElementsByClassName('MuiCheckbox-root').length != 0) {
+      var fields = _this.state.fields;
+
+      if (document.getElementsByClassName('MuiCheckbox-root').length !== 0) {
         if (document.getElementsByClassName('MuiCheckbox-checked').length === 0) {
           _this.disableSubmitButton();
           event.preventDefault();
           isValid = false;
         }
       }
-      var fields = _this.state.fields;
-
       _lodash2.default.each(fields, function (field, name) {
         if (field.isRequired && field.value === '') {
           _this.validateField(name, '');
