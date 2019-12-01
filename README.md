@@ -187,7 +187,7 @@ class MyForm extends React.Component {
 
 #### Custom validators:
 ```jsx
-import Form, { messageMap, validators } from '../../src/index'
+import Form, { messageMap, validators } from 'react-material-ui-form/dist/validation/index';
  
 
 validators.isBorat = value => value === 'borat'
