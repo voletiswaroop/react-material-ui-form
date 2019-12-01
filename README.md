@@ -4,7 +4,7 @@
 [![npm](https://img.shields.io/npm/v/react-material-ui-form.svg)](https://www.npmjs.com/package/react-material-ui-form)
 [![Build Status](https://travis-ci.com/voletiswaroop/react-material-ui-form.svg)](https://travis-ci.com/voletiswaroop/react-material-ui-form)
 [![Downloads](https://img.shields.io/npm/dt/react-material-ui-form.svg)](https://www.npmjs.com/package/react-material-ui-form)
-[![Downloads](https://img.shields.io/librariesio/sourcerank/npm/react-material-ui-form?color=green)](https://www.npmjs.com/package/react-material-ui-form)
+[![Downloads](https://img.shields.io/librariesio/sourcerank/npm/react-material-ui-form?color=green)](https://libraries.io/npm/react-material-ui-form/sourcerank)
 
 1. [About](#about)
 2. [Setup](#setup)
