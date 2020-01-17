@@ -63,7 +63,7 @@ var FieldClone = (_temp = _class = function (_React$Component) {
     var fieldComp = props.fieldComp;
 
 
-    if (fieldComp.type.name === undefined) {
+    if (!fieldComp.type.options && fieldComp.type.name === undefined || fieldComp.type.options.name === undefined) {
       throw new Error('FieldClone does not support native elements');
     }
     if (fieldComp.props.name === undefined || fieldComp.props.value === undefined) {
