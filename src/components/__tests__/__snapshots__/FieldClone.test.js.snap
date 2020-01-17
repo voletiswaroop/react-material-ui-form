@@ -15,6 +15,7 @@ exports[`<FieldClone>:<Select> should render 1`] = `
   onChange={[Function]}
   required={false}
   select={true}
+  variant="standard"
 >
   <option
     value="red"
@@ -40,5 +41,6 @@ exports[`<FieldClone>:<TextField> should render 1`] = `
   required={false}
   select={false}
   type="text"
+  variant="standard"
 />
 `;

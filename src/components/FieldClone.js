@@ -55,8 +55,7 @@ export default class FieldClone extends React.Component<Props, State> {
   constructor(props: Object) {
     super(props)
     const { fieldComp } = props
-
-    if ((!fieldComp.type.options && fieldComp.type.name === undefined) || fieldComp.type.options.name === undefined) {
+    if (fieldComp.type.name === undefined || (fieldComp.type.options && fieldComp.type.options.name === undefined)) {
       throw new Error('FieldClone does not support native elements')
     }
     if (fieldComp.props.name === undefined || fieldComp.props.value === undefined) {
