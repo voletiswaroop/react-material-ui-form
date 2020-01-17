@@ -65,6 +65,9 @@ _react-material-ui-form_ extends [_validator.js_ validators](https://github.com/
 - FormLabel
 - InputLabel
 
+## Note
+Currently this package will support only till **[Material-UI v3](https://v3.material-ui.com/getting-started/installation/)**
+
 ## Setup
 
 #### install
