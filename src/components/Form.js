@@ -31,7 +31,7 @@ function verifyFieldElement(component: any): boolean {
   ]
 
   return whitelist.includes(component.type)
-   || (_.has(component, 'props.name') && _.has(component, 'props.value'))
+    || (_.has(component, 'props.name') && _.has(component, 'props.value'))
 }
 
 function extractFieldValidators(fieldProps: Object): Array<mixed> {
@@ -205,7 +205,7 @@ export default class Form extends React.Component<Props, State> {
           },
         })
       })
-    // other inputs
+      // other inputs
     } else if (!_.isBoolean(checked)) {
       const { requiredValidatorName } = this.validation
       if (!_.has(this.state.fields, name)) {
@@ -263,7 +263,8 @@ export default class Form extends React.Component<Props, State> {
       })
 
       if (document.getElementsByClassName('MuiCheckbox-root').length === 1) {
-        if (isValidForm(this.state.fields) && document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
+        if (isValidForm(this.state.fields) &&
+          document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
           this.enableSubmitButton();
         }
       } else if (isValidForm(this.state.fields)) {
@@ -453,7 +454,7 @@ export default class Form extends React.Component<Props, State> {
         return React.cloneElement(child, {
           disabled: this.state.disableSubmitButton,
         })
-      // non-interactive elements should be rendered as is
+        // non-interactive elements should be rendered as is
       } else if (!isFieldElement) {
         // delete row button
         if (child.props[propNames.DELETE_FIELD_ROW] !== undefined) {
@@ -522,7 +523,7 @@ export default class Form extends React.Component<Props, State> {
         action={this.props.action}
         name={this.props.name}
       >
-        { this.cloneChildrenRecursively(this.props.children) }
+        {this.cloneChildrenRecursively(this.props.children)}
       </form>
     )
   }

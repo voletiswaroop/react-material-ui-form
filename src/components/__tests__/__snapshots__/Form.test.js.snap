@@ -19,6 +19,7 @@ exports[`<Form> (all props) should render 1`] = `
         select={false}
         type="text"
         value="123"
+        variant="standard"
       />
     }
     key="name/.1"
@@ -142,6 +143,7 @@ exports[`<Form> (no props) should render 1`] = `
         select={false}
         type="text"
         value="123!"
+        variant="standard"
       />
     }
     key="name/.0"
