@@ -58,7 +58,7 @@ _react-material-ui-form_ extends [_validator.js_ validators](https://github.com/
 - TextField
 - TextField { select }
 - TextField { multiline, textarea }
-- Checkbox 
+- [Checkbox](#nested-fields) 
 - RadioGroup
 - Radio
 - FormControlLabel (control prop)
@@ -152,11 +152,15 @@ class MyForm extends React.Component {
       <JssProvider>
         <MaterialUIForm onSubmit={this.submit}>
           <TextField label="Name" type="text" name="name" value="" data-validators="isRequired,isAlpha" onChange={this.customInputHandler} />
-        
           <fieldset>
-            <legend>Nested</legend>
-            <Checkbox checked name="love" value="yes" onChange={this.customToggleHandler} />
-            <span>I love it</span>
+            <FormControl>
+                {/* form label is required here to perform default validations */}
+                <FormLabel component="legend">I love React material UI form</FormLabel>
+                <FormGroup value=''>
+                  <FormControlLabel control={<Checkbox value='yes' />}
+                    label='I love React material UI form'/>
+                </FormGroup>
+              </FormControl>
 
             <FormControl required>
               <InputLabel>Age</InputLabel>
