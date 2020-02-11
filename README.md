@@ -547,10 +547,6 @@ class MyForm extends React.Component {
 
 This is a new project and contributions are welcome so feel free to [open an issue](https://github.com/voletiswaroop/react-material-ui-form/issues) or fork and create a pull request. Collaborators are also welcome - please send an email to swaroop.voleti@gmail.com.
 
-## Special Thanks to unitedhubs 
-
-This project is an extended version of https://github.com/unitedhubs/material-ui-form/
-
 ## License
 
 This project is licensed under the terms of the [MIT license](https://github.com/voletiswaroop/react-material-ui-form/blob/dev/LICENSE).
