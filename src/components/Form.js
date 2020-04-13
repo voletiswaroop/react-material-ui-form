@@ -262,12 +262,7 @@ export default class Form extends React.Component<Props, State> {
         },
       })
 
-      if (document.getElementsByClassName('MuiCheckbox-root').length === 1) {
-        if (isValidForm(this.state.fields) &&
-          document.getElementsByClassName('MuiFormHelperText-error').length === 0) {
-          this.enableSubmitButton();
-        }
-      } else if (isValidForm(this.state.fields)) {
+      if (isValidForm(this.state.fields)) {
         this.enableSubmitButton();
       }
 
