@@ -347,13 +347,7 @@ export default class Form extends React.Component<Props, State> {
     event.preventDefault()
     let isValid = true
     const { fields } = this.state
-    if (document.getElementsByClassName('MuiCheckbox-root').length !== 0) {
-      if (document.getElementsByClassName('MuiCheckbox-checked').length === 0) {
-        this.disableSubmitButton();
-        event.preventDefault();
-        isValid = false;
-      }
-    }
+
     _.each(fields, (field, name) => {
       if (field.isRequired && field.value === '') {
         this.validateField(name, '')

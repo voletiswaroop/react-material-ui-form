@@ -310,13 +310,7 @@ var Form = (_temp = _class = function (_React$Component) {
       var isValid = true;
       var fields = _this.state.fields;
 
-      if (document.getElementsByClassName('MuiCheckbox-root').length !== 0) {
-        if (document.getElementsByClassName('MuiCheckbox-checked').length === 0) {
-          _this.disableSubmitButton();
-          event.preventDefault();
-          isValid = false;
-        }
-      }
+
       _lodash2.default.each(fields, function (field, name) {
         if (field.isRequired && field.value === '') {
           _this.validateField(name, '');
