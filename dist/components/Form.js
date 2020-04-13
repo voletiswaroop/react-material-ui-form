@@ -170,9 +170,9 @@ var Form = (_temp = _class = function (_React$Component) {
 
     _this.onFieldConstruct = function (fieldProps) {
       var checked = fieldProps.checked,
-        name = fieldProps.name,
-        required = fieldProps.required,
-        value = fieldProps.value;
+          name = fieldProps.name,
+          required = fieldProps.required,
+          value = fieldProps.value;
 
       // checkable input
 
@@ -309,6 +309,7 @@ var Form = (_temp = _class = function (_React$Component) {
       event.preventDefault();
       var isValid = true;
       var fields = _this.state.fields;
+
 
       _lodash2.default.each(fields, function (field, name) {
         if (field.isRequired && field.value === '') {
@@ -523,6 +524,5 @@ var Form = (_temp = _class = function (_React$Component) {
   id: undefined,
   method: undefined,
   action: undefined,
-  name: undefined
-}, _temp);
+  name: undefined }, _temp);
 exports.default = Form;

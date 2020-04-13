@@ -27,7 +27,7 @@ const rules = [
     test: /\.(css)$/,
     use: [
       { loader: 'style-loader' },
-      { loader: 'css-loader' }, 
+      { loader: 'css-loader' },
     ],
   },
   {
@@ -60,7 +60,7 @@ if (!args.p) {
       filename: './index.html',
     })
   )
-// production
+  // production
 } else {
   devtool = 'source-map'
   externals.push('react', 'react-dom', 'material-ui')
@@ -77,7 +77,7 @@ if (!args.p) {
 }
 
 module.exports = {
-  devtool,
+  devtool: false,
   devServer: {
     historyApiFallback: true,
   },
@@ -88,6 +88,13 @@ module.exports = {
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'bundle'),
     umdNamedDefine: true,
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      maxSize: 0,
+
+    },
   },
   module: {
     rules,
